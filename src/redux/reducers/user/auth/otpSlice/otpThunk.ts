@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
-import authAxios from "../../../../api/authApi";
+import authAxios from "../../../../../api/axiosInstance/demo";
 import { User } from "../../../../../types/login";
 import { MyError } from "../../../../../types/myError";
-
+import { END_POINTS } from "../../../../../constants/endPoints";
 // createAsyncThunk<res data type,req data type ,err data type>
 
 export interface resData {
@@ -14,10 +14,10 @@ export interface resData {
 
 //to otp reducer
 export const userOtpSignUp = createAsyncThunk<resData, User, { rejectValue: MyError }>(
-  '/api/send-otp',
+  END_POINTS.SEND_OTP_SIGNUP,
   async (payload: User, thunkApi) => {
     try {
-      const response = await authAxios.post('/send-otp', payload);
+      const response = await authAxios.post(END_POINTS.SEND_OTP_SIGNUP, payload);
       console.log('response data ', response.data);
 
       const data = response.data as resData;

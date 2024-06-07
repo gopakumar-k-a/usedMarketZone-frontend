@@ -1,39 +1,55 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "../../../../../types/login";
-import { logInThunk, LoginResponse } from "./logInThunk";
+// import { User } from "../../../../../types/login";
+// import { logInThunk, LoginResponse } from "./logInThunk";
 
 interface InitialState {
-    isLoggedIn: boolean,
-    user: User | null,
+    isAuthenticated: boolean,
+    user: string | null,
     token: string | null,
-    error: string | null
+    role:string | null
 }
 
+const token = localStorage.getItem('token');
+const user = localStorage.getItem('user');
+const role=localStorage.getItem('role')
+
 const initialState: InitialState = {
-    isLoggedIn: false,
-    user: null,
-    token: null,
-    error: null,
+    isAuthenticated: !!token, 
+    user: user || null,
+    token: token || null,
+    role:role || null
+
 }
 
 const userSlice = createSlice({
     name: 'user',
     initialState,
-    reducers: {},
-    extraReducers: (builder) => {
-        builder
-            .addCase(logInThunk.pending, (state) => {
-                state.error = null; 
-            })
-            .addCase(logInThunk.fulfilled, (state, action: PayloadAction<LoginResponse>) => {
-                state.isLoggedIn = true;
-                state.user = action.payload.user || null; 
-                state.token = action.payload.token || null; 
-            })
-            .addCase(logInThunk.rejected, (state, action) => {
-                state.error = action.payload ? action.payload.message : action.error.message || 'Unknown error';
-            });
+    reducers: {
+        setCredentials: (state, action) => {
+            const { user, token,role } = action.payload
+            state.user = user
+            localStorage.setItem('user', user)
+            state.token = token
+            localStorage.setItem('token', token)
+            state.role=role
+            localStorage.setItem('role', role)
+            state.isAuthenticated = true
+
+        },
+        logOut: (state) => {
+            state.isAuthenticated = false
+            state.user = null
+            state.token = null
+            localStorage.removeItem('user');
+            localStorage.removeItem('token');
+        }
+
     },
 });
 
+export const { setCredentials, logOut } = userSlice.actions
+
 export default userSlice.reducer;
+
+

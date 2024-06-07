@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
-import authAxios from "../../../../api/authApi";
+import authAxios from "../../../../../api/axiosInstance/demo";
 import { User } from "../../../../../types/login";
 import { MyError } from "../../../../../types/myError";
 
@@ -8,7 +8,8 @@ export interface LoginResponse {
     status: boolean,
     message: string,
     token?: string,
-    user?: User
+    user?: User,
+    
 }
 
 export const logInThunk = createAsyncThunk<LoginResponse, User, { rejectValue: MyError }>(

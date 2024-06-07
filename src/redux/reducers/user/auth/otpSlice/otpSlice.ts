@@ -26,7 +26,7 @@ const otpSlice = createSlice({
       .addCase(userOtpSignUp.pending, (state: OtpState) => {
         state.isLoading = true;
         state.otpStatus = false
-        state.error = null; // Reset error on new request
+        state.error = null; 
       })
       .addCase(userOtpSignUp.fulfilled, (state: OtpState, action: PayloadAction<resData>) => {
         state.isLoading = false;

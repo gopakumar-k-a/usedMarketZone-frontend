@@ -8,8 +8,10 @@ interface PublicRouteProps {
 }
 
 const PublicRoute:React.FC<PublicRouteProps>=({children})=>{
- const isAuthenticated:boolean=useAppSelector((state:RootState)=>state.auth.isLoggedIn)
- if(isAuthenticated){
+ const isAuthenticated:boolean=useAppSelector((state:RootState)=>state.auth.isAuthenticated)
+//  const isAdminAuthenticated:boolean=useAppSelector((state:RootState)=>state.adminAuth.isAuthenticated)
+
+ if(isAuthenticated ){
     return <Navigate to="/" replace/>
  }
 

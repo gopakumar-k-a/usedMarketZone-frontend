@@ -1,21 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faLock, faEnvelope, faPhone, faUser } from '@fortawesome/free-solid-svg-icons';
 import { User } from '../../types/login';
-import { userOtpSignUp } from '../../redux/reducers/user/auth/otpSlice/otpThunk';
+// import { userOtpSignUp } from '../../redux/reducers/user/auth/otpSlice/otpThunk';
 import Loader from '../loader/Loader';
 // import {useAppDispatch,useAppSelector,useAppStore}
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
-import { setFlow } from '../../redux/reducers/user/auth/otpPageFlow/flowSlice';
+// import { setFlow } from '../../redux/reducers/user/auth/otpPageFlow/flowSlice';
+import { userOtpSignUp } from '../../api/auth';
+import { toast } from 'react-toastify';
+import { authorizeUserOtpPage } from '../../redux/reducers/user/auth/otpProtect/otpProtectSlice';
 
 function SignUp() {
+    const [isLoading, setLoading] = useState(false)
+    // const [otpStatus, setOtpStatus] = useState(false)
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const { userData, isLoading, error, otpStatus } = useAppSelector((state) => state.getOtp);
+    // const { userData, error } = useAppSelector((state) => state.getOtp);
 
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
@@ -52,18 +56,50 @@ function SignUp() {
             .required('Confirm Password is required'),
     });
 
-    const onSubmit = (values: User, { setSubmitting }) => {
+    const onSubmit = async (values: User, { setSubmitting }) => {
         const { confirmPassword, ...formData } = values;
-        dispatch(userOtpSignUp(formData));
-        setSubmitting(false);
-    };
 
-    useEffect(() => {
-        if (otpStatus) {
-            dispatch(setFlow('registering'));
-            navigate('/otp');
-        }
-    }, [otpStatus, navigate, dispatch]);
+        setLoading(true)
+
+        await toast.promise(
+            userOtpSignUp(formData),
+            {
+                pending: "Sending Otp",
+                success: "Successfully sent OTP To Your Account",
+                error: "Failed To Sent Otp",
+            },
+            {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            }
+        ).then(() => {
+
+            dispatch(authorizeUserOtpPage())
+            navigate('/otp', { state: { email: formData.email } });
+
+        })
+            .catch((error) => {
+                console.error(error);
+            })
+            .finally(() => {
+                setLoading(false);
+                setSubmitting(false);
+            });
+
+    }
+
+    // useEffect(() => {
+    //     if (otpStatus) {
+    //         dispatch(authorizeUserOtpPage())
+    //         navigate('/otp', { state: { email: values.email } });
+    //     }
+    // }, [otpStatus, navigate, dispatch]);
 
     return (
         <>

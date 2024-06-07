@@ -8,9 +8,10 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
-  const isAuthenticated: boolean = useAppSelector((state: RootState) => state.auth.isLoggedIn);
+  const isAuthenticated: boolean = useAppSelector((state: RootState) => state.auth.isAuthenticated);
+  // const isAdminAuthenticated:boolean=useAppSelector((state:RootState)=>state.adminAuth.isAuthenticated)
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated ) {
     return <Navigate to="/login" replace />; 
   }
 

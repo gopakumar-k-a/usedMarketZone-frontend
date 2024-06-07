@@ -1,58 +1,99 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter, Link, Navigate } from "react-router-dom";
 import { Suspense } from "react";
+import {
+  App,
+  Home,
+  ErrorPage,
+  AuthenticationPage,
+  Otp,
+  PublicRoute,
+  PrivateRoute,
+  OtpRouteGuard,
+  AdminPageLayout,
+  AdminDashboard,
+} from "./lazyComponents";
 
-//imports from Pages
-import App from "./App";
-import ErrorPage from "./pages/ErrorPage";
-import AuthenticationPage from "./pages/AuthenticationPage";
-import Otp from "./components/auth/Otp";
-import PublicRoute from "./Routes/PublicRoute";
-import PrivateRoute from "./Routes/PrivateRoute";
+const Loading = () => <div>Loading...</div>;
 
 export const AppRouter = createBrowserRouter([
-    {
-        path: '/',
+  {
+    path: "/",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <PrivateRoute>
+          <App />
+        </PrivateRoute>
+      </Suspense>
+    ),
+    errorElement: (
+      <Suspense fallback={<Loading />}>
+        <ErrorPage />
+      </Suspense>
+    ),
+    children: [
+      {
+        path: "/",
+        element: <Navigate to="/home" />,
+      },
+      {
+        path: "/home",
         element: (
-            <PrivateRoute>
-                <App />
-            </PrivateRoute>),
-        errorElement: <ErrorPage />,
-        children: [
-            {
-                path: '/',
-                element: <Navigate to="/home" />
-            },
-            {
-                path: '/home',
-                element: <App />
-            },
-
-        ]
-    },
-    {
-        path: 'login',
-        element: (
-            <PublicRoute>
-                <AuthenticationPage />
-            </PublicRoute>)
-    },
-    {
-        path: 'signup',
-        element: (
-            <PublicRoute>
-                <AuthenticationPage />
-            </PublicRoute>)
-    },
-    {
-        path: 'forgot-password',
-        element: (
-            <PublicRoute>
-                <AuthenticationPage />
-            </PublicRoute>)
-    },
-    {
-        path: 'otp',
-        element: <Otp />
-
-    }
-])
+          <Suspense fallback={<Loading />}>
+            <Home />
+          </Suspense>
+        ),
+      },
+    ],
+  },
+  {
+    path: "login",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <PublicRoute>
+          <AuthenticationPage />
+        </PublicRoute>
+      </Suspense>
+    ),
+  },
+  {
+    path: "signup",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <PublicRoute>
+          <AuthenticationPage />
+        </PublicRoute>
+      </Suspense>
+    ),
+  },
+  {
+    path: "forgot-password",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <PublicRoute>
+          <AuthenticationPage />
+        </PublicRoute>
+      </Suspense>
+    ),
+  },
+  {
+    path: "otp",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <OtpRouteGuard>
+          <Otp />
+        </OtpRouteGuard>
+      </Suspense>
+    ),
+  },
+//   {
+//     path: "admin",
+//     element: <AdminPageLayout />,
+//     children: [
+  
+//       {
+//         path: "dashboard",
+//         element: <AdminDashboard />,
+//       },
+//     ],
+//   },
+]);
