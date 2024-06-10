@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../../../../../types/login";
+import { User } from "../../../../types/login";
 // import { User } from "../../../../../types/login";
 // import { logInThunk, LoginResponse } from "./logInThunk";
 
@@ -22,18 +22,18 @@ const initialState: InitialState = {
 
 }
 
-const userSlice = createSlice({
+const authSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
         setCredentials: (state, action) => {
             const { user, token,role } = action.payload
             state.user = user
-            localStorage.setItem('user', user)
+            localStorage.setItem('user', JSON.stringify(user))
             state.token = token
-            localStorage.setItem('token', token)
+            localStorage.setItem('token', JSON.stringify(token))
             state.role=role
-            localStorage.setItem('role', role)
+            localStorage.setItem('role', JSON.stringify(role))
             state.isAuthenticated = true
 
         },
@@ -48,8 +48,8 @@ const userSlice = createSlice({
     },
 });
 
-export const { setCredentials, logOut } = userSlice.actions
+export const { setCredentials, logOut } = authSlice.actions
 
-export default userSlice.reducer;
+export default authSlice.reducer;
 
 

@@ -10,10 +10,13 @@ export interface User {
     _id?: string,
     firstName: string,
     lastName: string,
+    userName:string,
     email: string,
     phone: string,
     password: string,
-    confirmPassword?: string
+    confirmPassword?: string,
+    imageUrl?:string,
+
 }
 
 export interface SendOtpResponseSignUp {

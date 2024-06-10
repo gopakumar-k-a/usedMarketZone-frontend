@@ -1,14 +1,20 @@
 import { createBrowserRouter, Link, Navigate } from "react-router-dom";
 import { Suspense } from "react";
 import {
+  //user
   App,
   Home,
+  Profile,
+  EditProfile,
+
+  //auth
   ErrorPage,
   AuthenticationPage,
   Otp,
   PublicRoute,
   PrivateRoute,
   OtpRouteGuard,
+  //admin
   AdminPageLayout,
   AdminDashboard,
 } from "./lazyComponents";
@@ -43,6 +49,22 @@ export const AppRouter = createBrowserRouter([
           </Suspense>
         ),
       },
+      {
+        path: "/profile",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Profile />
+          </Suspense>
+        ),
+      },
+      {
+        path:"/edit-profile",
+        element:(
+          <Suspense fallback={<Loading/>}>
+            <EditProfile/>
+          </Suspense>
+        )
+      }
     ],
   },
   {
@@ -85,15 +107,15 @@ export const AppRouter = createBrowserRouter([
       </Suspense>
     ),
   },
-//   {
-//     path: "admin",
-//     element: <AdminPageLayout />,
-//     children: [
-  
-//       {
-//         path: "dashboard",
-//         element: <AdminDashboard />,
-//       },
-//     ],
-//   },
+  //   {
+  //     path: "admin",
+  //     element: <AdminPageLayout />,
+  //     children: [
+
+  //       {
+  //         path: "dashboard",
+  //         element: <AdminDashboard />,
+  //       },
+  //     ],
+  //   },
 ]);

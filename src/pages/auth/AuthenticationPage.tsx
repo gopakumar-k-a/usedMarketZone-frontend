@@ -1,9 +1,9 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
-import ForgotPass from '../components/auth/ForgotPass'
-import LogIn from '../components/auth/LogIn'
-import SignUp from '../components/auth/SignUp'
-import Otp from '../components/auth/Otp'
+import ForgotPass from '../../components/auth/ForgotPass'
+import LogIn from '../../components/auth/LogIn'
+import SignUp from '../../components/auth/SignUp'
+import Otp from '../../components/auth/Otp'
 
 function AuthenticationPage() {
 

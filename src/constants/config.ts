@@ -2,5 +2,13 @@
 
 
 export const Constants = {
-    BASE_URL: import.meta.env.VITE_APP_BASE_URL
+    BASE_URL: import.meta.env.VITE_APP_BASE_URL,
+    FIREBASE_API_KEY:import.meta.env.VITE_APP_FIREBASE_API_KEY
 }
+
+// VITE_APP_FIREBASE_API_KEY= AIzaSyDwP7MFZ2am33bgR4PlcXwhMpgu6ESEwVI
+// VITE_APP_FIREBASE_AUTH_DOMAIN=  usedmarketzone.firebaseapp.com
+// VITE_APP_FIREBASE_PROJECT_ID= usedmarketzone
+// VITE_APP_FIREBASE_STORAGE_BUCKET=usedmarketzone.appspot.com
+// VITE_APP_FIREBASE_MESSAGEING_SENDER_ID= 843770844397
+// VITE_APP_FIREBASE_APP_ID= 1:843770844397:web:c84160dfadd56b6d91e8e4
