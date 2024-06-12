@@ -14,11 +14,14 @@ export const axiosRefreshInstance = axios.create({
 
 axiosUserInstance.interceptors.request.use(
     (config) => {
-      const { token } = store.getState().auth;
+
+      const { token } = store.getState().auth;  
+      console.log('token is ',token);
+      
+      
       if (token) {
-        config.headers.authorization = `Bearer ${token}`;
-        console.log('config.headers.authorization in interseptor ',config.headers.authorization);
-        
+        // config.headers.authorization = 'Bearer ' +token; 
+        config.headers.authorization = `Bearer ${token}`; 
       }
       return config;
     },
