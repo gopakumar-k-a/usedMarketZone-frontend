@@ -1,24 +1,25 @@
 import React, { useState, useEffect, useCallback, useId } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faCamera } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import Loader from "../../components/loader/Loader";
-import { useAppSelector } from "../../utils/hooks/reduxHooks";
-import useDebounce from "../../utils/hooks/useDebounce";
-import { updateProfile, userNameAvailabilty } from "../../api/profile";
-import { Button } from "@/components/ui/button";
+import Loader from "../../../../components/loader/Loader";
+import { useAppSelector } from "../../../../utils/hooks/reduxHooks";
+import useDebounce from "../../../../utils/hooks/useDebounce";
+import { updateProfile, userNameAvailabilty } from "../../../../api/profile";
 import { toast } from "react-toastify";
 import { UserLoginResponse } from "@/types/login";
-import { useAppDispatch } from "../../utils/hooks/reduxHooks";
+import { useAppDispatch } from "../../../../utils/hooks/reduxHooks";
 import { updateUserCredentials } from "@/redux/reducers/user/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import ProfilePicSelector from "./ProfilePicSelector";
 
 const EditProfile = () => {
-  const dispatch=useAppDispatch()
-  const navigate=useNavigate()
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState<any>(null); // Adjust type according to your userData structure
   const [userName, setUserName] = useState("");
@@ -110,58 +111,57 @@ const EditProfile = () => {
   });
 
   // Handle form submission
-  const handleSubmit =async (values: any,{ setSubmitting }) => {
+  const handleSubmit = async (values: any, { setSubmitting }) => {
     console.log("Form values:", values);
-    values.userName=userName
+    values.userName = userName;
     // updateProfile(values).then((res) => {
     //   console.log("res in handle submit ", res);
     // });
 
     await toast
-    .promise(
-      updateProfile(values),
-      {
-        pending: "Updating Credentials",
-        success: "User Profile Updated",
-        error: "Failed to Update Please Check Credentials",
-      },
-      {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      }
-    )
-    .then((response: any) => {
-      console.log("response is ", response);
-      const { updatedUser } = response;
+      .promise(
+        updateProfile(values),
+        {
+          pending: "Updating Credentials",
+          success: "User Profile Updated",
+          error: "Failed to Update Please Check Credentials",
+        },
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      )
+      .then((response: any) => {
+        console.log("response is ", response);
+        const { updatedUser } = response;
 
-      console.log("log in page   user, token, role", updatedUser);
+        console.log("log in page   user, token, role", updatedUser);
 
-      // dispatch(loginSuccess({ user: JSON.stringify(user), token }));
+        // dispatch(loginSuccess({ user: JSON.stringify(user), token }));
 
-      dispatch(updateUserCredentials(updatedUser));
-      navigate("/profile");
+        dispatch(updateUserCredentials(updatedUser));
+        navigate("/profile");
 
-      //    else if (role == "admin") {
-      //   dispatch(setCredentialsAdmin({ user, token, role }));
-      //   navigate("/admin");
-      // }
-      // dispatch(authorizeUserOtpPage())
-      // navigate('/otp', { state: { email: formData.email } });
-    })
-    .catch((error) => {
-      console.error(error);
-    })
-    .finally(() => {
-      // setLoading(false);
-      setSubmitting(false);
-    });
-
+        //    else if (role == "admin") {
+        //   dispatch(setCredentialsAdmin({ user, token, role }));
+        //   navigate("/admin");
+        // }
+        // dispatch(authorizeUserOtpPage())
+        // navigate('/otp', { state: { email: formData.email } });
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        // setLoading(false);
+        setSubmitting(false);
+      });
   };
   // if (isLoading) {
   //   return <Loader />;
@@ -190,19 +190,9 @@ const EditProfile = () => {
                       }
                       alt="Bordered avatar"
                     />
-                    <input
-                      type="file"
-                      id="fileInput"
-                      className="hidden"
-                      accept="image/*"
-                      // onChange={handleFileChange}
-                    />
-                    <label
-                      htmlFor="fileInput"
-                      className="absolute bottom-0 right-0 w-10 h-10 bg-[#202142] hover:bg-indigo-900 dark:bg-indigo-800 rounded-full flex items-center justify-center ring-2 ring-white"
-                    >
-                      <FontAwesomeIcon icon={faCamera} className="text-white" />
-                    </label>
+                    <div className="absolute bottom-5 right-5 transform translate-x-1/2 translate-y-1/2">
+                      <ProfilePicSelector />
+                    </div>
                   </div>
 
                   <div className="flex flex-col space-y-5 sm:ml-8">

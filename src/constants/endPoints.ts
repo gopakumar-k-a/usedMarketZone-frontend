@@ -5,7 +5,8 @@ export const END_POINTS = {
     GOOGLE_LOG_IN:'/api/auth/google-login',
     GET_USER_INFO:'/api/user/profile',
     USER_NAME_AVILABILITY:'/api/user/username-check',
-    UPDATE_PROFILE:'/api/user/edit-profile'
+    UPDATE_PROFILE:'/api/user/edit-profile',
+    UPDATE_PROFILE_PIC:'/api/user/edit-profile/update-image'
 
 }
 

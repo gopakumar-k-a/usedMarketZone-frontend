@@ -8,7 +8,7 @@ const AuthenticationPage = React.lazy(
   () => import("./pages/auth/AuthenticationPage")
 );
 
-const Profile=React.lazy(()=>import("./pages/user/ProfilePage"))
+const Profile=React.lazy(()=>import("./pages/user/profile/ProfilePage"))
 const Otp = React.lazy(() => import("./components/auth/Otp"));
 const PublicRoute = React.lazy(() => import("./routes/PublicRoute"));
 const PrivateRoute = React.lazy(() => import("./routes/PrivateRoute"));
@@ -19,7 +19,7 @@ const AdminPageLayout = React.lazy(() => import("./components/admin/AdminPageLay
 const AdminDashboard = React.lazy(
   () => import("./components/admin/AdminDashboard")
 );
-const EditProfile=React.lazy(()=>import("./pages/user/EditProfile"))
+const EditProfile=React.lazy(()=>import("./pages/user/profile/editProfile/EditProfile"))
 
 export {
   //user

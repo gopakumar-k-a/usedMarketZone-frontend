@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWallet, faBookmark } from "@fortawesome/free-solid-svg-icons";
-import { useAppSelector } from "../../utils/hooks/reduxHooks";
+import { useAppSelector } from "../../../utils/hooks/reduxHooks";
 import { Link } from "react-router-dom";
 
 function ProfilePage() {

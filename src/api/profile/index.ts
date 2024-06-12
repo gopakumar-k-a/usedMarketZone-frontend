@@ -1,7 +1,8 @@
-import { axiosUserInstance } from "../axiosInstance/axiosUserInstance.ts";
+import axios from "axios";
+import { axiosUserInstance,axiosRefreshInstance } from "../axiosInstance/axiosUserInstance.ts";
 import { END_POINTS } from "../../constants/endPoints.ts";
 import { UserNameCheckRes } from "../../types/user.ts";
-
+import {Constants} from "../../constants/config.ts"
 import { store } from "../../redux/app/store.ts";
 
 const userId = store.getState().auth.user?._id;
@@ -30,3 +31,18 @@ console.log('user id ',userId);
   console.log("update profile response ", console.log(response.data));
   return response.data;
 };
+
+export const updateImageToCloudinary=async(imageBlob)=>{
+
+    const response=await axios.post(`${Constants.CLOUDINARY_URL}`,imageBlob)
+
+    return response.data
+}
+
+export const sendImageUrlToBackEnd=async(imageUrl:string)=>{
+    const response=await axiosUserInstance.put(`${END_POINTS.UPDATE_PROFILE_PIC}/${userId}`,{imageUrl})
+
+    console.log('response from sendImageUrlToBackEnd',response.data);
+    return response.data
+    
+}
