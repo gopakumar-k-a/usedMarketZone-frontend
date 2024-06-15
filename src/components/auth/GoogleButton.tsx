@@ -4,7 +4,7 @@ import { app } from "../../api/firebase/firebaseConfig";
 import { googleAuthenticate } from "../../api/auth";
 import { toast } from "react-toastify";
 import { useAppDispatch } from "../../utils/hooks/reduxHooks";
-import { setCredentials } from "../../redux/reducers/user/auth/authSlice";
+import { setCredentials } from "../../redux/reducers/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 
 function GoogleButton() {

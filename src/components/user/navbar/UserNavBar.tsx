@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useAppDispatch } from "../../utils/hooks/reduxHooks";
+import { useAppDispatch } from "../../../utils/hooks/reduxHooks";
 import { logOut } from "../../redux/reducers/user/auth/authSlice";
 function UserNavBar() {
   const dispatch = useAppDispatch();

@@ -13,6 +13,7 @@ export interface User {
     userName:string,
     email: string,
     phone: string,
+    role:string,
     password: string,
     confirmPassword?: string,
     imageUrl?:string,
@@ -30,6 +31,7 @@ export interface SendOtpResponseSignUp {
 export interface UserLogin {
     email: string;
     password: string;
+    message?:string
 }
 
 export interface UserLoginResponse extends NormalBackendRes {

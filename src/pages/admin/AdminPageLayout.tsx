@@ -1,15 +1,19 @@
-import "./App.css";
-import { useState, useEffect } from "react";
-import { useAppDispatch } from "./utils/hooks/reduxHooks";
-import { logOut } from "./redux/reducers/auth/authSlice";
-import UserNavBar from "./components/user/navbar/UserNavBar";
-import Sidebar from "./components/user/sideNav/SideBar";
-import SideBarMobile from "./components/user/sideNav/mobile/SideNavMobile";
+import React, { useState,useEffect } from "react";
 import { Outlet } from "react-router-dom";
-function App() {
-  const dispatch = useAppDispatch();
-  //dark mode
+import AdminSideBar from "../../components/admin/adminNavBar/AdminSideBar";
+import { useAppDispatch } from "@/utils/hooks/reduxHooks";
+import { logOut } from "@/redux/reducers/auth/authSlice";
+
+
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
+function AdminPage() {
+const dispatch=useAppDispatch()
   const [theme, setTheme] = useState("light");
+
 
   useEffect(() => {
     if (theme == "dark") {
@@ -33,21 +37,20 @@ function App() {
   const toggleSidebar = () => {
     setIsExpanded(!isExpanded);
   };
-
   return (
-    <>
-      <div className="sm:grid sm:grid-cols-12 flex flex-col h-screen">
+ 
+    <>    <div className="sm:grid sm:grid-cols-12 flex flex-col h-screen">
         {/* <div className="h-12  bg-violet-500 col-span-12">
           <UserNavBar />
         </div> */}
         <div className="h-16 w-full fixed top-0 bg-yellow-500 block  sm:hidden">
-          <SideBarMobile />
+          {/* <SideBarMobile /> */}
 
         </div>
         <div
           className={`h-full  bg-red-600 hidden sm:block ${isExpanded ? "sm:col-span-2" : "sm:col-span-1"}`}
         >
-          <Sidebar
+          <AdminSideBar
             isExpanded={isExpanded}
             toggleSidebar={toggleSidebar}
             handleLogout={handleLogout}
@@ -58,7 +61,7 @@ function App() {
 
         {/* Green Div: Always visible */}
         <div
-          className={`h-full overflow-y-scroll  bg-white dark:bg-gray-900 ${isExpanded ? "sm:col-span-7" : "sm:col-span-8"} pt-16 sm:pt-0`}
+          className={`h-full overflow-y-scroll  bg-white dark:bg-adminBgDark ${isExpanded ? "sm:col-span-7" : "sm:col-span-8"} pt-16 sm:pt-0`}
         >
           <Outlet />
         </div>
@@ -70,11 +73,11 @@ function App() {
 
         {/* Yellow Div: Visible on small screens, hidden on medium screens and above */}
         <div className="h-16 w-full  fixed bottom-0 bg-yellow-500 block sm:hidden">
-          <SideBarMobile />
+          {/* <SideBarMobile /> */}
         </div>
       </div>
-    </>
+      </>
   );
 }
 
-export default App;
+export default AdminPage;

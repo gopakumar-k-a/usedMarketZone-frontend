@@ -14,7 +14,7 @@ import { UserLogin } from "../../types/login";
 import { userLoginAuthenticate } from "../../api/auth";
 import { toast } from "react-toastify";
 import Loader from "../loader/Loader";
-import { setCredentials } from "../../redux/reducers/user/auth/authSlice";
+import { setCredentials } from "../../redux/reducers/auth/authSlice";
 import { useAppDispatch } from "../../utils/hooks/reduxHooks";
 import { UserLoginResponse } from "../../types/login";
 import { setCredentialsAdmin } from "../../redux/reducers/admin/auth/adminSlice";
@@ -33,7 +33,7 @@ function LogIn() {
 
   const initialValues = {
     email: emailAfterSignup ? emailAfterSignup : "",
-    password: "",
+    password: "Gopak@9145",
   };
 
   const validationSchema = Yup.object({
@@ -52,7 +52,15 @@ function LogIn() {
         {
           pending: "Checking Credentials",
           success: "Log In Success",
-          error: "Failed to LogIn Please Check Credentials",
+          error: {
+            render({ data }) {
+              // Extracting error message from response
+              if (data.response && data.response.data) {
+                return `Failed to LogIn: ${data.response.data.message}`;
+              }
+              return `Failed to LogIn: ${data.message}`;
+            },
+          }
         },
         {
           position: "top-right",
@@ -74,7 +82,17 @@ function LogIn() {
         // dispatch(loginSuccess({ user: JSON.stringify(user), token }));
 
         dispatch(setCredentials({ user, token, role }));
-        navigate("/");
+        console.log('user role UserLoginResponse ',user.role);
+        
+        if (user.role == "user") {
+          console.log(`if (user.role == "user")`);
+          
+          navigate("/");
+        } else if (user.role == "admin") {
+          console.log(`else if (user.role == "admin")`);
+
+          navigate("/admin");
+        }
 
         //    else if (role == "admin") {
         //   dispatch(setCredentialsAdmin({ user, token, role }));
@@ -220,7 +238,7 @@ function LogIn() {
               </Form>
             )}
           </Formik>
-        <GoogleButton />
+          <GoogleButton />
         </div>
       </section>
       {isLoading && <Loader />}

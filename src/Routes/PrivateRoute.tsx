@@ -8,10 +8,14 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
-  const isAuthenticated: boolean = useAppSelector((state: RootState) => state.auth.isAuthenticated);
-  // const isAdminAuthenticated:boolean=useAppSelector((state:RootState)=>state.adminAuth.isAuthenticated)
+  const isAuthenticated = useAppSelector((state: RootState) => state.auth.isAuthenticated);
+  const user = useAppSelector((state: RootState) => state.auth.user);
 
-  if (!isAuthenticated ) {
+  const role = isAuthenticated && user ? user?.role : "";
+  console.log('role of the user in user private route is ', role);
+
+
+  if (!isAuthenticated || role !== "user") {
     return <Navigate to="/login" replace />; 
   }
 

@@ -14,18 +14,17 @@ import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
 import { updateImageToCloudinary, sendImageUrlToBackEnd } from "@/api/profile";
 import { Constants } from "../../../../constants/config";
 import { toast } from "react-toastify";
 import { useAppDispatch } from "@/utils/hooks/reduxHooks";
 import { useNavigate } from "react-router-dom";
-import { updateUserCredentials } from "@/redux/reducers/user/auth/authSlice";
+import { updateUserCredentials } from "@/redux/reducers/auth/authSlice";
 
 function ProfilePicSelector() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [completedCrop, setCompletedCrop] = useState<any>(null);
+  // const [completedCrop, setCompletedCrop] = useState<any>(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [image, setImage] = useState<string | null>(null);
@@ -51,7 +50,7 @@ function ProfilePicSelector() {
       canvas.width = croppedAreaPixels.width;
       canvas.height = croppedAreaPixels.height;
 
-      ctx.drawImage(
+      (ctx as any).drawImage(
         img,
         croppedAreaPixels.x,
         croppedAreaPixels.y,

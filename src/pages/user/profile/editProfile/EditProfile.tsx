@@ -12,7 +12,7 @@ import { updateProfile, userNameAvailabilty } from "../../../../api/profile";
 import { toast } from "react-toastify";
 import { UserLoginResponse } from "@/types/login";
 import { useAppDispatch } from "../../../../utils/hooks/reduxHooks";
-import { updateUserCredentials } from "@/redux/reducers/user/auth/authSlice";
+import { updateUserCredentials } from "@/redux/reducers/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import ProfilePicSelector from "./ProfilePicSelector";

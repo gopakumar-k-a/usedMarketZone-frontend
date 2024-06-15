@@ -1,4 +1,6 @@
 import { createBrowserRouter, Link, Navigate } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+const queryClient = new QueryClient();
 import { Suspense } from "react";
 import {
   //user
@@ -13,10 +15,12 @@ import {
   Otp,
   PublicRoute,
   PrivateRoute,
+  AdminPrivateRoute,
   OtpRouteGuard,
   //admin
   AdminPageLayout,
   AdminDashboard,
+  UserManagement,
 } from "./lazyComponents";
 
 const Loading = () => <div>Loading...</div>;
@@ -58,13 +62,13 @@ export const AppRouter = createBrowserRouter([
         ),
       },
       {
-        path:"/edit-profile",
-        element:(
-          <Suspense fallback={<Loading/>}>
-            <EditProfile/>
+        path: "/edit-profile",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <EditProfile />
           </Suspense>
-        )
-      }
+        ),
+      },
     ],
   },
   {
@@ -107,15 +111,26 @@ export const AppRouter = createBrowserRouter([
       </Suspense>
     ),
   },
-  //   {
-  //     path: "admin",
-  //     element: <AdminPageLayout />,
-  //     children: [
-
-  //       {
-  //         path: "dashboard",
-  //         element: <AdminDashboard />,
-  //       },
-  //     ],
-  //   },
+  {
+    path: "admin",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <AdminPrivateRoute>
+          <QueryClientProvider client={queryClient}>
+            <AdminPageLayout />
+          </QueryClientProvider>
+        </AdminPrivateRoute>
+      </Suspense>
+    ),
+    children: [
+      {
+        path: "dashboard",
+        element: <AdminDashboard />,
+      },
+      {
+        path: "user-management",
+        element: <UserManagement />,
+      },
+    ],
+  },
 ]);
