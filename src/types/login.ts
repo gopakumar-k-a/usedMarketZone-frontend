@@ -34,10 +34,19 @@ export interface UserLogin {
     message?:string
 }
 
+export interface ForgotPassword{
+    email:string
+}
+
 export interface UserLoginResponse extends NormalBackendRes {
     token: string;
     user:User;
     role:string
+}
+
+export interface ForgotPasswordResponse extends NormalBackendRes{
+    otpToken:string
+    email:string
 }
 export interface VerifyOtpSignUp {
     userData: User,

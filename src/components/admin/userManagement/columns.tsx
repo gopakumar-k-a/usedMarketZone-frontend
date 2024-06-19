@@ -27,11 +27,13 @@ export type User = {
 
 export const columns = (
   userData: User[],
-  setUserData: React.Dispatch<React.SetStateAction<User[]>>
+  setUserData: React.Dispatch<React.SetStateAction<User[]>>,
+  currentPage: number,
+  limit:number
 ): ColumnDef<User>[] => [
   {
     header: "Sl No",
-    cell: (info) => info.row.index + 1,
+    cell: (info) => (currentPage - 1) * limit + info.row.index + 1, // Adjust '5' based on your pagination limit
   },
   {
     accessorKey: "email",
@@ -62,10 +64,7 @@ export const columns = (
         setIsActive(!isActive);
 
         try {
-          // Make API call or perform logic to update user's isActive status
-          // const updatedUser = await updateUserActiveStatus(id, !isActive);
-          // Update table data with the new isActive value
-          // updateData(id, (prevData) => ({ ...prevData, isActive: updatedUser.isActive }));
+
         } catch (error) {
           console.error("Error updating user isActive status:", error);
         } finally {

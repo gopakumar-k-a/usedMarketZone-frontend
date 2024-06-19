@@ -21,7 +21,8 @@ function GoogleButton() {
 
       console.log("result is ", result);
 
-      const [firstName, lastName] = (await result).user.displayName?.split(" ");
+      let [firstName, lastName] = (await result).user.displayName?.split(" ");
+       lastName = lastName ?? Math.floor(100000 + Math.random() * 900000).toString();
 
       const googleUserCredentials = {
         firstName,

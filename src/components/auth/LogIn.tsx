@@ -33,7 +33,7 @@ function LogIn() {
 
   const initialValues = {
     email: emailAfterSignup ? emailAfterSignup : "",
-    password: "Gopak@9145",
+    password: "",
   };
 
   const validationSchema = Yup.object({

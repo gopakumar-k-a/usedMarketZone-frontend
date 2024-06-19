@@ -21,8 +21,18 @@ export const userOtpSignUp = async (
 
   console.log("response.data", response.data);
 
-  localStorage.setItem("userData", JSON.stringify(response.data.userData));
+  // localStorage.setItem("userData", JSON.stringify(response.data.userData));
   return response.data;
+};
+
+export const resendOtpSignUp = async (payload) => {
+  const response = await axiosRefreshInstance.post(
+    END_POINTS.RESEND_OTP,
+    payload
+  );
+
+  console.log(" RESEND_OTP response ", response.data);
+  return response;
 };
 
 export const verifyOtpsignUp = async (payload: VerifyOtpSignUp) => {
@@ -60,6 +70,43 @@ export const googleAuthenticate = async (payload) => {
   );
 
   console.log(" googleAuthenticate api response is ", response.data);
+
+  return response.data;
+};
+
+export const verifyOtpForgotPassword = async (payload) => {
+  const response = await axiosRefreshInstance.post(
+    END_POINTS.VERIFY_OTP_FORGOT_PASS,
+    payload
+  );
+
+  console.log("payload ", payload);
+
+  console.log("response in verifyOTp forgo password ", response.data);
+
+  return response.data;
+};
+
+export const forgotPassword = async (payload) => {
+  const response = await axiosRefreshInstance.post(
+    END_POINTS.FORGOT_PASSWORD,
+    payload
+  );
+
+  console.log("payload ", payload);
+
+  console.log("response in verifyOTp forgo password ", response.data);
+
+  return response.data;
+};
+
+export const submitNewPass = async (payload) => {
+  const response = await axiosRefreshInstance.post(
+    END_POINTS.RESET_PASSWORD,
+    payload
+  );
+
+  console.log("payload ", response.data);
 
   return response.data;
 };

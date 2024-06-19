@@ -16,6 +16,7 @@ import { updateUserCredentials } from "@/redux/reducers/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import ProfilePicSelector from "./ProfilePicSelector";
+import PasswordUpdateDialogue from "@/components/user/PasswordUpdateDialogue";
 
 const EditProfile = () => {
   const dispatch = useAppDispatch();
@@ -27,6 +28,10 @@ const EditProfile = () => {
   const [userNameAvailable, setUserNameAvailable] = useState<boolean | null>(
     null
   );
+
+  const [isPasswordModalOpen, setPasswordModalOpen] = useState(false);
+
+
 
   const checkUserName = useDebounce(async (userName: string) => {
     console.log("checking for user name ", userName);
@@ -101,13 +106,12 @@ const EditProfile = () => {
       }
     }
   }, [userString]);
-
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("First name is required"),
     lastName: Yup.string().required("Last name is required"),
-    userName: Yup.string().required("user name is required"),
-    phone: Yup.string().matches(/^\d+$/, "Phone must be a number"),
-    bio: Yup.string(),
+    userName: Yup.string().required("User name is required"),
+    phone: Yup.string().matches(/^\d+$/, "Phone must be a number").nullable(), // If phone can be null, add nullable()
+    bio: Yup.string().nullable(), // If bio can be null, add nullable()
   });
 
   // Handle form submission
@@ -165,6 +169,14 @@ const EditProfile = () => {
   };
   // if (isLoading) {
   //   return <Loader />;
+
+  const handlePasswordUpdateModalOpen = () => {
+    setPasswordModalOpen(true);
+  };
+
+  const handlePasswordUpdateModalClose = () => {
+    setPasswordModalOpen(false);
+  };
   // }
   return (
     <>
@@ -196,18 +208,18 @@ const EditProfile = () => {
                   </div>
 
                   <div className="flex flex-col space-y-5 sm:ml-8">
-                    <button
+                    <button onClick={()=>handlePasswordUpdateModalOpen()}
                       type="button"
                       className="py-3.5 px-7 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200 dark:bg-indigo-800 dark:border-gray-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-500"
                     >
                       Change Password
                     </button>
-                    <button
+                    {/* <button
                       type="button"
                       className="py-3.5 px-7 text-base font-medium text-indigo-900 focus:outline-none bg-white rounded-lg border border-indigo-200 hover:bg-indigo-100 hover:text-[#202142] focus:z-10 focus:ring-4 focus:ring-indigo-200 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-500"
                     >
                       Delete picture
-                    </button>
+                    </button> */}
                   </div>
                 </div>
 
@@ -390,6 +402,7 @@ const EditProfile = () => {
           </div>
         </main>
       </div>
+      <PasswordUpdateDialogue isOpen={isPasswordModalOpen} onClose={handlePasswordUpdateModalClose}/>
     </>
   );
 };

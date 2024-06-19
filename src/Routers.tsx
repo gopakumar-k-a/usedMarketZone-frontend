@@ -17,11 +17,14 @@ import {
   PrivateRoute,
   AdminPrivateRoute,
   OtpRouteGuard,
+  ResetPassword,
+  ResetPassModal,
   //admin
   AdminPageLayout,
   AdminDashboard,
   UserManagement,
 } from "./lazyComponents";
+import ForgotPass from "./components/auth/ForgotPass";
 
 const Loading = () => <div>Loading...</div>;
 
@@ -105,12 +108,28 @@ export const AppRouter = createBrowserRouter([
     path: "otp",
     element: (
       <Suspense fallback={<Loading />}>
-        <OtpRouteGuard>
-          <Otp />
-        </OtpRouteGuard>
+        {/* <OtpRouteGuard> */}
+        <Otp />
+        {/* </OtpRouteGuard> */}
       </Suspense>
     ),
   },
+//   {
+//     path: "/reset-password",
+//     element: (
+//       <Suspense fallback={<Loading />}>
+//         <ResetPassword />
+//       </Suspense>
+//     ),
+//   },
+//   {
+// path:'/reset-pass-modal',
+// element:(
+//   <Suspense>
+//     <ResetPassModal/>
+//   </Suspense>
+// )
+//   },
   {
     path: "admin",
     element: (

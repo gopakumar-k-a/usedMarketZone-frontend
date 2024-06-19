@@ -21,7 +21,8 @@ const OtpRouteGuard = React.lazy(() => import("./routes/otpRouteProtect"));
 const AdminPrivateRoute = React.lazy(
   () => import("./routes/AdminPrivateRoute")
 );
-
+const ResetPassword=React.lazy(()=>import("./components/auth/ResetPassword"))
+const ResetPassModal=React.lazy(()=>import("./components/auth/ResetPasswModal"))
 //admin
 const AdminPageLayout = React.lazy(
   () => import("./pages/admin/AdminPageLayout")
@@ -45,6 +46,8 @@ export {
   PrivateRoute,
   AdminPrivateRoute,
   OtpRouteGuard,
+  ResetPassword,
+  ResetPassModal,
   //admin
   AdminPageLayout,
   AdminDashboard,
