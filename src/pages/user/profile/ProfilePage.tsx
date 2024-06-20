@@ -36,7 +36,7 @@ function ProfilePage() {
           <div className="w-full border-2 border-gray-400 aspect-square mt-4 col-span-4 rounded-full bg-white dark:bg-gray-900 overflow-hidden">
             {/* profile picture part */}
             <img
-              src={`${userData?.imageUrl ? userData?.imageUrl : "/UMZ-logo.svg"}`}
+              src={`${userData?.imageUrl ? userData?.imageUrl : "https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg"}`}
               alt="Profile Picture"
               className="w-full h-full object-cover rounded-full"
             />

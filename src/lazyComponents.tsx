@@ -10,6 +10,8 @@ const Profile = React.lazy(() => import("./pages/user/profile/ProfilePage"));
 const EditProfile = React.lazy(
   () => import("./pages/user/profile/editProfile/EditProfile")
 );
+const SellProductPost=React.lazy(()=>import("./pages/user/post/SellProductPost"))
+const AuctionProductPost=React.lazy(()=>import('./pages/user/post/AuctionProductPost'))
 //auth
 const AuthenticationPage = React.lazy(
   () => import("./pages/auth/AuthenticationPage")
@@ -37,6 +39,8 @@ export {
   Home,
   Profile,
   EditProfile,
+  SellProductPost,
+  AuctionProductPost,
 
   //auth
   ErrorPage,

@@ -29,6 +29,15 @@ function ProfilePicSelector() {
   const [zoom, setZoom] = useState(1);
   const [image, setImage] = useState<string | null>(null);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
+  const validImageTypes: string[] = [
+    "image/jpeg",
+    "image/png",
+    "image/bmp",
+    "image/webp",
+    "image/tiff",
+    "image/svg+xml",
+  ];
+  const [validImageError, setValidImageError] = useState<boolean>(false);
 
   const onCropComplete = useCallback(
     (croppedArea: any, croppedAreaPixels: any) => {
@@ -114,6 +123,11 @@ function ProfilePicSelector() {
   const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
+      setValidImageError(false);
+      if (!validImageTypes.includes(file.type)) {
+        setValidImageError(true);
+        return;
+      }
       const reader = new FileReader();
       reader.addEventListener("load", () => setImage(reader.result as string));
       reader.readAsDataURL(file);
@@ -185,15 +199,39 @@ function ProfilePicSelector() {
           </div>
         </div>
 
-        <DialogFooter className="flex justify-end items-end mt-4 ">
-          {!image ? (
+        <DialogFooter className="flex justify-center items-end mt-4 ">
+          {
+            validImageError?(<h3 className="text-red-600 w-full">only image files are allowed try selecting jped/png/webp format</h3>):(
+              !image ? (
+                <h1 className="text-black dark:text-white">
+                  Click the camera Icon to select Image
+                </h1>
+              ) : (
+                <h1 className="text-black dark:text-white">
+                  scroll or pinch to zoom, and drag to position image
+                </h1>
+              )
+
+            )
+          }
+          
+          {/* {!image ? (
             <h1 className="text-black dark:text-white">
-            Click the camera Icon to select Image
+              Click the camera Icon to select Image
             </h1>
           ) : (
             <h1 className="text-black dark:text-white">
               scroll or pinch to zoom, and drag to position image
             </h1>
+          )} */}
+
+          {image && (
+            <Button
+              className="bg-red-700 hover:bg-red-600"
+              onClick={() => setImage(null)}
+            >
+              cancel
+            </Button>
           )}
 
           <Button onClick={handleSaveChanges} disabled={!image}>

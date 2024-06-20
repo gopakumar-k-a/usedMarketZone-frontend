@@ -17,14 +17,15 @@ import {
   PrivateRoute,
   AdminPrivateRoute,
   OtpRouteGuard,
-  ResetPassword,
-  ResetPassModal,
+  AuctionProductPost,
+  SellProductPost,
   //admin
   AdminPageLayout,
   AdminDashboard,
   UserManagement,
 } from "./lazyComponents";
 import ForgotPass from "./components/auth/ForgotPass";
+
 
 const Loading = () => <div>Loading...</div>;
 
@@ -72,6 +73,22 @@ export const AppRouter = createBrowserRouter([
           </Suspense>
         ),
       },
+      {
+        path:"/post/sell-product",
+        element:(
+          <Suspense fallback={<Loading/>}>
+            <SellProductPost/>
+          </Suspense>
+        )
+      },
+      {
+        path:'/post/auction-product',
+        element:(
+          <Suspense fallback={<Loading/>}>
+            <AuctionProductPost/>
+          </Suspense>
+        )
+      }
     ],
   },
   {

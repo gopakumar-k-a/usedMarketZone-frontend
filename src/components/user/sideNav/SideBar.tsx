@@ -101,22 +101,22 @@ const Sidebar = ({
               Search
             </Link>
             <Link
-              to="/sell"
-              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${location.pathname === "/sell" ? "bg-customOrange text-white" : "bg-gray-200 dark:bg-gray-700"} text-gray-800 dark:text-white`}
+              to="/post/sell-product"
+              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${location.pathname === "/post/sell-product" ? "bg-customOrange text-white" : "bg-gray-200 dark:bg-gray-700"} text-gray-800 dark:text-white`}
             >
               <FontAwesomeIcon
                 icon={faHandHoldingHeart}
-                className="w-5 h-5 mr-3 text-black dark:text-white"
+                className={`w-5 h-5 mr-3 ${location.pathname === "/post/sell-product" ? "text-white" : "text-black"} dark:text-white`}
               />
               Sell
             </Link>
             <Link
-              to="/auction"
-              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${location.pathname === "/auction" ? "bg-customOrange text-white" : "bg-gray-200 dark:bg-gray-700"} text-gray-800 dark:text-white`}
+              to="/post/auction-product"
+              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${location.pathname === "/post/auction-product" ? "bg-customOrange text-white" : "bg-gray-200 dark:bg-gray-700"} text-gray-800 dark:text-white`}
             >
               <FontAwesomeIcon
                 icon={faGavel}
-                className="w-5 h-5 mr-3 text-black dark:text-white"
+                className={`w-5 h-5 mr-3 ${location.pathname === "/post/auction-product" ? "text-white" : "text-black"} dark:text-white`}
               />
               Auction
             </Link>
@@ -184,21 +184,21 @@ const Sidebar = ({
               />
             </Link>
             <Link
-              to="/sell"
-              className={`p-4 block text-gray-800 dark:text-white ${location.pathname === "/sell" ? "bg-customOrange rounded-xl text-white" : ""}`}
+              to="/post/sell-product"
+              className={`p-4 block text-gray-800 dark:text-white ${location.pathname === "/post/sell-product" ? "bg-customOrange rounded-xl text-white" : ""}`}
             >
               <FontAwesomeIcon
                 icon={faHandHoldingHeart}
-                className={`w-6 h-6 ${location.pathname === "/sell" ? "text-white" : "text-black"} dark:text-white`}
+                className={`w-6 h-6 ${location.pathname === "/post/sell-product" ? "text-white" : "text-black"} dark:text-white`}
               />
             </Link>
             <Link
-              to="/auction"
-              className={`p-4 block text-gray-800 dark:text-white ${location.pathname === "/auction" ? "bg-customOrange rounded-xl text-white" : ""}`}
+              to="/post/auction-product"
+              className={`p-4 block text-gray-800 dark:text-white ${location.pathname === "/post/auction-product" ? "bg-customOrange rounded-xl text-white" : ""}`}
             >
               <FontAwesomeIcon
                 icon={faGavel}
-                className={`w-6 h-6 ${location.pathname === "/auction" ? "text-white" : "text-black"} dark:text-white`}
+                className={`w-6 h-6 ${location.pathname === "/post/auction-product" ? "text-white" : "text-black"} dark:text-white`}
               />
             </Link>
             <Link

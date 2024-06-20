@@ -8,7 +8,11 @@ import axios from "axios";
 import Loader from "../../../../components/loader/Loader";
 import { useAppSelector } from "../../../../utils/hooks/reduxHooks";
 import useDebounce from "../../../../utils/hooks/useDebounce";
-import { updateProfile, userNameAvailabilty } from "../../../../api/profile";
+import {
+  updateProfile,
+  userNameAvailabilty,
+  removeProfilePicture,
+} from "../../../../api/profile";
 import { toast } from "react-toastify";
 import { UserLoginResponse } from "@/types/login";
 import { useAppDispatch } from "../../../../utils/hooks/reduxHooks";
@@ -17,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import ProfilePicSelector from "./ProfilePicSelector";
 import PasswordUpdateDialogue from "@/components/user/PasswordUpdateDialogue";
+import { CustomAlertDialogue } from "@/components/alert/CustomAlertDialogue";
 
 const EditProfile = () => {
   const dispatch = useAppDispatch();
@@ -30,11 +35,66 @@ const EditProfile = () => {
   );
 
   const [isPasswordModalOpen, setPasswordModalOpen] = useState(false);
+  const [isDeleteImageAlertOpen, setDeleteImageAlert] = useState(false);
 
 
+  const onDeleteImageAlertClose = () => {
+    setDeleteImageAlert(false);
+  };
+
+  const onDeleteImageSubmit = async (userId: string) => {
+    console.log("user id for on delet image ", userId);
+    await toast
+      .promise(
+        removeProfilePicture(userId),
+        {
+          pending: "Removing  Profile Picture",
+          success: "Profile Picture Removed Successfully",
+          error: "Failed to Remove Profile Picture",
+        },
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      )
+      .then((response: any) => {
+        console.log("response is ", response);
+        const { updatedUser } = response;
+
+        console.log("log in page   user, token, role", updatedUser);
+
+        // dispatch(loginSuccess({ user: JSON.stringify(user), token }));
+
+        dispatch(updateUserCredentials(updatedUser));
+        navigate("/profile");
+
+        //    else if (role == "admin") {
+        //   dispatch(setCredentialsAdmin({ user, token, role }));
+        //   navigate("/admin");
+        // }
+        // dispatch(authorizeUserOtpPage())
+        // navigate('/otp', { state: { email: formData.email } });
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+    
+  };
 
   const checkUserName = useDebounce(async (userName: string) => {
     console.log("checking for user name ", userName);
+
+    if (userData.userName == userName) {
+      setIsChecking(false);
+      setUserNameAvailable(null);
+      return;
+    }
     if (!userName) {
       setIsChecking(false); // Reset isChecking state
       setUserNameAvailable(null); // Reset userNameAvailable state
@@ -49,6 +109,7 @@ const EditProfile = () => {
         console.log("availability ");
 
         setUserNameAvailable(availability);
+
         setIsChecking(false);
         console.log(
           `Username '${userName}' is ${availability ? "available" : "not available"}.`
@@ -208,18 +269,22 @@ const EditProfile = () => {
                   </div>
 
                   <div className="flex flex-col space-y-5 sm:ml-8">
-                    <button onClick={()=>handlePasswordUpdateModalOpen()}
+                    <button
+                      onClick={() => handlePasswordUpdateModalOpen()}
                       type="button"
                       className="py-3.5 px-7 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200 dark:bg-indigo-800 dark:border-gray-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-500"
                     >
                       Change Password
                     </button>
-                    {/* <button
-                      type="button"
-                      className="py-3.5 px-7 text-base font-medium text-indigo-900 focus:outline-none bg-white rounded-lg border border-indigo-200 hover:bg-indigo-100 hover:text-[#202142] focus:z-10 focus:ring-4 focus:ring-indigo-200 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-500"
-                    >
-                      Delete picture
-                    </button> */}
+                    {userData?.imageUrl != "" && (
+                      <button
+                        onClick={() => setDeleteImageAlert(true)}
+                        type="button"
+                        className="py-3.5 px-7 text-base font-medium text-indigo-900 focus:outline-none bg-white rounded-lg border border-indigo-200 hover:bg-indigo-100 hover:text-[#202142] focus:z-10 focus:ring-4 focus:ring-indigo-200 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-500"
+                      >
+                        Delete picture
+                      </button>
+                    )}
                   </div>
                 </div>
 
@@ -387,7 +452,9 @@ const EditProfile = () => {
                           </button> */}
                           <Button
                             type="submit"
-                            disabled={isSubmitting || isChecking}
+                            disabled={
+                              isSubmitting || userNameAvailable == false
+                            }
                             className="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
                           >
                             save
@@ -402,7 +469,18 @@ const EditProfile = () => {
           </div>
         </main>
       </div>
-      <PasswordUpdateDialogue isOpen={isPasswordModalOpen} onClose={handlePasswordUpdateModalClose}/>
+
+      <CustomAlertDialogue
+        isOpen={isDeleteImageAlertOpen}
+        onClose={onDeleteImageAlertClose}
+        onContinue={() => onDeleteImageSubmit(userData._id)}
+        title={"Are you sure want to delete your profile picture"}
+        description={"by clicking continue you can delete your profile picture"}
+      />
+      <PasswordUpdateDialogue
+        isOpen={isPasswordModalOpen}
+        onClose={handlePasswordUpdateModalClose}
+      />
     </>
   );
 };
