@@ -8,8 +8,6 @@ const AddressComponent = () => {
   const [city, setCity] = useState("");
   const [postalCode, setPostalCode] = useState("");
 
-  const geoNamesUsername = "gopakumar_k_a";
-
   const fetchLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -18,29 +16,19 @@ const AddressComponent = () => {
         // Fetch the address details based on the geolocation
         axios
           .get(
-            `http://api.geonames.org/findNearbyPostalCodesJSON?lat=${latitude}&lng=${longitude}&username=${geoNamesUsername}`
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&accept-language=en`
           )
           .then((response) => {
-            const locationData = response.data.postalCodes[0];
-            setPostalCode(locationData.postalCode);
-            
-            // Fetch additional address details based on the location
-            axios
-              .get(
-                `http://api.geonames.org/extendedFindNearbyJSON?lat=${latitude}&lng=${longitude}&username=${geoNamesUsername}`
-              )
-              .then((response) => {
-                const addressData = response.data.geonames[0];
-                setCountry(addressData.countryName);
-                setState(addressData.adminName1);
-                setDistrict(addressData.adminName2);
-                setCity(addressData.name);
-              })
-              .catch((error) =>
-                console.error("Error fetching address details:", error)
-              );
+            const address = response.data.address;
+            setCountry(address.country);
+            setState(address.state || address.region);
+            setDistrict(address.county || address.suburb);
+            setCity(address.city || address.town || address.village);
+            setPostalCode(address.postcode);
           })
-          .catch((error) => console.error("Error fetching location data:", error));
+          .catch((error) =>
+            console.error("Error fetching location data:", error)
+          );
       });
     } else {
       alert("Geolocation is not supported by this browser.");
