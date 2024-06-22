@@ -15,6 +15,10 @@ export const END_POINTS = {
     UPDATE_PROFILE_PIC:'/api/user/edit-profile/update-image',
     UPDATE_USER_PASSWORD:'/api/user/edit-profile/update-password',
     REMOVE_PROFILE_PIC:'/api/user/edit-profile/remove-profile-pic',
+    //product
+
+    POST_PRODUCT:'/api/product/post-product',
+    GET_ALL_POSTS:'/api/product/get-all-products-posts',
 
     //admin
 
