@@ -25,11 +25,14 @@ export type User = {
   isActive: boolean;
 };
 
+// const navigate=useNavigate()
+
 export const columns = (
   userData: User[],
   setUserData: React.Dispatch<React.SetStateAction<User[]>>,
   currentPage: number,
-  limit:number
+  limit: number,
+  navigate: (path: string, state?: any) => void
 ): ColumnDef<User>[] => [
   {
     header: "Sl No",
@@ -64,7 +67,6 @@ export const columns = (
         setIsActive(!isActive);
 
         try {
-
         } catch (error) {
           console.error("Error updating user isActive status:", error);
         } finally {
@@ -100,8 +102,9 @@ export const columns = (
           }
           return data;
         });
-        setUserData(newUserData)
+        setUserData(newUserData);
       };
+
 
       return (
         <>
@@ -159,7 +162,8 @@ export const columns = (
               Copy User Email
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={()=>navigate("/admin/user-profile",{state:{userId:user._id}})}>
+            {/* <DropdownMenuItem > */}
               <LuUser className="text-red-600 mr-2" />
               View User Profile
             </DropdownMenuItem>

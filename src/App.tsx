@@ -58,15 +58,15 @@ function App() {
 
         {/* Green Div: Always visible */}
         <div
-          className={`h-full overflow-y-scroll  bg-white dark:bg-gray-900 ${isExpanded ? "sm:col-span-7" : "sm:col-span-8"} pt-16 sm:pt-0`}
+          className={`h-screen overflow-y-auto  bg-white dark:bg-gray-900 ${isExpanded ? "sm:col-span-10" : "sm:col-span-11"} pt-16 sm:pt-0`}
         >
           <Outlet />
         </div>
 
         {/* Blue Div: Hidden on small screens, visible on medium screens and above */}
-        <div
+        {/* <div
           className={`h-full bg-blue-600 hidden sm:block ${isExpanded ? "sm:col-span-3" : "sm:col-span-3"}`}
-        ></div>
+        ></div> */}
 
         {/* Yellow Div: Visible on small screens, hidden on medium screens and above */}
         <div className="h-16 w-full  fixed bottom-0 bg-yellow-500 block sm:hidden">

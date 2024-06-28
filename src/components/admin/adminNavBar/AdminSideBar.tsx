@@ -146,19 +146,19 @@ const AdminSideBar = ({
             </Link>
 
             <Link
-              to="/admin/bid-verfication"
-              className={`p-4 mb-2 flex items-center text-xl font-bold rounded-lg h-6 ${currentPath === "/admin/bid-verfication" ? "dark:bg-adminDarkLogo dark:bg-opacity-10 dark:text-white bg-gray-700 bg-opacity-20" : "bg-white dark:bg-adminBgDark"} text-gray-800 dark:text-white`}
+              to="/admin/bid-verification"
+              className={`p-4 mb-2 flex items-center text-xl font-bold rounded-lg h-6 ${currentPath === "/admin/bid-verification" ? "dark:bg-adminDarkLogo dark:bg-opacity-10 dark:text-white bg-gray-700 bg-opacity-20" : "bg-white dark:bg-adminBgDark"} text-gray-800 dark:text-white`}
             >
-              {currentPath === "/admin/bid-verfication" ? (
+              {currentPath === "/admin/bid-verification" ? (
                 <>
                   <IoHammer className=" text-2xl font-bold text-adminDarkLogo mr-2" />
-                  <div className="text-adminDarkLogo">Bid Verfication</div>
+                  <div className="text-adminDarkLogo">Bid Verification</div>
                 </>
               ) : (
                 <>
                   <IoHammerOutline className="text-2xl font-bold mr-2" />
                   <div className="text-black dark:text-white">
-                    Bid Verfication
+                    Bid Verification
                   </div>
                 </>
               )}
@@ -185,7 +185,7 @@ const AdminSideBar = ({
         )}
 
         {!isExpanded && (
-          <div className="mt-2">
+          <div className="mt-2 p-2">
             <Link
               to="/admin/dashboard"
               className={`p-4 block text-gray-800 dark:text-white rounded-2xl ${currentPath === "/admin/dashboard" ? "dark:bg-adminDarkLogo dark:bg-opacity-10 dark:text-white bg-gray-700 bg-opacity-20" : "bg-white dark:bg-adminBgDark"}`}

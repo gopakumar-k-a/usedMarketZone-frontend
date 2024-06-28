@@ -23,9 +23,13 @@ import {
   AdminPageLayout,
   AdminDashboard,
   UserManagement,
+  PostMangement,
+  UserProfileAdmin,
+  BidVerfication,
+  PostIncidents
+  
 } from "./lazyComponents";
 import ForgotPass from "./components/auth/ForgotPass";
-
 
 const Loading = () => <div>Loading...</div>;
 
@@ -74,21 +78,21 @@ export const AppRouter = createBrowserRouter([
         ),
       },
       {
-        path:"/post/sell-product",
-        element:(
-          <Suspense fallback={<Loading/>}>
-            <SellProductPost/>
+        path: "/post/sell-product",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <SellProductPost />
           </Suspense>
-        )
+        ),
       },
       {
-        path:'/post/auction-product',
-        element:(
-          <Suspense fallback={<Loading/>}>
-            <AuctionProductPost/>
+        path: "/post/auction-product",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <AuctionProductPost />
           </Suspense>
-        )
-      }
+        ),
+      },
     ],
   },
   {
@@ -131,22 +135,22 @@ export const AppRouter = createBrowserRouter([
       </Suspense>
     ),
   },
-//   {
-//     path: "/reset-password",
-//     element: (
-//       <Suspense fallback={<Loading />}>
-//         <ResetPassword />
-//       </Suspense>
-//     ),
-//   },
-//   {
-// path:'/reset-pass-modal',
-// element:(
-//   <Suspense>
-//     <ResetPassModal/>
-//   </Suspense>
-// )
-//   },
+  //   {
+  //     path: "/reset-password",
+  //     element: (
+  //       <Suspense fallback={<Loading />}>
+  //         <ResetPassword />
+  //       </Suspense>
+  //     ),
+  //   },
+  //   {
+  // path:'/reset-pass-modal',
+  // element:(
+  //   <Suspense>
+  //     <ResetPassModal/>
+  //   </Suspense>
+  // )
+  //   },
   {
     path: "admin",
     element: (
@@ -167,6 +171,22 @@ export const AppRouter = createBrowserRouter([
         path: "user-management",
         element: <UserManagement />,
       },
+      {
+        path: "user-profile",
+        element: <UserProfileAdmin />,
+     
+      },
+      {
+        path: "post-management",
+        element: <PostMangement />,
+      },
+      {
+        path:"bid-verification",
+        element:<BidVerfication/>
+      },{
+        path:"post-incidents",
+        element:<PostIncidents/>
+      }
     ],
   },
 ]);

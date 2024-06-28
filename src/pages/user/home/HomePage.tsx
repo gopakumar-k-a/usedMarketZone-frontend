@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import ProductCard from "../post/ProductCard";
+import ProductCard from "@/components/post/ProductCard";
+import BidCard from "@/components/post/BidCard";
 import { getAllPosts } from "@/api/product";
-
-function Home() {
-  const [posts, setPosts] = useState([]);
+import ProductInterface from "@/types/product";
+function HomePage() {
+  const [posts, setPosts] = useState<ProductInterface[]>([]);
 
   const handleGetAllPosts = async () => {
     const { allPosts } = await getAllPosts();
@@ -14,7 +15,7 @@ function Home() {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const allPosts = await handleGetAllPosts();
+      const allPosts: ProductInterface[] = await handleGetAllPosts();
       setPosts(allPosts);
     };
 
@@ -23,16 +24,19 @@ function Home() {
 
   return (
     <>
-
       <div className="flex items-center justify-center ">
         <div className="min-w-fit">
-          {posts.map((post) => {
-            return <ProductCard post={post}/>;
-          })}
+          {posts.map((post) =>
+            post.isBidding ? (
+            <BidCard post={post}/>
+            ) : (
+              <ProductCard post={post} />
+            )
+          )}
         </div>
       </div>
     </>
   );
 }
 
-export default Home;
+export default HomePage;

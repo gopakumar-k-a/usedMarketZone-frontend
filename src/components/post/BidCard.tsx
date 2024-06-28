@@ -6,68 +6,67 @@ import {
   FaShareAlt,
   FaGreaterThan,
   FaLessThan,
+  FaHammer,
 } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa6";
-import DropdownMenuComponent from "./DropdownMenuComponent";
 import { bookmarkPost } from "@/api/product";
-import { format, isToday, isYesterday } from "date-fns";
+import { formatDate } from "@/utils/formatDate";
+import BidEndTimer from "./BidEndTimer";
+import DropdownMenuComponent from "./DropdownMenuComponent";
 import { formatAddress } from "@/utils/formatAddress";
-// {
-//   "_id": "66765c46f5504a614190e4aa",
-//   "productName": "dsfds",
-//   "basePrice": 23142,
-//   "userId": "666092075d83d5cf5b71f485",
-//   "productImageUrls": [
-//       "https://res.cloudinary.com/dwjw8biat/image/upload/v1719032901/nrbrnzcnnbom2pmjwfzz.jpg",
-//       "https://res.cloudinary.com/dwjw8biat/image/upload/v1719032902/trukghtgfa23uydzshis.jpg"
-//   ],
-//   "category": "vehicles",
-//   "subCategory": "Motorcycles",
-//   "phone": 3435,
-//   "description": "dsfdsf",
-//   "productCondition": "veryGood",
-//   "bookmarkedCount": 0,
-//   "userDetails": {
-//       "imageUrl": "https://res.cloudinary.com/dwjw8biat/image/upload/v1719044266/ln1r91tabpuuafwfgeiv.jpg",
-//       "userName": "gopa_kumar"
-//   }
-// }
-const ProductCard = ({ post }) => {
-  const [slides, setSlides] = useState([]);
+
+// Define the interface for the post prop
+interface BidCardProps {
+  post: {
+    _id?: string;
+    productName?: string;
+    basePrice?: number;
+    userId?: string;
+    productImageUrls?: string[];
+    category?: string;
+    subCategory?: string;
+    phone?: number;
+    description?: string;
+    productCondition?: string;
+    bookmarkedCount?: number;
+    address?:string;
+    userDetails?: {
+      imageUrl?: string;
+      userName?: string;
+    };
+    isBookmarked?: boolean;
+    createdAt?:string;
+    productAge?: string;
+    bidEndTime?: string;
+    bidAcceptedTime?: string;
+  };
+}
+
+const BidCard = ({ post }: BidCardProps) => {
+  const [slides, setSlides] = useState<string[]>([]);
   const [slideIndex, setSlideIndex] = useState(0);
   const [slideLength, setSlideLength] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [bookmarkedCount, setBookmarkedCount] = useState(0);
   const [postedDate, setPostedDate] = useState("");
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    if (isToday(date)) {
-      return `Today, ${format(date, "h:mm a")}`;
-    } else if (isYesterday(date)) {
-      return `Yesterday, ${format(date, "h:mm a")}`;
-    } else {
-      return format(date, "MMMM d, yyyy, h:mm a");
-    }
-  };
   useEffect(() => {
     setSlides(post.productImageUrls);
     setSlideLength(post.productImageUrls.length - 1);
-    setIsBookmarked(post?.isBookmarked);
-    setBookmarkedCount(post?.bookmarkedCount);
+    setIsBookmarked(post?.isBookmarked || false);
+    setBookmarkedCount(post?.bookmarkedCount || 0);
     setPostedDate(formatDate(post.createdAt));
-  }, []);
+  }, [post]);
+
   const arrowRightClick = () => {
     if (slideLength > 0 && slideIndex < slideLength) {
       setSlideIndex((currentIndex) => currentIndex + 1);
-
-      console.log(slideIndex);
     }
   };
+
   const arrowLeftClick = () => {
     if (slideLength > 0 && slideIndex > 0) {
       setSlideIndex((currentIndex) => currentIndex - 1);
-      console.log(slideIndex);
     }
   };
 
@@ -89,6 +88,8 @@ const ProductCard = ({ post }) => {
     }
   };
 
+  
+
   return (
     <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800 mb-2 border-2 border-gray-200 dark:border-gray-700">
       <div className="px-6 py-4 flex items-center justify-between">
@@ -101,19 +102,20 @@ const ProductCard = ({ post }) => {
             />
           </div>
           <div className="ml-4">
-            <div className="text-lg font-bold dark:text-white">
+            <div className="text-lg font-bold dark:text-white ">
               {post?.userDetails.userName}
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400">
-              {formatAddress(post?.address)}
+             {formatAddress(post?.address)}
             </div>
           </div>
         </div>
+          <DropdownMenuComponent postId={post?._id}/>
         <div className="text-gray-600 dark:text-gray-400 text-sm">
-          <DropdownMenuComponent postId={post?._id} />
-          {/* Today, 8:35 am */}
-          {postedDate}
+          {post.bidAcceptedTime && formatDate(post?.bidAcceptedTime)}
         </div>
+   
+    
       </div>
       <div className="px-6 py-4">
         <div className="text-lg font-semibold dark:text-white">
@@ -121,8 +123,8 @@ const ProductCard = ({ post }) => {
           <h1>{post?.productName}</h1>
         </div>
         <div className="flex justify-end">
-          <span className="text-black dark:text-white font-bold px-2 py-1 text-xs border border-black dark:border-white rounded-full">
-            SALE
+          <span className="text-red-500 dark:text-red-500 font-bold px-2 py-1 text-xs border border-red-500 dark:border-red-500 rounded-full">
+            BID
           </span>
         </div>
       </div>
@@ -144,7 +146,7 @@ const ProductCard = ({ post }) => {
           {slideIndex !== 0 ? (
             <button
               className="bg-gray-400 dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 text-white p-2 rounded-full"
-              onClick={() => arrowLeftClick()}
+              onClick={arrowLeftClick}
             >
               <FaLessThan />
             </button>
@@ -154,7 +156,7 @@ const ProductCard = ({ post }) => {
           {slideIndex !== slideLength ? (
             <button
               className="bg-gray-400 dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 text-white p-2 rounded-full"
-              onClick={() => arrowRightClick()}
+              onClick={arrowRightClick}
             >
               <FaGreaterThan />
             </button>
@@ -176,9 +178,33 @@ const ProductCard = ({ post }) => {
         </div>
       </div>
       <div className="px-6 py-4">
-        <div className="text-blue-600 dark:text-blue-400 text-lg font-bold">
-          price: {post?.basePrice}
+        <div className="grid grid-cols-2">
+          <div className="text-black dark:text-white text-lg font-bold col-span-1">
+            <div>
+              highest bid:
+              <span className="text-red-600 dark:text-red-400">
+                25000-dummyContent
+              </span>
+            </div>
+            <div>
+              base price:
+              <span className="text-blue-600 dark:text-blue-400">
+                {post?.basePrice}
+              </span>
+            </div>
+          </div>
+          <div className="text-red-600 dark:text-red-400 text-sm font-bold col-span-1 p-2 ">
+            {/* base price: 25,000 */}
+            <div className="text-black dark:text-white pb-2">
+              {post?.bidEndTime && <BidEndTimer endDate={post?.bidEndTime} />}
+              {/* <span className="text-red-600 dark:text-red-400">23:45:01</span> */}
+            </div>
+            <div className="text-black dark:text-white">
+              bid ends: {post?.bidEndTime && formatDate(post?.bidEndTime)}
+            </div>
+          </div>
         </div>
+
         <div className="flex justify-around mt-4">
           <button className="flex items-center text-gray-600 dark:text-gray-400">
             {isBookmarked ? (
@@ -195,7 +221,7 @@ const ProductCard = ({ post }) => {
             <span className="ml-2">{bookmarkedCount}</span>
           </button>
           <button className="flex items-center text-gray-600 dark:text-gray-400">
-            <FaCommentDots className="h-6 w-6" />
+            <FaHammer className="h-6 w-6" />
           </button>
           <button className="flex items-center text-gray-600 dark:text-gray-400">
             <FaInfoCircle className="h-6 w-6" />
@@ -209,4 +235,4 @@ const ProductCard = ({ post }) => {
   );
 };
 
-export default ProductCard;
+export default BidCard;

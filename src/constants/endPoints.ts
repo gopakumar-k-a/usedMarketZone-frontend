@@ -19,13 +19,23 @@ export const END_POINTS = {
 
     POST_PRODUCT:'/api/product/post-product',
     GET_ALL_POSTS:'/api/product/get-all-products-posts',
+    BOOKMARK_POST:'/api/product/bookmark-post',
+    REPORT_POST:'/api/product/report-post',
 
+    //bid
+    POST_BID_PRODUCT:'/api/bid/post-bid',
+    
     //admin
-
+    
     GET_ALL_USERS:'/api/admin/get-all-users',
-    UPDATE_USER_ACCESS:'/api/admin/block-user'
-
-
+    UPDATE_USER_ACCESS:'/api/admin/block-user',
+    GET_USER_PROFILE_IN_ADMIN:"/api/admin/get-user-profile",
+    GET_USER_POSTS_IN_ADMIN:"/api/admin/get-user-posts",
+    GET_USER_POST_DETAILS_IN_ADMIN:"/api/admin/get-user-post-details",
+    GET_BID_REQUESTS:"/api/admin/get-bid-requests",
+    ACCEPT_BID_PRODUCT:'/api/admin/accept-bid',
+    
+    
 
 }
 

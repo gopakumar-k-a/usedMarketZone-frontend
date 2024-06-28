@@ -5,13 +5,14 @@ const ErrorPage = React.lazy(() => import("./pages/auth/ErrorPage"));
 
 //user
 const App = React.lazy(() => import("./App")); //user page layout
-const Home = React.lazy(() => import("./components/home/Home"));
+const Home = React.lazy(() => import("./pages/user/home/HomePage"));
 const Profile = React.lazy(() => import("./pages/user/profile/ProfilePage"));
 const EditProfile = React.lazy(
   () => import("./pages/user/profile/editProfile/EditProfile")
 );
+//product
 const SellProductPost=React.lazy(()=>import("./pages/user/post/SellProductPost"))
-const AuctionProductPost=React.lazy(()=>import('./pages/user/post/AuctionProductPost'))
+const AuctionProductPost=React.lazy(()=>import('./pages/user/post/BidProductPost'))
 //auth
 const AuthenticationPage = React.lazy(
   () => import("./pages/auth/AuthenticationPage")
@@ -33,6 +34,10 @@ const AdminDashboard = React.lazy(
   () => import("./components/admin/AdminDashboard")
 );
 const UserManagement=React.lazy(()=>import("./pages/admin/UserManagement"))
+const PostMangement=React.lazy(()=>import("./pages/admin/PostManagementPage"))
+const BidVerfication=React.lazy(()=>import("./pages/admin/BidVerificationPage"))
+const UserProfileAdmin=React.lazy(()=>import("./pages/admin/UserProfileAdmin"))
+const PostIncidents=React.lazy(()=>import("./pages/admin/PostIncidentsPage"))
 export {
   //user
   App,
@@ -55,5 +60,10 @@ export {
   //admin
   AdminPageLayout,
   AdminDashboard,
-  UserManagement
+  UserManagement,
+  PostMangement,
+  UserProfileAdmin,
+  BidVerfication,
+  PostIncidents
+  
 };
