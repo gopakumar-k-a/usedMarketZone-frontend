@@ -17,6 +17,7 @@ export interface User {
     password: string,
     confirmPassword?: string,
     imageUrl?:string,
+    bio?:string
 
 }
 

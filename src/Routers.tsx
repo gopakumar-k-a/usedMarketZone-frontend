@@ -8,6 +8,7 @@ import {
   Home,
   Profile,
   EditProfile,
+  ShowPostDetails,
 
   //auth
   ErrorPage,
@@ -26,8 +27,7 @@ import {
   PostMangement,
   UserProfileAdmin,
   BidVerfication,
-  PostIncidents
-  
+  PostIncidents,
 } from "./lazyComponents";
 import ForgotPass from "./components/auth/ForgotPass";
 
@@ -90,6 +90,14 @@ export const AppRouter = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <AuctionProductPost />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/post/post-details",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <ShowPostDetails/>
           </Suspense>
         ),
       },
@@ -174,19 +182,19 @@ export const AppRouter = createBrowserRouter([
       {
         path: "user-profile",
         element: <UserProfileAdmin />,
-     
       },
       {
         path: "post-management",
         element: <PostMangement />,
       },
       {
-        path:"bid-verification",
-        element:<BidVerfication/>
-      },{
-        path:"post-incidents",
-        element:<PostIncidents/>
-      }
+        path: "bid-verification",
+        element: <BidVerfication />,
+      },
+      {
+        path: "post-incidents",
+        element: <PostIncidents />,
+      },
     ],
   },
 ]);

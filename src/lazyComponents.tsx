@@ -6,13 +6,14 @@ const ErrorPage = React.lazy(() => import("./pages/auth/ErrorPage"));
 //user
 const App = React.lazy(() => import("./App")); //user page layout
 const Home = React.lazy(() => import("./pages/user/home/HomePage"));
-const Profile = React.lazy(() => import("./pages/user/profile/ProfilePage"));
+const Profile = React.lazy(() => import("./pages/user/profile/MyProfilePage"));
 const EditProfile = React.lazy(
   () => import("./pages/user/profile/editProfile/EditProfile")
 );
 //product
 const SellProductPost=React.lazy(()=>import("./pages/user/post/SellProductPost"))
 const AuctionProductPost=React.lazy(()=>import('./pages/user/post/BidProductPost'))
+const ShowPostDetails=React.lazy(()=>import('./pages/user/post/ShowPostDetails'))
 //auth
 const AuthenticationPage = React.lazy(
   () => import("./pages/auth/AuthenticationPage")
@@ -46,6 +47,7 @@ export {
   EditProfile,
   SellProductPost,
   AuctionProductPost,
+  ShowPostDetails,
 
   //auth
   ErrorPage,

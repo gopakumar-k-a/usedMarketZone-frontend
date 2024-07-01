@@ -2,10 +2,10 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -18,15 +18,15 @@ module.exports = {
     },
     extend: {
       colors: {
-        customTealAdmin: 'rgb(140, 185, 189)',
-        adminBgLightSideBar:'rgb(134, 182, 246)',
-        adminLightSideBar:'rgb(180, 212, 255)',
-        adminBgDark:'rgb(21, 21, 23)',
-        adminDarkLogo:'rgb(43, 178, 108)',
+        customTealAdmin: "rgb(140, 185, 189)",
+        adminBgLightSideBar: "rgb(134, 182, 246)",
+        adminLightSideBar: "rgb(180, 212, 255)",
+        adminBgDark: "rgb(21, 21, 23)",
+        adminDarkLogo: "rgb(43, 178, 108)",
         customOrange: {
-          DEFAULT: 'rgb(255, 69, 0)', // Use this for the default shade
-          light: 'rgb(255, 69, 0)',  // Lighter shade
-          dark: 'rgb(255, 69, 0)',   // Darker shade
+          DEFAULT: "rgb(255, 69, 0)", // Use this for the default shade
+          light: "rgb(255, 69, 0)", // Lighter shade
+          dark: "rgb(255, 69, 0)", // Darker shade
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -84,4 +84,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};

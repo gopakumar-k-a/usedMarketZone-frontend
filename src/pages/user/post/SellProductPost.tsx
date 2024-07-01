@@ -410,11 +410,13 @@ function SellProductPost() {
   return (
     <>
       <div
-        className={`w-full h-screen flex justify-center bg-white dark:bg-gray-900`}
+        // className={`w-full h-screen flex justify-center bg-white dark:bg-gray-900`}
+        className="flex justify-center bg-white dark:bg-gray-900 min-h-screen"
       >
         <form
           onSubmit={formik.handleSubmit}
-          className="max-w-3xl h-screen mx-auto p-6 bg-white text-black rounded-md shadow-md dark:bg-gray-900 dark:text-white"
+                className="max-w-3xl w-full mx-auto p-6 bg-white text-black rounded-md shadow-md dark:bg-gray-900 dark:text-white"
+          // className="max-w-3xl h-screen mx-auto p-6 bg-white text-black rounded-md shadow-md dark:bg-gray-900 dark:text-white"
         >
           <h2 className="text-2xl font-bold mb-6">Post Your Product</h2>
 

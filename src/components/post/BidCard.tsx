@@ -29,33 +29,33 @@ interface BidCardProps {
     description?: string;
     productCondition?: string;
     bookmarkedCount?: number;
-    address?:string;
+    address?: string;
     userDetails?: {
       imageUrl?: string;
       userName?: string;
     };
     isBookmarked?: boolean;
-    createdAt?:string;
+    createdAt?: string;
     productAge?: string;
     bidEndTime?: string;
     bidAcceptedTime?: string;
   };
 }
 
-const BidCard = ({ post }: BidCardProps) => {
+const     BidCard = ({ post }: BidCardProps) => {
   const [slides, setSlides] = useState<string[]>([]);
   const [slideIndex, setSlideIndex] = useState(0);
   const [slideLength, setSlideLength] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [bookmarkedCount, setBookmarkedCount] = useState(0);
-  const [postedDate, setPostedDate] = useState("");
+  // const [postedDate, setPostedDate] = useState("");
 
   useEffect(() => {
-    setSlides(post.productImageUrls);
-    setSlideLength(post.productImageUrls.length - 1);
+    setSlides(post.productImageUrls || []);
+    setSlideLength((post.productImageUrls.length || 1) - 1);
     setIsBookmarked(post?.isBookmarked || false);
     setBookmarkedCount(post?.bookmarkedCount || 0);
-    setPostedDate(formatDate(post.createdAt));
+    // setPostedDate(formatDate(post.createdAt));
   }, [post]);
 
   const arrowRightClick = () => {
@@ -88,17 +88,17 @@ const BidCard = ({ post }: BidCardProps) => {
     }
   };
 
-  
-
   return (
-    <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800 mb-2 border-2 border-gray-200 dark:border-gray-700">
+    // <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800 mb-2 border-2 border-gray-200 dark:border-gray-700">
+    <div className="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800 mb-2 border-2 border-gray-200 dark:border-gray-700">
       <div className="px-6 py-4 flex items-center justify-between">
         <div className="flex items-center">
           <div className="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center overflow-hidden">
             <img
               src={post?.userDetails?.imageUrl}
               alt="user profile image"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover bg-white"
+              //  className="w-full h-full object-contain bg-white"
             />
           </div>
           <div className="ml-4">
@@ -106,16 +106,14 @@ const BidCard = ({ post }: BidCardProps) => {
               {post?.userDetails.userName}
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400">
-             {formatAddress(post?.address)}
+              {formatAddress(post?.address)}
             </div>
           </div>
         </div>
-          <DropdownMenuComponent postId={post?._id}/>
+        <DropdownMenuComponent postId={post?._id} />
         <div className="text-gray-600 dark:text-gray-400 text-sm">
           {post.bidAcceptedTime && formatDate(post?.bidAcceptedTime)}
         </div>
-   
-    
       </div>
       <div className="px-6 py-4">
         <div className="text-lg font-semibold dark:text-white">
@@ -130,16 +128,22 @@ const BidCard = ({ post }: BidCardProps) => {
       </div>
       <div className="relative w-full">
         <div
-          className="flex transition-transform duration-500"
+          className="flex items-center transition-transform duration-500 "
           style={{ transform: `translateX(-${slideIndex * 100}%)` }}
         >
           {slides.map((slide, index) => (
-            <img
+            <div
               key={index}
-              className="w-full"
-              src={slide}
-              alt={`Slide ${index + 1}`}
-            />
+              className="flex justify-center items-center w-full h-full"
+            >
+              <img
+                key={index}
+                // className="w-full"
+                className="w-full h-full object-cover  bg-white"
+                src={slide}
+                alt={`Slide ${index + 1}`}
+              />
+            </div>
           ))}
         </div>
         <div className="absolute inset-0 flex justify-between items-center px-4">
