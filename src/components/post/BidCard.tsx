@@ -14,6 +14,7 @@ import { formatDate } from "@/utils/formatDate";
 import BidEndTimer from "./BidEndTimer";
 import DropdownMenuComponent from "./DropdownMenuComponent";
 import { formatAddress } from "@/utils/formatAddress";
+import { Link } from "react-router-dom";
 
 // Define the interface for the post prop
 interface BidCardProps {
@@ -42,7 +43,7 @@ interface BidCardProps {
   };
 }
 
-const     BidCard = ({ post }: BidCardProps) => {
+const BidCard = ({ post }: BidCardProps) => {
   const [slides, setSlides] = useState<string[]>([]);
   const [slideIndex, setSlideIndex] = useState(0);
   const [slideLength, setSlideLength] = useState(0);
@@ -91,6 +92,7 @@ const     BidCard = ({ post }: BidCardProps) => {
   return (
     // <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800 mb-2 border-2 border-gray-200 dark:border-gray-700">
     <div className="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800 mb-2 border-2 border-gray-200 dark:border-gray-700">
+    {/* <div className="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800  border-2 border-gray-200 dark:border-gray-700"> */}
       <div className="px-6 py-4 flex items-center justify-between">
         <div className="flex items-center">
           <div className="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center overflow-hidden">
@@ -224,9 +226,11 @@ const     BidCard = ({ post }: BidCardProps) => {
             )}
             <span className="ml-2">{bookmarkedCount}</span>
           </button>
-          <button className="flex items-center text-gray-600 dark:text-gray-400">
-            <FaHammer className="h-6 w-6" />
-          </button>
+          <Link to={"/post/post-details"} state={{ pId: post?._id }}>
+            <button className="flex items-center text-gray-600 dark:text-gray-400">
+              <FaHammer className="h-6 w-6" />
+            </button>
+          </Link>
           <button className="flex items-center text-gray-600 dark:text-gray-400">
             <FaInfoCircle className="h-6 w-6" />
           </button>

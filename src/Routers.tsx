@@ -9,6 +9,8 @@ import {
   Profile,
   EditProfile,
   ShowPostDetails,
+  UserProfile,
+  Chat,
 
   //auth
   ErrorPage,
@@ -97,10 +99,26 @@ export const AppRouter = createBrowserRouter([
         path: "/post/post-details",
         element: (
           <Suspense fallback={<Loading />}>
-            <ShowPostDetails/>
+            <ShowPostDetails />
           </Suspense>
         ),
       },
+      {
+        path: "/user-profile",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <UserProfile />
+          </Suspense>
+        ),
+      },
+      {
+        path:'/messages',
+        element:(
+          <Suspense fallback={<Loading/>}>
+            <Chat/>
+          </Suspense>
+        )
+      }
     ],
   },
   {

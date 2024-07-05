@@ -15,6 +15,10 @@ export const END_POINTS = {
   UPDATE_PROFILE_PIC: "/api/user/edit-profile/update-image",
   UPDATE_USER_PASSWORD: "/api/user/edit-profile/update-password",
   REMOVE_PROFILE_PIC: "/api/user/edit-profile/remove-profile-pic",
+  GET_SUGGESTED_USERS:'/api/user/suggested-users',
+  FOLLOW_USER:'/api/user/follow-user',
+  UN_FOLLOW_USER:'/api/user/un-follow-user',
+  GET_NO_OF_FOLLOW:'/api/user/num-of-follow',
   //product
 
   POST_PRODUCT: "/api/product/post-product",
@@ -27,6 +31,7 @@ export const END_POINTS = {
   REPLY_COMMENT:"/api/product/reply-comment",
   GET_POST_COMMENTS:"/api/product/get-post-comments",
   GET_REPLY_COMMENTS:"/api/product/get-comment-reply",
+  DELETE_COMMENT:"/api/product/delete-comment",
 
   //bid
   POST_BID_PRODUCT: "/api/bid/post-bid",

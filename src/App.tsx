@@ -62,8 +62,8 @@ function App() {
 
         {/* Green Div: Always visible */}
         <div
-          className={`h-screen overflow-y-auto  bg-white dark:bg-gray-900 ${isExpanded ? "sm:col-span-10" : "sm:col-span-11"} pt-16 sm:pt-4 `}
-          style={{ paddingTop: '4rem', paddingBottom: '4rem' }} 
+          className={`h-screen overflow-y-auto pb-16 pt-16 sm:p-0 bg-white dark:bg-gray-900 ${isExpanded ? "sm:col-span-10" : "sm:col-span-11"} pt-16  `}
+          // style={{ paddingTop: '4rem', paddingBottom: '4rem' }} 
 
         >
 

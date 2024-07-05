@@ -1,9 +1,67 @@
 import { faBookmark, faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
 import { User } from "@/types/login";
 import { Link } from "react-router-dom";
-function ProfileTop({ userData, ownerProfile }) {
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import LoadingButton from "@/components/loadingButton/LoadingButton";
+import { useEffect, useState } from "react";
+import { followUser, unFollowUser } from "@/api/user";
+import { store } from "@/redux/app/store";
+import { CustomAlertDialogue } from "@/components/alert/CustomAlertDialogue";
+
+function ProfileTop({
+  userData,
+  ownerProfile,
+}: {
+  userData: User;
+  ownerProfile: boolean;
+}) {
+
+  const [isFollowingLoaderOn, serIsFollowingLoaderOn] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [isUnfollowAlertOpen, setIsUnfollowAlertOpen] = useState(false);
+  const myUserId = store.getState().auth.user?._id;
+  const checkIsFollowing = () => {
+    const userCheck = userData.followers.find(
+      (user: string) => user == myUserId
+    );
+    console.log("userCheck ", userCheck);
+    userCheck ? setIsFollowing(true) : setIsFollowing(false);
+  };
+
+  useEffect(() => {
+    checkIsFollowing();
+    console.log("isFollowing ", isFollowing);
+  }, []);
+
+  const handleFollowUser = async (userId: string = userData._id) => {
+    serIsFollowingLoaderOn(true);
+    try {
+      await followUser(userId);
+
+      setIsFollowing(true);
+    } catch (error) {
+      console.log(error);
+    }
+    serIsFollowingLoaderOn(false);
+  };
+  const handleUnFollowUser = async (userId: string = userData._id) => {
+    serIsFollowingLoaderOn(true);
+    try {
+      await unFollowUser(userId);
+      setIsFollowing(false);
+    } catch (error) {
+      console.log(error);
+    }
+    serIsFollowingLoaderOn(false);
+  };
+
+  const onAlertDialogueClose = () => {
+    setIsUnfollowAlertOpen(false);
+  };
+  // isOpen, onClose, title, description,onContinue
+  const unfollowTitle = "do you want to unfollow";
+  const unfollowDescription = "Clicking continue will unfollow the user";
   return (
     <>
       <div className=" w-full bg-red-200 dark:bg-gray-800 flex justify-center items-center">
@@ -17,7 +75,6 @@ function ProfileTop({ userData, ownerProfile }) {
           </div>
           {ownerProfile && (
             <div className="w-full h-20 flex sm:pt-10 pt-2 justify-end">
-        
               <Link to={"/edit-profile"}>
                 <button
                   type="button"
@@ -26,7 +83,6 @@ function ProfileTop({ userData, ownerProfile }) {
                   Edit Profile
                 </button>
               </Link>
-  
             </div>
           )}
 
@@ -47,8 +103,6 @@ function ProfileTop({ userData, ownerProfile }) {
             </h2>
             <a
               className="text-gray-400 mt-2 hover:text-blue-500"
-              href="https://www.instagram.com/immohitdhiman/"
-              target="_blank"
               rel="noopener noreferrer"
             >
               @{userData?.userName}
@@ -56,7 +110,7 @@ function ProfileTop({ userData, ownerProfile }) {
             <p className="mt-2 text-gray-500 text-sm">{userData?.bio}</p>
           </div>
 
-          {ownerProfile && (
+          {ownerProfile ? (
             <div className="flex justify-center gap-4 mt-4">
               <div className="bg-white dark:bg-gray-900 flex justify-center">
                 <button
@@ -78,25 +132,96 @@ function ProfileTop({ userData, ownerProfile }) {
                 </button>
               </div>
             </div>
+          ) : (
+            <div className="flex justify-center gap-4 mt-4">
+              {isFollowing ? (
+                <>
+                  <div className="bg-white dark:bg-gray-900 flex justify-center">
+                    {isFollowingLoaderOn ? (
+                      <LoadingButton buttonText={"un-following"} />
+                    ) : (
+                      <button
+                        className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-green-500 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none flex items-center gap-3"
+                        type="button"
+                        onClick={() => setIsUnfollowAlertOpen(true)}
+                      >
+                        {/* <FontAwesomeIcon icon={faBookmark} /> */}
+                        <MdOutlineKeyboardArrowDown className="w-5 h-5" />
+                        following
+                      </button>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="bg-white dark:bg-gray-900 flex justify-center">
+                    {isFollowingLoaderOn ? (
+                      <LoadingButton buttonText={"following"} />
+                    ) : (
+                      <button
+                        className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-blue-500 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none flex items-center gap-3"
+                        type="button"
+                        onClick={() => handleFollowUser()}
+                      >
+                        follow
+                      </button>
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
           )}
 
           <hr className="mt-6" />
 
-          <div className="flex border-t border-b">
-            <div className="text-center w-1/2 p-4 hover:bg-gray-100 cursor-pointer">
-              <p>
-                <span className="font-semibold">2.5k </span> Followers
-              </p>
+          {/* {ownerProfile ? (
+            <>
+              {" "}
+              <div className="flex border-t border-b">
+                <div className="text-center w-1/2 p-4 hover:bg-gray-100 cursor-pointer">
+                  <p>
+                    <span className="font-semibold">2.5k </span> Followers
+                  </p>
+                </div>
+                <div className="border"></div>
+                <div className="text-center w-1/2 p-4 hover:bg-gray-100 cursor-pointer">
+                  <p>
+                    <span className="font-semibold">2.0k </span> Following
+                  </p>
+                </div>
+              </div>
+            </>
+          ) : ( */}
+          <>
+            {" "}
+            <div className="flex border-t border-b">
+              <div className="text-center w-1/2 p-4 hover:bg-gray-100 cursor-pointer">
+                <p>
+                  <span className="font-semibold"> </span> Followers{" "}
+                  {userData.numOfFollowers}
+                </p>
+              </div>
+              <div className="border"></div>
+              <div className="text-center w-1/2 p-4 hover:bg-gray-100 cursor-pointer">
+                <p>
+                  <span className="font-semibold"> </span> Following{" "}
+                  {userData.numOfFollowing}
+                </p>
+              </div>
             </div>
-            <div className="border"></div>
-            <div className="text-center w-1/2 p-4 hover:bg-gray-100 cursor-pointer">
-              <p>
-                <span className="font-semibold">2.0k </span> Following
-              </p>
-            </div>
-          </div>
+          </>
+          {/* // )} */}
         </div>
       </div>
+      {isUnfollowAlertOpen && (
+        <CustomAlertDialogue
+          isOpen={isUnfollowAlertOpen}
+          onClose={onAlertDialogueClose}
+          title={unfollowTitle}
+          description={unfollowDescription}
+          onContinue={() => handleUnFollowUser(userData._id)}
+        />
+      )}
     </>
   );
 }

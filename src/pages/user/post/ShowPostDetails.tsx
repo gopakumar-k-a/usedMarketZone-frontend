@@ -7,6 +7,8 @@ import BidCard from "@/components/post/BidCard";
 import ProductCard from "@/components/post/ProductCard";
 import Discussion from "../../../components/post/comment/Discussions";
 import PostComment from "../../../components/post/comment/PostComment";
+import { MdDeleteOutline } from "react-icons/md";
+import PlaceBid from "@/components/post/bid/PlaceBid";
 function ShowPostDetails() {
   const location = useLocation();
   // const [postId, setPostId] = useState("");
@@ -80,14 +82,17 @@ function ShowPostDetails() {
 
   return (
     <>
-  
       {!loading && postData && (
         <div className="grid grid-cols-5  h-full w-full ">
-          <div className="col-span-3 sm:block hidden">
+          <div
+            className="sm:col-span-3 
+       col-span-5
+          "
+          >
             <div className="flex  justify-center ">
-              <div className="w-5/6  h-screen   bg-red-200">
+              <div className="w-5/6  h-screen  ">
                 {postData.isBidding ? (
-                  <BidCard post={postData}  />
+                  <BidCard post={postData} />
                 ) : (
                   <ProductCard post={postData} />
                 )}
@@ -95,7 +100,13 @@ function ShowPostDetails() {
             </div>
           </div>
           <div className="sm:col-span-2 col-span-5 w-full flex justify-center-center border-gray-200 border-l-2 ">
-            <div className="flex items-center w-full">{!loading && postData && <Discussion pId={pId}/>}</div>
+            <div className="flex items-center justify-center w-full">
+              {postData.isBidding ? (
+                <> {!loading && postData && <PlaceBid pId={pId} />}</>
+              ) : (
+                <> {!loading && postData && <Discussion pId={pId} />}</>
+              )}
+            </div>
 
             {/* <div className=" fixed sm:bottom-2 sm:w-4/12 w-full bottom-10">
               <PostComment />
@@ -107,6 +118,5 @@ function ShowPostDetails() {
     </>
   );
 }
-
 
 export default ShowPostDetails;

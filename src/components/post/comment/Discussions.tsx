@@ -1,12 +1,20 @@
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useRef, useState } from "react";
-import { addNewComment, getReplyComments, replyComment } from "@/api/product";
+import {
+  addNewComment,
+  deletComment,
+  getReplyComments,
+  replyComment,
+} from "@/api/product";
 import { store } from "@/redux/app/store";
 import { getPostComments } from "@/api/product";
 import { RxCross2 } from "react-icons/rx";
 import { formatDate } from "@/utils/formatDate";
+import { MdDeleteOutline } from "react-icons/md";
 const Discussion = ({ pId }) => {
   const commentStart = useRef<HTMLDivElement | null>(null);
+  const replyInputRef = useRef<HTMLTextAreaElement | null>(null);
+
   // const replyUserRef = useRef<HTMLDivElement | null>(null);
   const [newComment, setNewComment] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -22,11 +30,13 @@ const Discussion = ({ pId }) => {
     _id: string;
     content: string;
     authorId: string;
-    replies: Comment[];
+    replies: string[];
     imageUrl: string;
     userName: string;
     createdAt: string;
+    parentCommentId: string;
   }
+  const commentRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const [comments, setComments] = useState<Comment[]>([]);
   const [replies, setReplies] = useState<Comment[]>([]);
 
@@ -35,11 +45,26 @@ const Discussion = ({ pId }) => {
   const [commentReply, setCommentReply] = useState("");
   const [parentCommentId, setParentCommentId] = useState("");
   const [activeParentCommentId, setActiveParentCommentId] = useState("");
+  const [newReplyCommentId, setNewReplyCommentId] = useState<string | null>("");
   const userId = store.getState().auth.user?._id;
 
   useEffect(() => {
     console.log("pId ", pId);
   }, []);
+  useEffect(() => {
+    if (newReplyCommentId && commentRefs.current[newReplyCommentId]) {
+      commentRefs.current[newReplyCommentId]?.scrollIntoView({
+        behavior: "smooth",
+      });
+      setNewReplyCommentId(null);
+    }
+  }, [newReplyCommentId]);
+
+  useEffect(() => {
+    if (isCommentReplyDivOpen && replyInputRef.current) {
+      replyInputRef.current.focus();
+    }
+  }, [isCommentReplyDivOpen]);
 
   useEffect(() => {
     const fetchPostComments = async () => {
@@ -106,7 +131,14 @@ const Discussion = ({ pId }) => {
     setMainCommentUserName(commentUserName);
     setParentCommentId(commentId);
   };
-
+  const fetchReplyComments = async (parentCommentId: string) => {
+    try {
+      const response = await getReplyComments(parentCommentId);
+      console.log("getReplyComments response", response);
+      setActiveParentCommentId(parentCommentId);
+      setReplies(response.replyData);
+    } catch (error) {}
+  };
   const submitReplyToComment = async () => {
     const newReplyCommentData = {
       content: commentReply,
@@ -121,8 +153,16 @@ const Discussion = ({ pId }) => {
 
     try {
       const response = await replyComment(newReplyCommentData);
-      console.log(response.newCommentData[0]);
-      // setComments([response.newCommentData[0], ...comments]);
+      console.log(response.newCommentData);
+
+      comments.forEach((comment) =>
+        comment._id == parentCommentId
+          ? comment.replies.push(response.newCommentData[0]._id)
+          : comment
+      );
+      fetchReplyComments(parentCommentId);
+      setNewReplyCommentId(parentCommentId);
+      handleCommentReplyOff();
     } catch (error) {
       console.log(error);
     }
@@ -130,14 +170,66 @@ const Discussion = ({ pId }) => {
     setLoading(false);
   };
 
-  const fetchReplyComments = async (parentCommentId: string) => {
+  const handleDeleteComment = async (
+    commentId: string,
+    parentCommentId: string | null = null
+  ) => {
+    const payload = {
+      commentId,
+      parentCommentId,
+    };
+
     try {
-      const response = await getReplyComments(parentCommentId);
-      console.log("getReplyComments response", response);
-      setActiveParentCommentId(parentCommentId);
-      setReplies(response.replyData);
-    } catch (error) {}
+      await deletComment(payload);
+      // if (commentId) {
+
+      // }
+
+      if (commentId && parentCommentId) {
+        console.log("inside child commment delete");
+
+        const updatedReplies = replies.filter((reply) =>
+          reply._id == commentId ? null : reply
+        );
+        setReplies(updatedReplies);
+        // const updatedComments = comments.filter((comment) => {
+        //   // (comment._id==parentCommentId)?(comment.replies):(comment)
+        //   if (comment._id == parentCommentId) {
+        //     const replyIndex = comments.findIndex(
+        //       (comment, index) => comment._id === parentCommentId
+        //     );
+
+        //     console.log('reply index ',replyIndex);
+
+        //     if (replyIndex !== -1) {
+        //       // The comment with the specified ID was found
+        //       comment.replies.splice(replyIndex, 1);
+        //       console.log("Parent comment found at index:", replyIndex);
+        //     } else {
+        //       // No comment with the specified ID was found
+        //       console.log("Parent comment not found");
+        //     }
+        //     return comment;
+        //   } else {
+        //     return comment;
+        //   }
+        // });
+        // setComments(updatedComments);
+      }
+      if (commentId && !parentCommentId) {
+        console.log("inside parent comment delete");
+
+        const updatedComments = comments.filter((comment) =>
+          comment._id == commentId ? null : comment
+        );
+
+        setComments(updatedComments);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <>
       <div className=" h-screen w-full ">
@@ -149,7 +241,10 @@ const Discussion = ({ pId }) => {
             <h3 className="font-semibold p-1">comments </h3>
             <div className="flex flex-col gap-5 m-3 pb-20 sm:pb-0">
               {comments.map((comment, index) => (
-                <div key={index}>
+                <div
+                  key={index}
+                  ref={(el) => (commentRefs.current[comment._id] = el)}
+                >
                   <div className="flex w-full justify-between border rounded-md">
                     <div className="p-3">
                       <div className="flex gap-3 items-center">
@@ -163,6 +258,16 @@ const Discussion = ({ pId }) => {
                           <br />
                         </h3>
                         <h4>{formatDate(comment.createdAt)}</h4>
+                        {/* <h4
+                          className="cursor-pointer"
+                          onClick={() => handleDeleteComment(comment._id)}
+                        >
+                          delete
+                        </h4> */}
+                        <MdDeleteOutline
+                          onClick={() => handleDeleteComment(comment._id)}
+                          className="cursor-pointer  bg-red-600 hover:bg-red-500 h-5 w-5 rounded-lg text-white"
+                        />
                       </div>
                       <p className="text-gray-600 mt-2">{comment.content}</p>
                       <button
@@ -213,6 +318,13 @@ const Discussion = ({ pId }) => {
                                 <br />
                               </h3>
                               <h4>{formatDate(reply.createdAt)}</h4>
+
+                              <MdDeleteOutline
+                                onClick={() =>
+                                  handleDeleteComment(reply._id, comment._id)
+                                }
+                                className="cursor-pointer  bg-red-600 hover:bg-red-500 h-5 w-5 rounded-lg text-white"
+                              />
                             </div>
                             <p className="text-gray-600 mt-2">
                               {reply.content}
@@ -260,6 +372,7 @@ const Discussion = ({ pId }) => {
                     <span className="absolute inset-y-0 flex items-center"></span>
 
                     <textarea
+                      ref={replyInputRef}
                       value={commentReply}
                       onChange={(e) => setCommentReply(e.target.value)}
                       placeholder={`reply to... @${mainCommentUserName}`}

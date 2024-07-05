@@ -7,7 +7,7 @@ export interface NormalBackendRes {
 }
 
 export interface User {
-    _id?: string,
+    _id: string,
     firstName: string,
     lastName: string,
     userName:string,
@@ -17,7 +17,12 @@ export interface User {
     password: string,
     confirmPassword?: string,
     imageUrl?:string,
-    bio?:string
+    bio?:string,
+    followers:string[],
+    following:string[],
+    numOfFollowing:number,
+    numOfFollowers:number
+
 
 }
 

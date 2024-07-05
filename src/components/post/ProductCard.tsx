@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FaRegBookmark,
   FaCommentDots,
@@ -12,6 +12,7 @@ import DropdownMenuComponent from "./DropdownMenuComponent";
 import { bookmarkPost } from "@/api/product";
 import { format, isToday, isYesterday } from "date-fns";
 import { formatAddress } from "@/utils/formatAddress";
+import { Link } from "react-router-dom";
 // {
 //   "_id": "66765c46f5504a614190e4aa",
 //   "productName": "dsfds",
@@ -40,7 +41,7 @@ const ProductCard = ({ post }) => {
   const [bookmarkedCount, setBookmarkedCount] = useState(0);
   const [postedDate, setPostedDate] = useState("");
 
-  const formatDate = (dateString) => {
+  const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     if (isToday(date)) {
       return `Today, ${format(date, "h:mm a")}`;
@@ -92,8 +93,9 @@ const ProductCard = ({ post }) => {
   return (
     // <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800 mb-2 border-2 border-gray-200 dark:border-gray-700">
     // <div className="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800 mb-2 border-2 border-gray-200 dark:border-gray-700">
-    <div className="bg-red-600 w-full h-full">
+    <div className=" w-full h-full">
       <div className="max-w-sm sm:max-w-md  md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800 mb-2 border-2 border-gray-200 dark:border-gray-700">
+      {/* <div className="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700"> */}
         <div className="px-6 py-4 flex items-center justify-between">
           <div className="flex items-center">
             <div className="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center overflow-hidden">
@@ -197,9 +199,11 @@ const ProductCard = ({ post }) => {
               )}
               <span className="ml-2">{bookmarkedCount}</span>
             </button>
-            <button className="flex items-center text-gray-600 dark:text-gray-400">
-              <FaCommentDots className="h-6 w-6" />
-            </button>
+            <Link to={"/post/post-details"} state={{ pId: post?._id }}>
+              <button className="flex items-center text-gray-600 dark:text-gray-400">
+                <FaCommentDots className="h-6 w-6" />
+              </button>
+            </Link>
             <button className="flex items-center text-gray-600 dark:text-gray-400">
               <FaInfoCircle className="h-6 w-6" />
             </button>
