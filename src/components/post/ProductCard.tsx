@@ -4,8 +4,6 @@ import {
   FaCommentDots,
   FaInfoCircle,
   FaShareAlt,
-  FaGreaterThan,
-  FaLessThan,
 } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa6";
 import DropdownMenuComponent from "./DropdownMenuComponent";
@@ -13,6 +11,7 @@ import { bookmarkPost } from "@/api/product";
 import { format, isToday, isYesterday } from "date-fns";
 import { formatAddress } from "@/utils/formatAddress";
 import { Link } from "react-router-dom";
+import Carousel from "./Curosal";
 // {
 //   "_id": "66765c46f5504a614190e4aa",
 //   "productName": "dsfds",
@@ -35,8 +34,7 @@ import { Link } from "react-router-dom";
 // }
 const ProductCard = ({ post }) => {
   const [slides, setSlides] = useState([]);
-  const [slideIndex, setSlideIndex] = useState(0);
-  const [slideLength, setSlideLength] = useState(0);
+
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [bookmarkedCount, setBookmarkedCount] = useState(0);
   const [postedDate, setPostedDate] = useState("");
@@ -52,25 +50,12 @@ const ProductCard = ({ post }) => {
     }
   };
   useEffect(() => {
-    setSlides(post.productImageUrls);
-    setSlideLength(post.productImageUrls.length - 1);
+    setSlides(post?.productImageUrls);
     setIsBookmarked(post?.isBookmarked);
     setBookmarkedCount(post?.bookmarkedCount);
     setPostedDate(formatDate(post.createdAt));
   }, []);
-  const arrowRightClick = () => {
-    if (slideLength > 0 && slideIndex < slideLength) {
-      setSlideIndex((currentIndex) => currentIndex + 1);
 
-      console.log(slideIndex);
-    }
-  };
-  const arrowLeftClick = () => {
-    if (slideLength > 0 && slideIndex > 0) {
-      setSlideIndex((currentIndex) => currentIndex - 1);
-      console.log(slideIndex);
-    }
-  };
 
   const handleBookmark = async (postId: string) => {
     try {
@@ -131,55 +116,7 @@ const ProductCard = ({ post }) => {
             </span>
           </div>
         </div>
-        <div className="relative w-full">
-          <div
-            className="flex transition-transform duration-500"
-            style={{ transform: `translateX(-${slideIndex * 100}%)` }}
-          >
-            {slides.map((slide, index) => (
-              <img
-                key={index}
-                className="w-full"
-                src={slide}
-                alt={`Slide ${index + 1}`}
-              />
-            ))}
-          </div>
-          <div className="absolute inset-0 flex justify-between items-center px-4">
-            {slideIndex !== 0 ? (
-              <button
-                className="bg-gray-400 dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 text-white p-2 rounded-full"
-                onClick={() => arrowLeftClick()}
-              >
-                <FaLessThan />
-              </button>
-            ) : (
-              <div className="w-8 h-8"></div>
-            )}
-            {slideIndex !== slideLength ? (
-              <button
-                className="bg-gray-400 dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 text-white p-2 rounded-full"
-                onClick={() => arrowRightClick()}
-              >
-                <FaGreaterThan />
-              </button>
-            ) : (
-              <div className="w-8 h-8"></div>
-            )}
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 flex justify-center mb-4">
-            {slides.map((_, index) => (
-              <div
-                key={index}
-                className={`w-3 h-3 rounded-full mx-1 ${
-                  slideIndex === index
-                    ? "bg-gray-300 dark:bg-gray-500"
-                    : "bg-gray-700 dark:bg-gray-900"
-                }`}
-              ></div>
-            ))}
-          </div>
-        </div>
+       <Carousel items={slides}/>
         <div className="px-6 py-4">
           <div className="text-blue-600 dark:text-blue-400 text-lg font-bold">
             price: {post?.basePrice}

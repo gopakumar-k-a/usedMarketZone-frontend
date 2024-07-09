@@ -387,7 +387,7 @@ function Otp() {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center h-screen">
+      <div className="flex flex-col items-center justify-center h-screen  bg-white">
         <h1 className="text-2xl font-bold mb-4">OTP Verification</h1>
         <h2 className="font-semibold text-base mb-2">
           OTP has been sent to your inbox:

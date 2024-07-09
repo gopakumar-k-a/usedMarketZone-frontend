@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FaRegBookmark,
-  FaCommentDots,
   FaInfoCircle,
   FaShareAlt,
   FaGreaterThan,
   FaLessThan,
-  FaHammer,
 } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa6";
 import { bookmarkPost } from "@/api/product";
@@ -15,9 +13,13 @@ import BidEndTimer from "./BidEndTimer";
 import DropdownMenuComponent from "./DropdownMenuComponent";
 import { formatAddress } from "@/utils/formatAddress";
 import { Link } from "react-router-dom";
+import { ImHammer2 } from "react-icons/im";
+import ProductInterface from "@/types/product";
+import Carousel from "./Curosal";
+
 
 // Define the interface for the post prop
-interface BidCardProps {
+export interface BidCardProps {
   post: {
     _id?: string;
     productName?: string;
@@ -40,36 +42,31 @@ interface BidCardProps {
     productAge?: string;
     bidEndTime?: string;
     bidAcceptedTime?: string;
+    currentHighestBid: string;
   };
 }
 
-const BidCard = ({ post }: BidCardProps) => {
+const BidCard = ({ post }: { post: ProductInterface }) => {
   const [slides, setSlides] = useState<string[]>([]);
-  const [slideIndex, setSlideIndex] = useState(0);
-  const [slideLength, setSlideLength] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [bookmarkedCount, setBookmarkedCount] = useState(0);
   // const [postedDate, setPostedDate] = useState("");
 
   useEffect(() => {
     setSlides(post.productImageUrls || []);
-    setSlideLength((post.productImageUrls.length || 1) - 1);
+    // if (post.productImageUrls) {
+    //   setSlideLength((post.productImageUrls.length || 1) - 1);
+    // } else {
+    //   setSlideLength(0);
+    // }
+
+
     setIsBookmarked(post?.isBookmarked || false);
     setBookmarkedCount(post?.bookmarkedCount || 0);
     // setPostedDate(formatDate(post.createdAt));
   }, [post]);
 
-  const arrowRightClick = () => {
-    if (slideLength > 0 && slideIndex < slideLength) {
-      setSlideIndex((currentIndex) => currentIndex + 1);
-    }
-  };
 
-  const arrowLeftClick = () => {
-    if (slideLength > 0 && slideIndex > 0) {
-      setSlideIndex((currentIndex) => currentIndex - 1);
-    }
-  };
 
   const handleBookmark = async (postId: string) => {
     try {
@@ -92,7 +89,7 @@ const BidCard = ({ post }: BidCardProps) => {
   return (
     // <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800 mb-2 border-2 border-gray-200 dark:border-gray-700">
     <div className="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800 mb-2 border-2 border-gray-200 dark:border-gray-700">
-    {/* <div className="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800  border-2 border-gray-200 dark:border-gray-700"> */}
+      {/* <div className="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800  border-2 border-gray-200 dark:border-gray-700"> */}
       <div className="px-6 py-4 flex items-center justify-between">
         <div className="flex items-center">
           <div className="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center overflow-hidden">
@@ -105,7 +102,7 @@ const BidCard = ({ post }: BidCardProps) => {
           </div>
           <div className="ml-4">
             <div className="text-lg font-bold dark:text-white ">
-              {post?.userDetails.userName}
+              {post?.userDetails?.userName}
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400">
               {formatAddress(post?.address)}
@@ -128,7 +125,8 @@ const BidCard = ({ post }: BidCardProps) => {
           </span>
         </div>
       </div>
-      <div className="relative w-full">
+      <Carousel items={slides}/>
+      {/* <div className="relative w-full">
         <div
           className="flex items-center transition-transform duration-500 "
           style={{ transform: `translateX(-${slideIndex * 100}%)` }}
@@ -182,14 +180,21 @@ const BidCard = ({ post }: BidCardProps) => {
             ></div>
           ))}
         </div>
-      </div>
+      </div> */}
+
+
+
+
+      {/* </div> */}
       <div className="px-6 py-4">
         <div className="grid grid-cols-2">
           <div className="text-black dark:text-white text-lg font-bold col-span-1">
             <div>
               highest bid:
               <span className="text-red-600 dark:text-red-400">
-                25000-dummyContent
+                {post?.currentHighestBid
+                  ? post?.currentHighestBid
+                  : "no bids placed"}
               </span>
             </div>
             <div>
@@ -206,6 +211,7 @@ const BidCard = ({ post }: BidCardProps) => {
               {/* <span className="text-red-600 dark:text-red-400">23:45:01</span> */}
             </div>
             <div className="text-black dark:text-white">
+              {/* {post?.bidEndTime} */}
               bid ends: {post?.bidEndTime && formatDate(post?.bidEndTime)}
             </div>
           </div>
@@ -213,7 +219,7 @@ const BidCard = ({ post }: BidCardProps) => {
 
         <div className="flex justify-around mt-4">
           <button className="flex items-center text-gray-600 dark:text-gray-400">
-            {isBookmarked ? (
+            {/* {isBookmarked ? (
               <FaBookmark
                 className="h-6 w-6 text-blue-500 dark:text-blue-300"
                 onClick={() => handleBookmark(post._id)}
@@ -223,12 +229,26 @@ const BidCard = ({ post }: BidCardProps) => {
                 className="h-6 w-6"
                 onClick={() => handleBookmark(post._id)}
               />
-            )}
+            )} */}
+            <div>
+              {post._id &&
+                (isBookmarked ? (
+                  <FaBookmark
+                    className="h-6 w-6 text-blue-500 dark:text-blue-300"
+                    onClick={() => handleBookmark(post._id!)}
+                  />
+                ) : (
+                  <FaRegBookmark
+                    className="h-6 w-6"
+                    onClick={() => handleBookmark(post._id!)}
+                  />
+                ))}
+            </div>
             <span className="ml-2">{bookmarkedCount}</span>
           </button>
           <Link to={"/post/post-details"} state={{ pId: post?._id }}>
             <button className="flex items-center text-gray-600 dark:text-gray-400">
-              <FaHammer className="h-6 w-6" />
+              <ImHammer2 className="h-6 w-6" />
             </button>
           </Link>
           <button className="flex items-center text-gray-600 dark:text-gray-400">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ProductInterface from "@/types/product";
 import { getUserPostDetails } from "@/api/product";
@@ -6,15 +6,21 @@ import Loader from "@/components/loader/Loader";
 import BidCard from "@/components/post/BidCard";
 import ProductCard from "@/components/post/ProductCard";
 import Discussion from "../../../components/post/comment/Discussions";
-import PostComment from "../../../components/post/comment/PostComment";
-import { MdDeleteOutline } from "react-icons/md";
 import PlaceBid from "@/components/post/bid/PlaceBid";
+import { ImHammer2 } from "react-icons/im";
 function ShowPostDetails() {
   const location = useLocation();
   // const [postId, setPostId] = useState("");
   const [loading, setLoading] = useState(true);
   const [postData, setPostData] = useState<ProductInterface | null>(null);
   const { pId } = location.state;
+  const isBidEnded = ( bidEndTime: string ) => {
+    const currentTime = new Date().getTime();
+
+    const bidEndTimeDate = new Date(bidEndTime).getTime();
+
+    return currentTime < bidEndTimeDate;
+  };
   // const getPostData = async () => {
   //   const postData = await getUserPostDetails(postId);
   //   setPostData(postData);
@@ -79,6 +85,10 @@ function ShowPostDetails() {
       getPostData();
     }
   }, [location.state]);
+  useEffect(() => {
+    if (postData?.bidEndTime)
+      console.log("  postData.bidEndTime ", postData.bidEndTime);
+  }, []);
 
   return (
     <>
@@ -102,7 +112,11 @@ function ShowPostDetails() {
           <div className="sm:col-span-2 col-span-5 w-full flex justify-center-center border-gray-200 border-l-2 ">
             <div className="flex items-center justify-center w-full">
               {postData.isBidding ? (
-                <> {!loading && postData && <PlaceBid pId={pId} />}</>
+                isBidEnded(postData?.bidEndTime) ? (
+                  !loading && postData && <PlaceBid pId={pId} basePrice={postData.basePrice} highestBid={postData.currentHighestBid} />
+                ) : (
+                  <BiddingEnded />
+                )
               ) : (
                 <> {!loading && postData && <Discussion pId={pId} />}</>
               )}
@@ -120,3 +134,23 @@ function ShowPostDetails() {
 }
 
 export default ShowPostDetails;
+
+function BiddingEnded() {
+  return (
+    <>
+      <div className="flex-1 sm-pb-0 pb-16">
+        <div className="w-full h-full  flex items-center justify-center">
+          <div className="flex flex-col gap-2 items-center justify-center">
+            <ImHammer2 className="text-gray-400 h-20 w-20" />
+            <h1 className="font-bold text-4xl"> Bid Ended</h1>
+            <div className="w-full flex items-center justify-center">
+              <h1 className="font-medium text-2xl w-4/5">
+                Can't Place Bid On This Product, Bid has Ended
+              </h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

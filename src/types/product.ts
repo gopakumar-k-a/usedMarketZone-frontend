@@ -1,7 +1,7 @@
 interface ProductInterface {
   _id?: string;
   productName?: string;
-  basePrice?: number;
+  basePrice: string;
   userId?: string;
   productImageUrls?: string[];
   category?: string;
@@ -27,8 +27,9 @@ interface ProductInterface {
   };
   isBookmarked?: boolean;
 
-  bidEndTime?: string;
+  bidEndTime: string;
   bidAcceptedTime?: string;
+  currentHighestBid:string;
 }
 export default ProductInterface;
 
