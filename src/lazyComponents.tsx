@@ -12,6 +12,8 @@ const EditProfile = React.lazy(
 );
 const Chat=React.lazy(()=>import ("./pages/user/chat/ChatPage"))
 const UserProfile=React.lazy(()=>import("./pages/user/profile/UserProfilePage"))
+const OwnerPosts=React.lazy(()=>import("./components/user/profilePage/myPosts"))
+const OwnerBookmarks=React.lazy(()=>import("./components/user/profilePage/myBookmarks"))
 //product
 const SellProductPost=React.lazy(()=>import("./pages/user/post/SellProductPost"))
 const AuctionProductPost=React.lazy(()=>import('./pages/user/post/BidProductPost'))
@@ -52,6 +54,8 @@ export {
   ShowPostDetails,
   UserProfile,
   Chat,
+  OwnerPosts,
+  OwnerBookmarks,
 
   //auth
   ErrorPage,

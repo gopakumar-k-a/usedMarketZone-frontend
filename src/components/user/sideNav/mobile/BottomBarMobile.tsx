@@ -74,7 +74,7 @@ const BottomBarMobile = () => {
           <RiNotification2Line className="w-5 h-5" />
         )}
       </Link>
-      <Link to={"/profile"} className="text-white">
+      <Link to={"/profile/my-posts"} className="text-white">
         {currentPath == "/profile" ? (
           <FaUser className="w-5 h-5" />
         ) : (

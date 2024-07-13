@@ -1,19 +1,19 @@
 interface ProductInterface {
-  _id?: string;
-  productName?: string;
+  _id: string;
+  productName: string;
   basePrice: string;
-  userId?: string;
-  productImageUrls?: string[];
-  category?: string;
-  subCategory?: string;
-  phone?: number;
-  description?: string;
-  createdAt?: Date;
+  userId: string;
+  productImageUrls: string[];
+  category: string;
+  subCategory: string;
+  phone: number;
+  description: string;
+  createdAt: string;
   productCondition?: string;
-  productAge?: string;
-  address?: string;
+  productAge: string;
+  address: string;
   bookmarkedUsers?: string[];
-  bookmarkedCount?: number;
+  bookmarkedCount: number;
   isBlocked?: boolean;
   isSold?: boolean;
   isOtpVerified?: boolean;
@@ -21,11 +21,11 @@ interface ProductInterface {
   isBidding?: boolean;
   updatedAt?: Date;
 
-  userDetails?: {
+  userDetails: {
     imageUrl?: string;
     userName: string;
   };
-  isBookmarked?: boolean;
+  isBookmarked: boolean;
 
   bidEndTime: string;
   bidAcceptedTime?: string;

@@ -5,16 +5,22 @@ import { useAppSelector } from "@/utils/hooks/reduxHooks";
 import useGetMessage from "@/utils/hooks/chat/useGetMessage";
 import { Chat } from "@/types/chat";
 import useListenMessages from "@/utils/hooks/chat/useListenMessages";
+import PostMessage from "./PostMessage";
+import PostReplyMessage from "./PostReplyMessage";
 function Messages() {
   const { loading, messages } = useGetMessage();
+  useEffect(()=>{
+    console.log('messages ',messages);
+    
+  })
 
-  const lastMessageRef = useRef<HTMLDivElement>(null)
+  const lastMessageRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (lastMessageRef.current) {
       lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
-  useListenMessages()
+  useListenMessages();
 
   return (
     <div className="flex h-[90vh]  flex-col">
@@ -23,8 +29,15 @@ function Messages() {
         {messages && messages.length > 0 ? (
           messages.map((message, index) => (
             <div ref={lastMessageRef} key={`${message.recieverId}${index}`}>
+            {message.isPostReply ? (
+              <PostReplyMessage message={message} />
+              // <div>this is reply</div>
+            ) : message.isPost ? (
+              <PostMessage message={message} />
+            ) : (
               <Message message={message} />
-            </div>
+            )}
+          </div>
           ))
         ) : (
           <>

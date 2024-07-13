@@ -113,7 +113,7 @@ function ShowPostDetails() {
             <div className="flex items-center justify-center w-full">
               {postData.isBidding ? (
                 isBidEnded(postData?.bidEndTime) ? (
-                  !loading && postData && <PlaceBid pId={pId} basePrice={postData.basePrice} highestBid={postData.currentHighestBid} />
+                  !loading && postData && <PlaceBid pId={pId} ownerId={postData.userId} basePrice={postData.basePrice} highestBid={postData.currentHighestBid} />
                 ) : (
                   <BiddingEnded />
                 )

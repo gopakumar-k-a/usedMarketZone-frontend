@@ -83,3 +83,12 @@ console.log('image urls ',response.data);
 
   return response.data;
 };
+
+export const getBookmarkImageList = async () => {
+  const response = await axiosUserInstance.get(
+    END_POINTS.GET_BOOKMARK_IMAGE_LIST
+  );
+
+  return response.data;
+};
+

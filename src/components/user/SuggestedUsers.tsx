@@ -2,18 +2,24 @@ import { useEffect, useState } from "react";
 import UserCard from "./SuggestedUserCard";
 import { getSuggestedUsers } from "@/api/user";
 import { FaRegUserCircle } from "react-icons/fa";
+
 function SuggestedUsers() {
-  const [suggestedUsers,setSuggestedUsers]=useState([])
+  interface UserCard {
+    imageUrl: string;
+    userName: string;
+    _id: string;
+  }
+  const [suggestedUsers, setSuggestedUsers] = useState<UserCard[]>([]);
   useEffect(() => {
     const fetchSuggestedUsers = async () => {
       try {
         const { suggestedUsers } = await getSuggestedUsers();
-        setSuggestedUsers(suggestedUsers)
+        setSuggestedUsers(suggestedUsers);
       } catch (error) {
         console.log(error);
       }
     };
-     fetchSuggestedUsers();
+    fetchSuggestedUsers();
   }, []);
   const handleViewClick = () => {};
   return (
@@ -31,11 +37,11 @@ function SuggestedUsers() {
         userName="John Doe"
         onViewClick={handleViewClick}
       /> */}
-      {
-        suggestedUsers && suggestedUsers.length>0 &&
-         suggestedUsers.map((userData)=>   <UserCard userData={userData}/>)
-      }
-
+            {suggestedUsers &&
+              suggestedUsers.length > 0 &&
+              suggestedUsers.map((userData) => (
+                <UserCard key={userData._id} userData={userData} />
+              ))}
           </div>
         </div>
       </div>

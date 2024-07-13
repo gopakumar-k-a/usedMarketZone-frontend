@@ -22,8 +22,10 @@ export const END_POINTS = {
   GET_FOLLOWERS: "/api/user/followers",
   GET_FOLLOWING: "/api/user/following",
   //chat
-  SEND_MESSAGE:"/api/message/send-message",
-  GET_CHAT:'/api/message/get-chat',
+  SEND_MESSAGE: "/api/message/send-message",
+  SEND_POST_AS_MESSAGE:"/api/message/send-post",
+  SEND_POST_REPLY_AS_MESSAGE:"/api/message/reply-post",
+  GET_CHAT: "/api/message/get-chat",
   //product
 
   POST_PRODUCT: "/api/product/post-product",
@@ -37,6 +39,7 @@ export const END_POINTS = {
   GET_POST_COMMENTS: "/api/product/get-post-comments",
   GET_REPLY_COMMENTS: "/api/product/get-comment-reply",
   DELETE_COMMENT: "/api/product/delete-comment",
+  GET_BOOKMARK_IMAGE_LIST:"/api/product/owner/get-bookmark-list",
 
   //bid
   POST_BID_PRODUCT: "/api/bid/post-bid",
@@ -50,4 +53,6 @@ export const END_POINTS = {
   GET_USER_POST_DETAILS_IN_ADMIN: "/api/admin/get-user-post-details",
   GET_BID_REQUESTS: "/api/admin/get-bid-requests",
   ACCEPT_BID_PRODUCT: "/api/admin/accept-bid",
+  GET_POST_REPORTS: "/api/admin/get-post-reports",
+  BLOCK_USER_POST:"/api/admin/block-post"
 };

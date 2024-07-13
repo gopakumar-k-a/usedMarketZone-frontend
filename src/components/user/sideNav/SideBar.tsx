@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useAppDispatch } from "../../utils/hooks/reduxHooks";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
@@ -19,8 +18,8 @@ import {
   faMoon,
   faSun,
 } from "@fortawesome/free-solid-svg-icons";
-
 import { Link, useLocation } from "react-router-dom";
+
 const Sidebar = ({
   isExpanded,
   toggleSidebar,
@@ -82,17 +81,27 @@ const Sidebar = ({
           <>
             <Link
               to="/home"
-              className={`p-4 mb-2 flex items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${location.pathname === "/home" ? "bg-customOrange text-white" : "bg-gray-200 dark:bg-gray-700"} text-gray-800 dark:text-white`}
+              className={`p-4 mb-2 flex items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${
+                location.pathname.includes("/home")
+                  ? "bg-customOrange text-white"
+                  : "bg-gray-200 dark:bg-gray-700"
+              } text-gray-800 dark:text-white`}
             >
               <FontAwesomeIcon
                 icon={faHome}
-                className={`w-5 h-5 mr-3 ${location.pathname === "/home" ? "text-white" : "text-black"} dark:text-white`}
+                className={`w-5 h-5 mr-3 ${
+                  location.pathname.includes("/home") ? "text-white" : "text-black"
+                } dark:text-white`}
               />
               Home
             </Link>
             <Link
               to="/search"
-              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${location.pathname === "/search" ? "bg-customOrange text-white" : "bg-gray-200 dark:bg-gray-700"} text-gray-800 dark:text-white`}
+              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${
+                location.pathname.includes("/search")
+                  ? "bg-customOrange text-white"
+                  : "bg-gray-200 dark:bg-gray-700"
+              } text-gray-800 dark:text-white`}
             >
               <FontAwesomeIcon
                 icon={faMagnifyingGlass}
@@ -102,27 +111,43 @@ const Sidebar = ({
             </Link>
             <Link
               to="/post/sell-product"
-              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${location.pathname === "/post/sell-product" ? "bg-customOrange text-white" : "bg-gray-200 dark:bg-gray-700"} text-gray-800 dark:text-white`}
+              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${
+                location.pathname.includes("/post/sell-product")
+                  ? "bg-customOrange text-white"
+                  : "bg-gray-200 dark:bg-gray-700"
+              } text-gray-800 dark:text-white`}
             >
               <FontAwesomeIcon
                 icon={faHandHoldingHeart}
-                className={`w-5 h-5 mr-3 ${location.pathname === "/post/sell-product" ? "text-white" : "text-black"} dark:text-white`}
+                className={`w-5 h-5 mr-3 ${
+                  location.pathname.includes("/post/sell-product") ? "text-white" : "text-black"
+                } dark:text-white`}
               />
               Sell
             </Link>
             <Link
               to="/post/auction-product"
-              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${location.pathname === "/post/auction-product" ? "bg-customOrange text-white" : "bg-gray-200 dark:bg-gray-700"} text-gray-800 dark:text-white`}
+              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${
+                location.pathname.includes("/post/auction-product")
+                  ? "bg-customOrange text-white"
+                  : "bg-gray-200 dark:bg-gray-700"
+              } text-gray-800 dark:text-white`}
             >
               <FontAwesomeIcon
                 icon={faGavel}
-                className={`w-5 h-5 mr-3 ${location.pathname === "/post/auction-product" ? "text-white" : "text-black"} dark:text-white`}
+                className={`w-5 h-5 mr-3 ${
+                  location.pathname.includes("/post/auction-product") ? "text-white" : "text-black"
+                } dark:text-white`}
               />
               Auction
             </Link>
             <Link
               to="/messages"
-              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${location.pathname === "/messages" ? "bg-customOrange text-white" : "bg-gray-200 dark:bg-gray-700"} text-gray-800 dark:text-white`}
+              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${
+                location.pathname.includes("/messages")
+                  ? "bg-customOrange text-white"
+                  : "bg-gray-200 dark:bg-gray-700"
+              } text-gray-800 dark:text-white`}
             >
               <FontAwesomeIcon
                 icon={faMessage}
@@ -132,7 +157,11 @@ const Sidebar = ({
             </Link>
             <Link
               to="/notifications"
-              className={`p-4 mb-2 flex items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${location.pathname === "/notifications" ? "bg-customOrange text-white" : "bg-gray-200 dark:bg-gray-700"} text-gray-800 dark:text-white`}
+              className={`p-4 mb-2 flex items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${
+                location.pathname.includes("/notifications")
+                  ? "bg-customOrange text-white"
+                  : "bg-gray-200 dark:bg-gray-700"
+              } text-gray-800 dark:text-white`}
             >
               <FontAwesomeIcon
                 icon={faBell}
@@ -141,18 +170,28 @@ const Sidebar = ({
               Notifications
             </Link>
             <Link
-              to="/profile"
-              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${location.pathname === "/profile" || location.pathname === "/edit-profile" ? "bg-customOrange text-white" : "bg-gray-200 dark:bg-gray-700"} text-gray-800 dark:text-white`}
+              to="/profile/my-posts"
+              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${
+                location.pathname.includes("/profile")
+                  ? "bg-customOrange text-white"
+                  : "bg-gray-200 dark:bg-gray-700"
+              } text-gray-800 dark:text-white`}
             >
               <FontAwesomeIcon
                 icon={faUser}
-                className={`w-5 h-5 mr-3 ${location.pathname === "/profile" || location.pathname === "/edit-profile" ? "text-white" : "text-black"} dark:text-white`}
+                className={`w-5 h-5 mr-3 ${
+                  location.pathname.includes("/profile") ? "text-white" : "text-black"
+                } dark:text-white`}
               />
               Profile
             </Link>
             <Link
               to="/settings"
-              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${location.pathname === "/settings" ? "bg-customOrange text-white" : "bg-gray-200 dark:bg-gray-700"} text-gray-800 dark:text-white`}
+              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${
+                location.pathname.includes("/settings")
+                  ? "bg-customOrange text-white"
+                  : "bg-gray-200 dark:bg-gray-700"
+              } text-gray-800 dark:text-white`}
             >
               <FontAwesomeIcon
                 icon={faGear}
@@ -167,103 +206,128 @@ const Sidebar = ({
           <div className="mt-2">
             <Link
               to="/home"
-              className={`p-4 block text-gray-800 dark:text-white ${location.pathname === "/home" ? "bg-customOrange text-white rounded-xl" : ""}`}
+              className={`p-4 block text-gray-800 dark:text-white ${
+                location.pathname.includes("/home") ? "bg-customOrange text-white rounded-xl" : ""
+              }`}
             >
               <FontAwesomeIcon
                 icon={faHome}
-                className={`w-6 h-6 ${location.pathname === "/home" ? "text-white" : "text-black"} dark:text-white`}
+                className={`w-6 h-6 ${
+                  location.pathname.includes("/home") ? "text-white" : "text-black"
+                } dark:text-white`}
               />
             </Link>
             <Link
               to="/search"
-              className={`p-4 block text-gray-800 dark:text-white ${location.pathname === "/search" ? "bg-customOrange rounded-xl text-white" : ""}`}
+              className={`p-4 block text-gray-800 dark:text-white ${
+                location.pathname.includes("/search") ? "bg-customOrange rounded-xl text-white" : ""
+              }`}
             >
               <FontAwesomeIcon
                 icon={faMagnifyingGlass}
-                className={`w-6 h-6 ${location.pathname === "/search" ? "text-white" : "text-black"} dark:text-white`}
+                className={`w-6 h-6 ${
+                  location.pathname.includes("/search") ? "text-white" : "text-black"
+                } dark:text-white`}
               />
             </Link>
             <Link
               to="/post/sell-product"
-              className={`p-4 block text-gray-800 dark:text-white ${location.pathname === "/post/sell-product" ? "bg-customOrange rounded-xl text-white" : ""}`}
+              className={`p-4 block text-gray-800 dark:text-white ${
+                location.pathname.includes("/post/sell-product") ? "bg-customOrange rounded-xl text-white" : ""
+              }`}
             >
               <FontAwesomeIcon
                 icon={faHandHoldingHeart}
-                className={`w-6 h-6 ${location.pathname === "/post/sell-product" ? "text-white" : "text-black"} dark:text-white`}
+                className={`w-6 h-6 ${
+                  location.pathname.includes("/post/sell-product") ? "text-white" : "text-black"
+                } dark:text-white`}
               />
             </Link>
             <Link
               to="/post/auction-product"
-              className={`p-4 block text-gray-800 dark:text-white ${location.pathname === "/post/auction-product" ? "bg-customOrange rounded-xl text-white" : ""}`}
+              className={`p-4 block text-gray-800 dark:text-white ${
+                location.pathname.includes("/post/auction-product") ? "bg-customOrange rounded-xl text-white" : ""
+              }`}
             >
               <FontAwesomeIcon
                 icon={faGavel}
-                className={`w-6 h-6 ${location.pathname === "/post/auction-product" ? "text-white" : "text-black"} dark:text-white`}
+                className={`w-6 h-6 ${
+                  location.pathname.includes("/post/auction-product") ? "text-white" : "text-black"
+                } dark:text-white`}
               />
             </Link>
             <Link
               to="/messages"
-              className={`p-4 block text-gray-800 dark:text-white ${location.pathname === "/messages" ? "bg-customOrange rounded-xl text-white" : ""}`}
+              className={`p-4 block text-gray-800 dark:text-white ${
+                location.pathname.includes("/messages") ? "bg-customOrange rounded-xl text-white" : ""
+              }`}
             >
               <FontAwesomeIcon
                 icon={faMessage}
-                className={`w-6 h-6 ${location.pathname === "/messages" ? "text-white" : "text-black"} dark:text-white`}
+                className={`w-6 h-6 ${
+                  location.pathname.includes("/messages") ? "text-white" : "text-black"
+                } dark:text-white`}
               />
             </Link>
             <Link
               to="/notifications"
-              className={`p-4 block text-gray-800 dark:text-white ${location.pathname === "/notifications" ? "bg-customOrange rounded-xl text-white" : ""}`}
+              className={`p-4 block text-gray-800 dark:text-white ${
+                location.pathname.includes("/notifications") ? "bg-customOrange rounded-xl text-white" : ""
+              }`}
             >
               <FontAwesomeIcon
                 icon={faBell}
-                className={`w-6 h-6 ${location.pathname === "/notifications" ? "text-white" : "text-black"} dark:text-white`}
+                className={`w-6 h-6 ${
+                  location.pathname.includes("/notifications") ? "text-white" : "text-black"
+                } dark:text-white`}
               />
             </Link>
             <Link
-              to="/profile"
-              className={`p-4 block text-gray-800 dark:text-white ${location.pathname === "/profile" || location.pathname === "/edit-profile"  ? "bg-customOrange rounded-xl text-white" : ""}`}
+              to="/profile/my-posts"
+              className={`p-4 block text-gray-800 dark:text-white ${
+                location.pathname.includes("/profile") ? "bg-customOrange rounded-xl text-white" : ""
+              }`}
             >
               <FontAwesomeIcon
                 icon={faUser}
-                className={`w-6 h-6 ${location.pathname === "/profile" ? "text-white" : "text-black"} dark:text-white`}
+                className={`w-6 h-6 ${
+                  location.pathname.includes("/profile") ? "text-white" : "text-black"
+                } dark:text-white`}
               />
             </Link>
             <Link
               to="/settings"
-              className={`p-4 block text-gray-800 dark:text-white ${location.pathname === "/settings" ? "bg-customOrange rounded-xl  text-white" : ""}`}
+              className={`p-4 block text-gray-800 dark:text-white ${
+                location.pathname.includes("/settings") ? "bg-customOrange rounded-xl text-white" : ""
+              }`}
             >
               <FontAwesomeIcon
                 icon={faGear}
-                className={`w-6 h-6 ${location.pathname === "/settings" ? "text-white" : "text-black"} dark:text-white`}
+                className={`w-6 h-6 ${
+                  location.pathname.includes("/settings") ? "text-white" : "text-black"
+                } dark:text-white`}
               />
             </Link>
-            <span
-              onClick={() => handleLogout()}
-              className="p-4 block text-red-600"
-            >
-              <FontAwesomeIcon
-                icon={faRightFromBracket}
-                className="w-6 h-6 text-red-600"
-              />
-            </span>
           </div>
         )}
       </div>
-      <div className="mb-8">
-        {isExpanded && (
-          <span
-            onClick={() => handleLogout()}
-            className="p-4 flex items-center text-red-600"
-          >
-            <FontAwesomeIcon
-              icon={faRightFromBracket}
-              className="w-5 h-5 mr-3 text-red-600"
-            />
-            Log Out
-          </span>
-        )}
+
+      <div className="mt-2 mb-8">
+        <button
+          onClick={handleLogout}
+          className="flex items-center p-4 text-gray-800 dark:text-white"
+        >
+          <FontAwesomeIcon
+            icon={faRightFromBracket}
+            className="w-6 h-6 text-black dark:text-white"
+          />
+          {isExpanded && (
+            <span className="ml-2 dark:text-xl text-lg font-bold">Logout</span>
+          )}
+        </button>
       </div>
     </div>
   );
 };
+
 export default Sidebar;

@@ -7,6 +7,8 @@ import {
   App,
   Home,
   Profile,
+  OwnerPosts,
+  OwnerBookmarks,
   EditProfile,
   ShowPostDetails,
   UserProfile,
@@ -70,6 +72,13 @@ export const AppRouter = createBrowserRouter([
             <Profile />
           </Suspense>
         ),
+        children: [
+          { path: "my-posts", element: <OwnerPosts/> },
+          {
+            path: "my-bookmarks",
+            element: <OwnerBookmarks/>,
+          },
+        ],
       },
       {
         path: "/edit-profile",
@@ -112,13 +121,13 @@ export const AppRouter = createBrowserRouter([
         ),
       },
       {
-        path:'/messages',
-        element:(
-          <Suspense fallback={<Loading/>}>
-            <Chat/>
+        path: "/messages",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Chat />
           </Suspense>
-        )
-      }
+        ),
+      },
     ],
   },
   {

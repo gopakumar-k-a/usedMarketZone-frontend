@@ -37,16 +37,16 @@ function App() {
 
   return (
     <>
-
       <div className="sm:grid sm:grid-cols-12 flex flex-col h-screen">
         {/* <div className="h-12  bg-violet-500 col-span-12">
           <UserNavBar />
         </div> */}
         <div className="h-16 w-full fixed top-0 bg-yellow-500 block  sm:block md:hidden  z-50">
-
-          <TopBarMobile           handleLogout={handleLogout}
+          <TopBarMobile
+            handleLogout={handleLogout}
             handleThemeSwitch={handleThemeSwitch}
-            theme={theme}/>
+            theme={theme}
+          />
         </div>
         <div
           className={`h-full  bg-red-600 hidden sm:block ${isExpanded ? "sm:col-span-2" : "sm:col-span-1"}`}
@@ -63,14 +63,9 @@ function App() {
         {/* Green Div: Always visible */}
         <div
           className={`h-screen overflow-y-auto pb-16 pt-16 sm:p-0 bg-white dark:bg-gray-900 ${isExpanded ? "sm:col-span-10" : "sm:col-span-11"} pt-16  `}
-          // style={{ paddingTop: '4rem', paddingBottom: '4rem' }} 
-
+          // style={{ paddingTop: '4rem', paddingBottom: '4rem' }}
         >
-
-
           <Outlet />
-  
-    
         </div>
 
         {/* Blue Div: Hidden on small screens, visible on medium screens and above */}

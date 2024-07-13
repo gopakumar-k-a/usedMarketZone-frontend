@@ -1,4 +1,4 @@
-import { getConversations } from "@/api/chat";
+import { getFollowing } from "@/api/user";
 import { AxiosError, isAxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -16,7 +16,7 @@ const useGetConversations = () => {
     const fetchConversations = async () => {
       setLoading(true);
       try {
-        const response = await getConversations();
+        const response = await getFollowing();
         dispatch(setConversations({ conversations: response.followingUsers }));
       } catch (error) {
         if (isAxiosError(error)) {

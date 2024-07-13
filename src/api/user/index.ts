@@ -1,6 +1,7 @@
 import { axiosUserInstance } from "../axiosInstance/axiosUserInstance.ts";
 import { END_POINTS } from "@/constants/endPoints.ts";
-
+import { ConversationsRes } from "@/types/chat.ts";
+import { AxiosResponse } from "axios";
 export const getSuggestedUsers = async () => {
   const response = await axiosUserInstance.get(END_POINTS.GET_SUGGESTED_USERS);
 
@@ -37,3 +38,14 @@ export const getNumOfFollow=async(userId:string)=>{
 
     return response.data
 }
+
+export const getFollowing = async (): Promise<ConversationsRes> => {
+  const response: AxiosResponse<ConversationsRes> = await axiosUserInstance.get(
+    END_POINTS.GET_FOLLOWING
+  );
+
+  console.log('get following api ',response.data);
+  
+
+  return response.data;
+};

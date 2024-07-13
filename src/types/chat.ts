@@ -24,6 +24,15 @@ export interface Chat {
   recieverId: string;
   message: string;
   createdAt: string;
+  isPost:boolean;
+  isPostReply:boolean;
+  postId: string;
+  postImageUrl: string[];
+  postDescription:string;
+  postIsBidding:boolean;
+  postOwnerId:string;
+  postOwnerUserName:string;
+  postCreatedAt:string;
 }
 export interface IMessage {
   id: number;

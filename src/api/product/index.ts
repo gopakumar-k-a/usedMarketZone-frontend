@@ -3,7 +3,7 @@ import { axiosUserInstance } from "../axiosInstance/axiosUserInstance.ts";
 import { END_POINTS } from "@/constants/endPoints.ts";
 import { isAxiosError } from "axios";
 
-export const postProduct = async (payload:any) => {
+export const postProduct = async (payload: any) => {
   const response = await axiosUserInstance.post(
     `${END_POINTS.POST_PRODUCT}`,
     payload
@@ -84,3 +84,4 @@ export const deletComment = async (payload: {
   });
   return response.data;
 };
+

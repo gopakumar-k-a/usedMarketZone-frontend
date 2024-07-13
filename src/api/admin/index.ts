@@ -1,6 +1,8 @@
 import { BidDuration } from "@/types/product";
 import { axiosAdminInstance } from "../axiosInstance/axiosAdminInstance";
 import { END_POINTS } from "@/constants/endPoints";
+import { PostReportRes } from "@/types/admin/postReport";
+
 
 export const getAllUsers = async (page: number, limit: number) => {
   const response = await axiosAdminInstance.get(
@@ -50,9 +52,27 @@ export const getBidRequests = async () => {
   return response.data;
 };
 
-export const acceptBidRequest = async (bidId: string,bidDuration:BidDuration|null) => {
+export const acceptBidRequest = async (
+  bidId: string,
+  bidDuration: BidDuration | null
+) => {
   const response = await axiosAdminInstance.patch(
-    `${END_POINTS.ACCEPT_BID_PRODUCT}/${bidId}`,{bidDuration:bidDuration}
+    `${END_POINTS.ACCEPT_BID_PRODUCT}/${bidId}`,
+    { bidDuration: bidDuration }
+  );
+
+  return response.data;
+};
+
+export const getPostReports = async (): Promise<PostReportRes> => {
+  const response = await axiosAdminInstance.get(END_POINTS.GET_POST_REPORTS);
+
+  return response.data;
+};
+
+export const blockPostAdmin = async (productId: string) => {
+  const response = await axiosAdminInstance.patch(
+    `${END_POINTS.BLOCK_USER_POST}/${productId}`
   );
 
   return response.data;

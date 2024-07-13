@@ -3,9 +3,15 @@ import ProductInterface from "@/types/product";
 import { useState, useEffect } from "react";
 import BidCard from "./BidCard";
 import ProductCard from "./ProductCard";
+import { SharePostDialogue } from "./SharePostModal";
 
 function AllPosts() {
   const [posts, setPosts] = useState<ProductInterface[]>([]);
+  const [isShareModalOpen, setShareModalOpen] = useState(false);
+  const [selectedPostIdShare, setSelectedPostIdShare] = useState("");
+  const handleShareModalClose = () => {
+    setShareModalOpen(false);
+  };
 
   const handleGetAllPosts = async () => {
     const { allPosts } = await getAllPosts();
@@ -22,19 +28,45 @@ function AllPosts() {
 
     fetchPosts();
   }, []);
+
+  const postIdCallBack = (postId: string) => {
+    console.log(" postIdCallBack", postId);
+    setSelectedPostIdShare(postId);
+  };
   return (
     <>
       <div className="flex items-center justify-center ">
         <div className="min-w-fit">
+          <button onClick={() => setShareModalOpen(true)}>
+            open share modal{" "}
+          </button>
           {posts.map((post) =>
             post.isBidding ? (
-              <BidCard post={post} />
+              <BidCard
+                key={post._id}
+                post={post}
+                setShareModalOpen={setShareModalOpen}
+                postIdCallBack={postIdCallBack}
+              />
             ) : (
-              <ProductCard post={post} />
+              <ProductCard
+                key={post._id}
+                post={post}
+                setShareModalOpen={setShareModalOpen}
+                postIdCallBack={postIdCallBack}
+
+              />
             )
           )}
         </div>
       </div>
+      {isShareModalOpen && selectedPostIdShare&&(
+        <SharePostDialogue
+          isOpen={isShareModalOpen}
+          onClose={handleShareModalClose}
+          selectedPostIdShare={selectedPostIdShare}
+        />
+      )}
     </>
   );
 }
