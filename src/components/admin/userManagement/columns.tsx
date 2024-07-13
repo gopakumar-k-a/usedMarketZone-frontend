@@ -76,7 +76,7 @@ export const columns = (
       // const handleClick = () => {
       //   setShowDialog(true);
       //   if (triggerDialogue.current) {
-      //     triggerDialogue.current.click();
+      //     trigger.current.click();
       //   }
       // };
 

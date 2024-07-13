@@ -13,6 +13,7 @@ import {
   ShowPostDetails,
   UserProfile,
   Chat,
+  SettingsPage,
 
   //auth
   ErrorPage,
@@ -73,10 +74,10 @@ export const AppRouter = createBrowserRouter([
           </Suspense>
         ),
         children: [
-          { path: "my-posts", element: <OwnerPosts/> },
+          { path: "my-posts", element: <OwnerPosts /> },
           {
             path: "my-bookmarks",
-            element: <OwnerBookmarks/>,
+            element: <OwnerBookmarks />,
           },
         ],
       },
@@ -125,6 +126,14 @@ export const AppRouter = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <Chat />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/settings",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <SettingsPage />
           </Suspense>
         ),
       },

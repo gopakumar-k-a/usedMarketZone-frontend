@@ -1,7 +1,12 @@
 
+import SettingsMain from "@/components/user/Settings/SettingsMain";
 
 function SettingsPage() {
-  return <div>this is settings page</div>;
+  return (
+   <>
+   <SettingsMain/>
+   </>
+  );
 }
 
 export default SettingsPage;
