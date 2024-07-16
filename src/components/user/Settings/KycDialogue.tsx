@@ -24,6 +24,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { submitKycRequest } from "@/api/user";
+import { toast } from "react-toastify";
+import { isAxiosError } from "axios";
 
 interface KycProps {
   isKycDialogueOpen: boolean;
@@ -43,7 +46,7 @@ const KycDialogue: React.FC<KycProps> = ({
 
   const validationSchema = Yup.object({
     name: Yup.string().required("Name is required"),
-    dateOfBirth: Yup.date()
+    dob: Yup.date()
       .required("Date of Birth is required")
       .max(
         new Date(new Date().setFullYear(new Date().getFullYear() - 18)),
@@ -54,8 +57,32 @@ const KycDialogue: React.FC<KycProps> = ({
     phone: Yup.string().required("Phone is required"),
   });
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = async (values: {
+    name: string;
+    dob: string;
+    idType: string;
+    idNumber: string;
+    phone: string;
+  }) => {
     console.log(values);
+
+    console.log(`    name: string;
+    dob: string;
+    idType: string;
+    idNumber: string;
+    phone: string;`);
+    try {
+      const res = await submitKycRequest(values);
+      toast.success(res?.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.log(error.message);
+        toast.error(error.message);
+      } else {
+        console.log("An unexpected error occurred");
+        toast.error("An unexpected error occurred");
+      }
+    }
   };
 
   return (
@@ -74,7 +101,7 @@ const KycDialogue: React.FC<KycProps> = ({
           <Formik
             initialValues={{
               name: "",
-              dateOfBirth: startDate,
+              dob: startDate,
               idType: "",
               idNumber: "",
               phone: "",
@@ -101,7 +128,7 @@ const KycDialogue: React.FC<KycProps> = ({
                   />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="dateOfBirth" className="text-right">
+                  <Label htmlFor="dob" className="text-right">
                     DOB
                   </Label>
                   <div className="relative max-w-sm col-span-3">
@@ -112,7 +139,7 @@ const KycDialogue: React.FC<KycProps> = ({
                       selected={startDate}
                       onChange={(date) => {
                         setStartDate(date);
-                        setFieldValue("dateOfBirth", date);
+                        setFieldValue("dob", date);
                       }}
                       dateFormat="dd/MM/yyyy"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -120,7 +147,7 @@ const KycDialogue: React.FC<KycProps> = ({
                     />
                   </div>
                   <ErrorMessage
-                    name="dateOfBirth"
+                    name="dob"
                     component="div"
                     className="col-span-4 text-red-600 text-right"
                   />

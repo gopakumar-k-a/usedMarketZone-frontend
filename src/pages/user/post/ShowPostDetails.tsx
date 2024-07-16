@@ -14,7 +14,7 @@ function ShowPostDetails() {
   const [loading, setLoading] = useState(true);
   const [postData, setPostData] = useState<ProductInterface | null>(null);
   const { pId } = location.state;
-  const isBidEnded = ( bidEndTime: string ) => {
+  const isBidEnded = (bidEndTime: string) => {
     const currentTime = new Date().getTime();
 
     const bidEndTimeDate = new Date(bidEndTime).getTime();
@@ -113,7 +113,17 @@ function ShowPostDetails() {
             <div className="flex items-center justify-center w-full">
               {postData.isBidding ? (
                 isBidEnded(postData?.bidEndTime) ? (
-                  !loading && postData && <PlaceBid pId={pId} ownerId={postData.userId} basePrice={postData.basePrice} highestBid={postData.currentHighestBid} />
+                  !loading &&
+                  postData && (
+                    <PlaceBid
+                      pId={pId}
+                      ownerId={postData.userId}
+                      basePrice={postData.basePrice}
+                      highestBid={postData.currentHighestBid}
+                      previousBidSumOfUser={postData.previousBidSumOfUser}
+              
+                    />
+                  )
                 ) : (
                   <BiddingEnded />
                 )

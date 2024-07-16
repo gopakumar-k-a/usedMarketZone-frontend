@@ -18,7 +18,7 @@ interface ProductInterface {
   isSold?: boolean;
   isOtpVerified?: boolean;
   postStatus?: "draft" | "active" | "deactivated";
-  isBidding?: boolean;
+  isBidding: boolean;
   updatedAt?: Date;
 
   userDetails: {
@@ -29,7 +29,9 @@ interface ProductInterface {
 
   bidEndTime: string;
   bidAcceptedTime?: string;
-  currentHighestBid:string;
+  isDeactivatedPost: boolean;
+  currentHighestBid: string;
+  previousBidSumOfUser: string;
 }
 export default ProductInterface;
 

@@ -4,6 +4,7 @@ import { Constants } from "../../constants/config";
 import { toast } from "react-toastify";
 
 import { logOut } from "@/redux/reducers/auth/authSlice";
+import { handleAxiosErrorHelper } from "@/utils/helpers/handleAxiosErrorHelper";
 // import { useAppDispatch } from "@/utils/hooks/reduxHooks";
 
 // const dispatch = useAppDispatch();
@@ -39,7 +40,7 @@ axiosUserInstance.interceptors.response.use(
   async (error) => {
     console.log('error message from interceptor',error.message)
     const originalRequest = error.config;
-
+    handleAxiosErrorHelper(error);
     if (
       error.response &&
       error.response.status === 401 &&

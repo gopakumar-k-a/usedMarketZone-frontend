@@ -21,6 +21,7 @@ export const END_POINTS = {
   GET_NO_OF_FOLLOW: "/api/user/num-of-follow",
   GET_FOLLOWERS: "/api/user/followers",
   GET_FOLLOWING: "/api/user/following",
+  SUBMIT_KYC_REQUEST:"/api/user/kyc-request",
   //chat
   SEND_MESSAGE: "/api/message/send-message",
   SEND_POST_AS_MESSAGE:"/api/message/send-post",
@@ -40,9 +41,11 @@ export const END_POINTS = {
   GET_REPLY_COMMENTS: "/api/product/get-comment-reply",
   DELETE_COMMENT: "/api/product/delete-comment",
   GET_BOOKMARK_IMAGE_LIST:"/api/product/owner/get-bookmark-list",
+  DEACTIVATE_PRODUCT_SELL_POST:"/api/product/deactivate-post",
 
   //bid
   POST_BID_PRODUCT: "/api/bid/post-bid",
+  PLACE_BID_ON_PRODUCT:"/api/bid/place-bid",
 
   //admin
 

@@ -9,7 +9,7 @@ import { formatAddress } from "@/utils/formatAddress";
 import { Link } from "react-router-dom";
 import { ImHammer2 } from "react-icons/im";
 import ProductInterface from "@/types/product";
-
+import { store } from "@/redux/app/store";
 // Define the interface for the post prop
 import React from "react";
 
@@ -53,7 +53,8 @@ const BidCard = ({
   const [slides, setSlides] = useState<string[]>([]);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [bookmarkedCount, setBookmarkedCount] = useState(0);
-
+  const [isActive, setIsActive] = useState(false);
+  const ownerId = store.getState().auth.user?._id;
   // const [isShareModalOpen, setShareModalOpen] = useState(false);
   // const [postedDate, setPostedDate] = useState("");
 
@@ -131,7 +132,13 @@ const BidCard = ({
             </div>
           </div>
           <div className="text-gray-600 dark:text-gray-400 text-sm">
-            <DropdownMenuComponent postId={post?._id} />
+            <DropdownMenuComponent
+              postId={post?._id}
+              ownerId={post.userId}
+              isDeActive={isActive}
+              setDeActive={setIsActive}
+              isBidding={post.isBidding}
+            />
 
             {formatDate(post.createdAt)}
           </div>
@@ -217,9 +224,9 @@ const BidCard = ({
               {/* {userId && userId != post.userId && (
              
               )} */}
-                 <button className="flex items-center text-gray-600 dark:text-gray-400">
-                  <ImHammer2 className="h-6 w-6" />
-                </button>
+              <button className="flex items-center text-gray-600 dark:text-gray-400">
+                <ImHammer2 className="h-6 w-6" />
+              </button>
             </Link>
             <button className="flex items-center text-gray-600 dark:text-gray-400">
               <FaInfoCircle className="h-6 w-6" />

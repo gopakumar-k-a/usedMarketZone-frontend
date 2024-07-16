@@ -11,6 +11,7 @@ import { store } from "@/redux/app/store";
 import AskProductDialogue from "./AskProductDialogue";
 import ProductInterface from "@/types/product";
 import SlideCurosal from "./SlideCurosal";
+import { Badge } from "../ui/badge";
 
 const ProductCard = ({
   post,
@@ -31,6 +32,7 @@ const ProductCard = ({
   const [bookmarkedCount, setBookmarkedCount] = useState(0);
 
   const [isAskProductModalOpen, setAskProductModalOpen] = useState(false);
+  const [isDeActive, setDeActive] = useState(post.isDeactivatedPost);
 
   const ownerId = store.getState().auth.user?._id;
 
@@ -93,8 +95,18 @@ const ProductCard = ({
                 </div>
               </div>
             </div>
-            <div className="text-gray-600 dark:text-gray-400 text-sm">
-              <DropdownMenuComponent postId={post?._id} ownerId={post.userId} />
+            <span>{isDeActive && <Badge>De-active Post</Badge>}</span>
+            <div className="text-gray-600 dark:text-gray-400 text-sm ">
+              {/* <div className="flex justify-end w-full" > */}
+              <DropdownMenuComponent
+                postId={post?._id}
+                ownerId={post.userId}
+                isDeActive={isDeActive}
+                setDeActive={setDeActive}
+                isBidding={post.isBidding}
+              />
+              {/* </div> */}
+      
 
               {formatDate(post.createdAt)}
             </div>
@@ -158,7 +170,7 @@ const ProductCard = ({
       </div>
       {isAskProductModalOpen && (
         <AskProductDialogue
-        postId={post._id}
+          postId={post._id}
           isAskProductModalOpen={isAskProductModalOpen}
           setAskProductModalOpen={setAskProductModalOpen}
           postImageUrl={slides[0]}

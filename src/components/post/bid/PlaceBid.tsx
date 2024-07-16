@@ -2,16 +2,22 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { store } from "@/redux/app/store";
+
+import { placeBidOnProduct } from "@/api/bid";
+import { toast } from "react-toastify";
+
 function PlaceBid({
   pId,
   ownerId,
   highestBid,
   basePrice,
+  previousBidSumOfUser,
 }: {
   pId: string;
   ownerId: string;
   highestBid: string;
   basePrice: string;
+  previousBidSumOfUser: string;
 }) {
   const [bid, setBid] = useState("");
   const userId = store.getState().auth.user?._id;
@@ -19,10 +25,18 @@ function PlaceBid({
   //   setBid(event.target.value);
   // };
 
-  const placeBid = () => {
+  const placeBid = async () => {
     console.log(`Bid placed: ₹${bid}`);
     console.log("product id ", pId);
-
+    try {
+      const res = await placeBidOnProduct(bid, pId);
+      setBid(String(res.totalBidAmount));
+      toast.success("bid placed successfully ");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setBid("");
+    }
     // Add logic to handle bid placement
   };
 
@@ -38,6 +52,18 @@ function PlaceBid({
               </span>
             </h1>
           </div>
+          {previousBidSumOfUser && (
+            <div className="col-span-2  w-full flex">
+              <h1 className="font-bold  text-lg w-full h-full flex items-center justify-start">
+                my bid-{" "}
+                <span className="font-bold  text-lg text-red-500">
+                  {previousBidSumOfUser
+                    ? previousBidSumOfUser
+                    : "no bids placed"}
+                </span>
+              </h1>
+            </div>
+          )}
 
           <div className="col-span-2 ">
             <h1 className="font-bold text-lg">base price-</h1>

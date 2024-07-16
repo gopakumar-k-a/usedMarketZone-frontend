@@ -1,7 +1,10 @@
 import { ReportPost } from "@/components/post/ReportPostDialogue.tsx";
 import { axiosUserInstance } from "../axiosInstance/axiosUserInstance.ts";
 import { END_POINTS } from "@/constants/endPoints.ts";
-import { isAxiosError } from "axios";
+import { AxiosError, AxiosResponse, isAxiosError } from "axios";
+import { toast } from "react-toastify";
+import { handleAxiosErrorHelper } from "@/utils/helpers/handleAxiosErrorHelper.ts";
+import { NormalBackendRes } from "@/types/login.ts";
 
 export const postProduct = async (payload: any) => {
   const response = await axiosUserInstance.post(
@@ -85,3 +88,17 @@ export const deletComment = async (payload: {
   return response.data;
 };
 
+export const deActivateProductSellPost = async (postId: string) => {
+  try {
+    interface DeactivateRes extends NormalBackendRes{
+      isDeactivatedPost:boolean
+    }
+    const response:AxiosResponse<DeactivateRes> = await axiosUserInstance.patch(
+      `${END_POINTS.DEACTIVATE_PRODUCT_SELL_POST}/${postId}`
+    );
+
+    return response.data;
+  } catch (error) {
+    handleAxiosErrorHelper(error)
+  }
+};
