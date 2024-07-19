@@ -2,7 +2,8 @@ import { BidDuration } from "@/types/product";
 import { axiosAdminInstance } from "../axiosInstance/axiosAdminInstance";
 import { END_POINTS } from "@/constants/endPoints";
 import { PostReportRes } from "@/types/admin/postReport";
-
+import { AxiosResponse } from "axios";
+import { GetBidHistoryOfProductRes } from "@/types/bid";
 
 export const getAllUsers = async (page: number, limit: number) => {
   const response = await axiosAdminInstance.get(
@@ -75,5 +76,12 @@ export const blockPostAdmin = async (productId: string) => {
     `${END_POINTS.BLOCK_USER_POST}/${productId}`
   );
 
+  return response.data;
+};
+
+export const getBidHistoryOfProduct = async (bidProductId: string) => {
+  const response:AxiosResponse<GetBidHistoryOfProductRes> = await axiosAdminInstance.get(
+    `${END_POINTS.GET_BID_HISTORY_ADMIN}/${bidProductId}`
+  );
   return response.data;
 };

@@ -15,6 +15,7 @@ const UserProfile=React.lazy(()=>import("./pages/user/profile/UserProfilePage"))
 const OwnerPosts=React.lazy(()=>import("./components/user/profilePage/myPosts"))
 const OwnerBookmarks=React.lazy(()=>import("./components/user/profilePage/myBookmarks"))
 const SettingsPage=React.lazy(()=>import("./pages/user/settings/SettingsPage"))
+const SearchPage=React.lazy(()=>import("./pages/user/search/SearchPage"))
 //product
 const SellProductPost=React.lazy(()=>import("./pages/user/post/SellProductPost"))
 const AuctionProductPost=React.lazy(()=>import('./pages/user/post/BidProductPost'))
@@ -41,9 +42,10 @@ const AdminDashboard = React.lazy(
 );
 const UserManagement=React.lazy(()=>import("./pages/admin/UserManagement"))
 const PostMangement=React.lazy(()=>import("./pages/admin/PostManagementPage"))
-const BidVerfication=React.lazy(()=>import("./pages/admin/BidVerificationPage"))
+const BidVerfication=React.lazy(()=>import("./pages/admin/bid/BidVerificationPage"))
 const UserProfileAdmin=React.lazy(()=>import("./pages/admin/UserProfileAdmin"))
 const PostIncidents=React.lazy(()=>import("./pages/admin/PostIncidentsPage"))
+const BidHistoryAdmin=React.lazy(()=>import("./components/admin/bidHistory/BidHistoryAdmin"))
 export {
   //user
   App,
@@ -58,7 +60,7 @@ export {
   OwnerPosts,
   OwnerBookmarks,
   SettingsPage,
-
+  SearchPage,
   //auth
   ErrorPage,
   AuthenticationPage,
@@ -76,6 +78,7 @@ export {
   PostMangement,
   UserProfileAdmin,
   BidVerfication,
-  PostIncidents
+  PostIncidents,
+  BidHistoryAdmin
   
 };

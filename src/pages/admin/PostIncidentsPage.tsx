@@ -21,9 +21,13 @@ function PostIncidentsPage() {
       <PageHeading heading={"Post Incidents"} Icon={MdReport} />
       {reports && reports.length > 0 ? (
         <>
-          {reports.map((report: PostReport) => (
-        <PostReportCard report={report}/>
-          ))}
+          <section className="bg-gray-100 py-5 flex  justify-center">
+            <div className="w-10/12 ">
+              {reports.map((report: PostReport) => (
+                <PostReportCard report={report} />
+              ))}
+            </div>
+          </section>
         </>
       ) : (
         <></>

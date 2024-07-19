@@ -84,6 +84,8 @@ const BidCard = ({
     try {
       await bookmarkPost(postId).then((response) => {
         const { action } = response;
+        console.log('action in book mark bid card ',action);
+        
         if (action == "added") {
           setIsBookmarked(true);
           setBookmarkedCount((prevCount) => (prevCount += 1));

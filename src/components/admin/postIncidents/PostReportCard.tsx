@@ -28,10 +28,10 @@ const PostReportCard: React.FC<ReportProps> = ({ report }) => {
   const description = `Clicking continue will ${isBlocked ? "un-block" : "block"} the post`;
   return (
     <>
-    <div className="w-full flex justify-center">
-      <div className="bg-gray-800 text-white shadow-lg border rounded-lg overflow-hidden w-9/10">
+   
+      <div className="bg-gray-800 text-white shadow-lg border rounded-lg overflow-hidden">
         <div className="flex">
-          <div className="ml-2">
+        <div className="ml-2  max-w-16 max-h-16">
             <img
               src={report.postImageUrl[0]}
               alt="Reported post"
@@ -111,7 +111,7 @@ const PostReportCard: React.FC<ReportProps> = ({ report }) => {
           </div>
         </div>
       </div>
-      </div>
+
       {
         <CustomAlertDialogue
           isOpen={isBlockAlertOpen}

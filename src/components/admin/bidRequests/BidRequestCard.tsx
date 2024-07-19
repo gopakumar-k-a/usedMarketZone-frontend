@@ -1,41 +1,41 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { formatDate } from "@/utils/formatDate";
 import { CustomAlertDialogue } from "@/components/alert/CustomAlertDialogue";
 import { TiTick } from "react-icons/ti";
 import { RxCross2 } from "react-icons/rx";
 import { acceptBidRequest } from "@/api/admin";
-import { error } from "console";
+import { FaEye } from "react-icons/fa";
 import { BidDuration } from "@/types/product";
+import { useNavigate } from "react-router-dom";
 function BidRequestCard({ request }) {
   const [isAcceptAlertOpen, setAcceptAlertOpen] = useState(false);
   const [isRejectAlertOpen, setRejectAlertOpen] = useState(false);
   const [selectedBidId, setSelectedBidId] = useState("");
-  const [selectedBidDuration,setSelectedBidDuration]=useState<BidDuration | null>(null)
+  const [selectedBidDuration, setSelectedBidDuration] =
+    useState<BidDuration | null>(null);
   const [isAdminAcceptedBid, setAdminAcceptedBid] = useState(
     request?.productData?.isAdminAccepted
   );
 
-  
-  const acceptBid = async (bidId: string,bidDuration:BidDuration|null) => {
+  const navigate = useNavigate();
+  const acceptBid = async (bidId: string, bidDuration: BidDuration | null) => {
     console.log("id is ", bidId);
-    console.log('bid duration is ',bidDuration);
-    
-    await acceptBidRequest(bidId,bidDuration)
-      .then(() => {
-        setAdminAcceptedBid(true);
-      })
-    
+    console.log("bid duration is ", bidDuration);
+
+    await acceptBidRequest(bidId, bidDuration).then(() => {
+      setAdminAcceptedBid(true);
+    });
   };
 
   const rejectBid = (bidId: string) => {
     console.log("reject  bid id is ", bidId);
   };
 
-  const handleAcceptAlertOpen = (bidId: string,bidDuration:BidDuration) => {
-    console.log('handleAcceptAlertOpen bidDuration',bidDuration);
-    
-      setSelectedBidId(bidId);
-      setSelectedBidDuration(bidDuration)
+  const handleAcceptAlertOpen = (bidId: string, bidDuration: BidDuration) => {
+    console.log("handleAcceptAlertOpen bidDuration", bidDuration);
+
+    setSelectedBidId(bidId);
+    setSelectedBidDuration(bidDuration);
     setAcceptAlertOpen(true);
   };
 
@@ -62,7 +62,7 @@ function BidRequestCard({ request }) {
       {/* Card 1 */}
       <div className="bg-gray-800 text-white shadow-lg border rounded-lg overflow-hidden">
         <div className="flex">
-          <div className="ml-2  ">
+          <div className="ml-2  max-w-16 max-h-16">
             <img
               src={request?.productData?.productImageUrls[0]}
               alt="Quant trident shirts"
@@ -98,14 +98,26 @@ function BidRequestCard({ request }) {
           <div className="p-4 flex  justify-start items-center gap-2">
             {isAdminAcceptedBid ? (
               <>
-                <h1>accepted</h1>
+                <div
+                  className="flex flex-col justify-center items-center"
+                  onClick={() => navigate("/admin/bid-history",{state:{bidProductData:request.productData}})}
+                >
+                  <div className=" hover:bg-blue-600 w-8 h-8 bg-blue-500 flex items-center justify-center rounded-lg">
+                    <FaEye className=" text-white rounded-lg w-5 h-5" />
+                  </div>
+
+                  <h1>accepted</h1>
+                </div>
               </>
             ) : (
               <>
                 {" "}
                 <TiTick
                   onClick={() =>
-                    handleAcceptAlertOpen(request.productData._id as string,request?.productData?.bidDuration)
+                    handleAcceptAlertOpen(
+                      request.productData._id as string,
+                      request?.productData?.bidDuration
+                    )
                   }
                   className="w-12 h-10 bg-green-500 hover:bg-green-600 rounded-lg "
                 />
@@ -127,7 +139,7 @@ function BidRequestCard({ request }) {
           onClose={handleAcceptAlertClose}
           title={acceptAlertTitle}
           description={acceptAlertDescription}
-          onContinue={() => acceptBid(selectedBidId,selectedBidDuration)}
+          onContinue={() => acceptBid(selectedBidId, selectedBidDuration)}
         />
       )}
       {isRejectAlertOpen && (

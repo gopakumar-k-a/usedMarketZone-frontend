@@ -14,7 +14,7 @@ import {
   UserProfile,
   Chat,
   SettingsPage,
-
+  SearchPage,
   //auth
   ErrorPage,
   AuthenticationPage,
@@ -33,6 +33,7 @@ import {
   UserProfileAdmin,
   BidVerfication,
   PostIncidents,
+  BidHistoryAdmin,
 } from "./lazyComponents";
 import ForgotPass from "./components/auth/ForgotPass";
 
@@ -137,6 +138,14 @@ export const AppRouter = createBrowserRouter([
           </Suspense>
         ),
       },
+      {
+        path: "/search",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <SearchPage />
+          </Suspense>
+        ),
+      },
     ],
   },
   {
@@ -230,6 +239,10 @@ export const AppRouter = createBrowserRouter([
       {
         path: "post-incidents",
         element: <PostIncidents />,
+      },
+      {
+        path: "bid-history",
+        element: <BidHistoryAdmin />,
       },
     ],
   },

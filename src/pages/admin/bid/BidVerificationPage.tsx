@@ -41,10 +41,9 @@ function BidVerificationPage() {
 
   return (
     <>
-    <PageHeading heading={"Bid Verfication"} Icon={IoHammerOutline}/>
-    
-      <section className="bg-gray-100 py-5 flex  justify-center">
+      <PageHeading heading={"Bid Verfication"} Icon={IoHammerOutline} />
 
+      <section className="bg-gray-100 py-5 flex  justify-center ">
         <div className="w-10/12 ">
           {bidRequests &&
             bidRequests.map((request) => <BidRequestCard request={request} />)}

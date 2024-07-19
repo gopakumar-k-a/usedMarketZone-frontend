@@ -22,6 +22,7 @@ export const END_POINTS = {
   GET_FOLLOWERS: "/api/user/followers",
   GET_FOLLOWING: "/api/user/following",
   SUBMIT_KYC_REQUEST:"/api/user/kyc-request",
+  SEARCH_ON_APP:"/api/user/search",
   //chat
   SEND_MESSAGE: "/api/message/send-message",
   SEND_POST_AS_MESSAGE:"/api/message/send-post",
@@ -46,6 +47,7 @@ export const END_POINTS = {
   //bid
   POST_BID_PRODUCT: "/api/bid/post-bid",
   PLACE_BID_ON_PRODUCT:"/api/bid/place-bid",
+  GET_BID_HISTORY_ON_PRODUCT:"/api/bid/get-bid-history",
 
   //admin
 
@@ -57,5 +59,6 @@ export const END_POINTS = {
   GET_BID_REQUESTS: "/api/admin/get-bid-requests",
   ACCEPT_BID_PRODUCT: "/api/admin/accept-bid",
   GET_POST_REPORTS: "/api/admin/get-post-reports",
-  BLOCK_USER_POST:"/api/admin/block-post"
+  BLOCK_USER_POST:"/api/admin/block-post",
+  GET_BID_HISTORY_ADMIN:"/api/admin/bid-history",
 };

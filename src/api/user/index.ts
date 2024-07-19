@@ -68,20 +68,39 @@ export const submitKycRequest = async (kycData: {
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
-      
       const axiosError = error as AxiosError<any>;
-      console.log('axiosError ',axiosError);
-      
+      console.log("axiosError ", axiosError);
+
       if (
         axiosError.response &&
         axiosError.response.data &&
         axiosError.response.data.message
       ) {
-        console.log('inside backendError');
-        
+        console.log("inside backendError");
+
         const backendError = axiosError.response.data.message;
         toast.error(backendError);
       }
     }
   }
+};
+
+export const searchOnApp = async (
+  query: string,
+  filter: string,
+  subFilter: string | null = ""
+) => {
+  console.log("query filter subFilter ", query, filter, subFilter);
+
+  const response = await axiosUserInstance.get(END_POINTS.SEARCH_ON_APP, {
+    params: {
+      query: query,
+      filter: filter,
+      subFilter: subFilter,
+    },
+  });
+
+  console.log("search on app response ", response.data);
+
+  return response.data;
 };
