@@ -48,6 +48,7 @@ export const END_POINTS = {
   POST_BID_PRODUCT: "/api/bid/post-bid",
   PLACE_BID_ON_PRODUCT:"/api/bid/place-bid",
   GET_BID_HISTORY_ON_PRODUCT:"/api/bid/get-bid-history",
+  GET_USER_BIDS:"/api/bid/get-user-bids",
 
   //admin
 

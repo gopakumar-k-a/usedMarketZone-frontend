@@ -7,6 +7,9 @@ const BidEndTimer = ({ endDate }) => {
     } else {
       return (
         <div className="text-black dark:text-white pb-2">
+          time <div className='text-green-500'>
+          {endDate}
+          </div>
           Time left:{" "}
           <span className="text-red-600 dark:text-red-400">
             {days > 0 && `${days}d `}{hours.toString().padStart(2, '0')}h {minutes.toString().padStart(2, '0')}m {seconds.toString().padStart(2, '0')}s

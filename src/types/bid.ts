@@ -27,3 +27,17 @@ export interface IBidHistoryAdmin {
 export interface GetBidHistoryOfProductRes extends NormalBackendRes {
   bidHistory: IBidHistoryAdmin[];
 }
+
+export type UserProfileMyBids = {
+  isAdminAccepted: boolean;
+  _id: string;
+  productName: string;
+  basePrice: number;
+  productImageUrls: string[];
+  category: string;
+  subCategory: string;
+};
+
+export interface UserProfileBidRes extends NormalBackendRes {
+  userBids: UserProfileMyBids[];
+}

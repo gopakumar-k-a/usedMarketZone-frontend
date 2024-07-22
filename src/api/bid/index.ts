@@ -1,7 +1,7 @@
 import { NormalBackendRes } from "@/types/login.ts";
 import { axiosUserInstance } from "../axiosInstance/axiosUserInstance.ts";
 import { END_POINTS } from "@/constants/endPoints.ts";
-import { BidHistoryResponse } from "@/types/bid.ts";
+import { BidHistoryResponse, UserProfileBidRes } from "@/types/bid.ts";
 import { AxiosResponse } from "axios";
 export const bidProductPost = async (payload) => {
   const response = await axiosUserInstance.post(
@@ -28,11 +28,21 @@ export const placeBidOnProduct = async (
 };
 
 export const bidHistoryOfUser = async (bidProductId: string) => {
-  const response:AxiosResponse<BidHistoryResponse> = await axiosUserInstance.get<BidHistoryResponse>(
-    `${END_POINTS.GET_BID_HISTORY_ON_PRODUCT}/${bidProductId}`
-  );
+  const response: AxiosResponse<BidHistoryResponse> =
+    await axiosUserInstance.get<BidHistoryResponse>(
+      `${END_POINTS.GET_BID_HISTORY_ON_PRODUCT}/${bidProductId}`
+    );
 
   console.log("response.data bid  history of user ", response.data);
+
+  return response.data;
+};
+
+export const getUserWistBid = async () => {
+  const response: AxiosResponse<UserProfileBidRes> =
+    await axiosUserInstance.get(END_POINTS.GET_USER_BIDS);
+
+  console.log("getUserWistBid response data ", response.data);
 
   return response.data;
 };

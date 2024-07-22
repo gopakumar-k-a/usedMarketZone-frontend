@@ -1,17 +1,18 @@
 import { FaCamera } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { getOwnerPostsListImage } from "@/api/profile";
 import { getBookmarkImageList } from "@/api/profile";
 import { useEffect, useState } from "react";
+import { Badge } from "@/components/ui/badge";
 
-interface ProductImage {
-  _id: string;
-  productImageUrls: string[];
-}
+// interface ProductImage {
+//   _id: string;
+//   productImageUrls: string[];
+// }
 interface BookmarkImage {
   _id: string;
   bookmarkImageUrls: string[];
-  postId:string;
+  postId: string;
+  isBidding: boolean;
 }
 
 // interface OwnerPostsImageList {
@@ -52,7 +53,15 @@ function MyBookmarks() {
                   to={"/post/post-details"}
                   state={{ pId: imageList.postId }}
                 >
-                  <div className="flex items-center justify-center sm:w-60 sm:h-60">
+
+                  <div className="relative flex items-center justify-center sm:w-60 sm:h-60">
+                    <div className="absolute top-0 right-0 m-2">
+                      {imageList.isBidding ? (
+                        <Badge variant="destructive">bid</Badge>
+                      ) : (
+                        <Badge>sell</Badge>
+                      )}
+                    </div>
                     <img
                       className="w-full h-full object-contain rounded-lg"
                       src={imageList.bookmarkImageUrls[0]}

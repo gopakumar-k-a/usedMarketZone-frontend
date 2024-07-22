@@ -12,8 +12,9 @@ const EditProfile = React.lazy(
 );
 const Chat=React.lazy(()=>import ("./pages/user/chat/ChatPage"))
 const UserProfile=React.lazy(()=>import("./pages/user/profile/UserProfilePage"))
-const OwnerPosts=React.lazy(()=>import("./components/user/profilePage/myPosts"))
-const OwnerBookmarks=React.lazy(()=>import("./components/user/profilePage/myBookmarks"))
+const OwnerPosts=React.lazy(()=>import("./components/user/profilePage/MyPosts"))
+const OwnerBookmarks=React.lazy(()=>import("./components/user/profilePage/MyBookmarks"))
+const OwnerBidStatus=React.lazy(()=>import("./components/user/profilePage/MyBids"))
 const SettingsPage=React.lazy(()=>import("./pages/user/settings/SettingsPage"))
 const SearchPage=React.lazy(()=>import("./pages/user/search/SearchPage"))
 //product
@@ -61,6 +62,7 @@ export {
   OwnerBookmarks,
   SettingsPage,
   SearchPage,
+  OwnerBidStatus,
   //auth
   ErrorPage,
   AuthenticationPage,

@@ -2,10 +2,12 @@ import { FaCamera } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { getOwnerPostsListImage } from "@/api/profile";
 import { useEffect, useState } from "react";
+import { Badge } from "@/components/ui/badge";
 
 interface ProductImage {
   _id: string;
   productImageUrls: string[];
+  isBidding: boolean;
 }
 
 // interface OwnerPostsImageList {
@@ -35,23 +37,34 @@ function Myposts() {
     <>
       {postImagesList.length > 0 ? (
         <>
-             <div className="pt-4 w-full flex justify-center">
-        {/* <div className="w-4/5 flex justify-center"> */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-            {postImagesList.map((imageList, index) => (
-              <Link key={index} to={"/post/post-details"} state={{ pId: imageList._id }}>
-                <div className="flex items-center justify-center sm:w-60 sm:h-60">
-                  <img
-                    className="w-full h-full object-contain rounded-lg"
-                    src={imageList.productImageUrls[0]}
-                    alt={`image ${index}`}
-                  />
-                </div>
-              </Link>
-            ))}
+          <div className="pt-4 w-full flex justify-center">
+            {/* <div className="w-4/5 flex justify-center"> */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              {postImagesList.map((imageList, index) => (
+                <Link
+                  key={index}
+                  to={"/post/post-details"}
+                  state={{ pId: imageList._id }}
+                >
+                  <div className="relative flex items-center justify-center sm:w-60 sm:h-60">
+                    <div className="absolute top-0 right-0 m-2">
+                      {imageList.isBidding ? (
+                       <Badge variant="destructive">bid</Badge>
+                      ) : (
+                        <Badge>sell</Badge>
+                      )}
+                    </div>
+                    <img
+                      className="w-full h-full object-contain rounded-lg"
+                      src={imageList.productImageUrls[0]}
+                      alt={`image ${index}`}
+                    />
+                  </div>
+                </Link>
+              ))}
+            </div>
+            {/* </div> */}
           </div>
-        {/* </div> */}
-      </div>
         </>
       ) : (
         <>

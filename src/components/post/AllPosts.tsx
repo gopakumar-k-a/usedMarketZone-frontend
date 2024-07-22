@@ -37,9 +37,7 @@ function AllPosts() {
     <>
       <div className="flex items-center justify-center ">
         <div className="min-w-fit">
-          <button onClick={() => setShareModalOpen(true)}>
-            open share modal{" "}
-          </button>
+    
           {posts.map((post) =>
             post.isBidding ? (
               <BidCard

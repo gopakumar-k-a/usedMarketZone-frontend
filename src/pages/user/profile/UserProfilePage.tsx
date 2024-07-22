@@ -1,4 +1,4 @@
-import ProfileBottom from "@/components/user/profilePage/myPosts";
+import ProfileBottom from "@/components/user/profilePage/MyPosts";
 import ProfileTop from "@/components/user/profilePage/ProfileTop";
 import { useCallback, useEffect, useState } from "react";
 import { FaCamera } from "react-icons/fa";

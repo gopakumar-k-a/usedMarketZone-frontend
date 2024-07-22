@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { store } from "@/redux/app/store";
@@ -7,6 +7,13 @@ import { placeBidOnProduct } from "@/api/bid";
 import { toast } from "react-toastify";
 import MyBidPlacedHistoryDialogue from "./MyBidPlacedHistory";
 import { CustomAlertDialogue } from "@/components/alert/CustomAlertDialogue";
+import { useSocketContext } from "@/context/SocketContext";
+
+
+import { ToastAction } from "@/components/ui/toast"
+import { useToast } from "@/components/ui/use-toast"
+
+
 
 function PlaceBid({
   pId,
@@ -22,7 +29,7 @@ function PlaceBid({
   previousBidSumOfUser: string;
 }) {
   // isOpen, onClose, title, description,onContinue
-
+const {socket}=useSocketContext()
   const [isConfirmPlaceBidDialogueOpen, setConfirmPlaceBidDialogueOpen] =
     useState(false);
 
@@ -37,6 +44,17 @@ function PlaceBid({
   const [myBid, setMyBid] = useState(
     previousBidSumOfUser ? previousBidSumOfUser : ""
   );
+
+  const [newBid, setNewBid] = useState("");
+  useEffect(() => {
+    if (myBid && bidInput) {
+      setNewBid((parseFloat(myBid) + parseFloat(bidInput)).toString());
+    } else {
+      setNewBid("");
+    }
+  }, [bidInput, myBid]);
+
+
 
   const [isMyBidHistoryDialogueOpen, setMyBidHistoryDialogue] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -57,12 +75,51 @@ function PlaceBid({
     }
     // Add logic to handle bid placement
   };
+  
+  useEffect(() => {
+    // Listen for the newHighestBid event
+    if (socket) {
+      socket.on('newHighestBid', (data) => {
+        console.log(data , ' dataattat');
+        
+        if (data.bidProductId === pId) {
+          setHighestBidPlaced(data.highestBid);
+          toast.success("Highest bid updated successfully");
+        }
+      });
+    }
+
+    return () => {
+      // Clean up the event listener on component unmount
+      if (socket) {
+        socket.off('newHighestBid');
+      }
+    };
+  }, [socket, pId]);
 
   const confirmPlaceBidTitle = `Are sure Place Bid ${bidInput} this can't be unDone`;
   const confirmPlaceBidDescription = `Clicking Confirming will place Bid Amount of ${bidInput} and Can't be UnDone Click Confirm To Continue`;
 
+  const { toast:customToast } = useToast()
   return (
     <>
+        <Button
+      variant="outline"
+      onClick={() => {
+        customToast({
+          title: "Scheduled: Catch up ",
+          description: "Friday, February 10, 2023 at 5:57 PM",
+          action: (
+            <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
+          ),
+        })
+      }}
+    >
+
+
+      Add to calendar
+    </Button>
+    
       <div className="grid grid-cols-2 bg-gray-200 w-full p-2 sm:mb-0 mb-16">
         <div className="min-h-48 w-full">
           <div className="col-span-2  w-full flex">
@@ -77,7 +134,7 @@ function PlaceBid({
               </span>
             </h1>
           </div>
-          {previousBidSumOfUser && (
+          {myBid && (
             <div className="col-span-2  w-full flex">
               <h1 className="font-bold  text-lg w-full h-full flex items-center justify-start">
                 my bid-{" "}
@@ -96,6 +153,22 @@ function PlaceBid({
               &#8377; {basePrice}
             </span>
           </div>
+        </div>
+        <div className="col-span-2 ">
+        {myBid && bidInput && (
+        <>
+          <div className="current-bids">
+            <span className={`current-bid ${newBid >= highestBid ? '' : ''}`}>
+              &#8377; {myBid}
+            </span>
+            <span>+</span>
+            <span className={`current-bid ${newBid >= highestBid ? '' : ''}`}>
+              &#8377; {bidInput}
+            </span>
+          </div>
+          <div className="new-bid">my new bid: &#8377; {newBid}</div>
+        </>
+      )}
         </div>
         {userId && userId != ownerId && (
           <div className="col-span-2 w-full ">

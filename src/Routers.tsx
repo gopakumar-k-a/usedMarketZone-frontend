@@ -15,6 +15,7 @@ import {
   Chat,
   SettingsPage,
   SearchPage,
+  OwnerBidStatus,
   //auth
   ErrorPage,
   AuthenticationPage,
@@ -80,6 +81,10 @@ export const AppRouter = createBrowserRouter([
             path: "my-bookmarks",
             element: <OwnerBookmarks />,
           },
+          {
+            path:"my-bids",
+            element:<OwnerBidStatus/>
+          }
         ],
       },
       {
