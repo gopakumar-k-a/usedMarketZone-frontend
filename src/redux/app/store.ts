@@ -6,13 +6,17 @@ import authReducer from '../reducers/auth/authSlice'
 import otpProtectReducer from '../reducers/user/auth/otpProtect/otpProtectSlice'
 // import adminReducer from '../reducers/admin/auth/adminSlice'
 import chatReducer from '../reducers/chat/chatSlice'
+import userNotificationReducer from "../reducers/user/userNotification/userNotificationSlice";
+
+
 export const store=configureStore({
     reducer:{
         getOtp:otpReducer,
         auth:authReducer,
         // adminAuth:adminReducer,
         protectOtp:otpProtectReducer,
-        chat:chatReducer
+        chat:chatReducer,
+        userNotifications:userNotificationReducer
     }
 })
 

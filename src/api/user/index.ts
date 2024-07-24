@@ -2,6 +2,7 @@ import { axiosUserInstance } from "../axiosInstance/axiosUserInstance.ts";
 import { END_POINTS } from "@/constants/endPoints.ts";
 import { ConversationsRes } from "@/types/chat.ts";
 import { NormalBackendRes } from "@/types/login.ts";
+import { NotificationRes } from "@/types/Notification.ts";
 import { AxiosError, AxiosResponse, isAxiosError } from "axios";
 import { toast } from "react-toastify";
 export const getSuggestedUsers = async () => {
@@ -101,6 +102,23 @@ export const searchOnApp = async (
   });
 
   console.log("search on app response ", response.data);
+
+  return response.data;
+};
+
+export const getNotifications = async () => {
+  const response: AxiosResponse<NotificationRes> = await axiosUserInstance.get(
+    END_POINTS.GET_NOTIFICATIONS
+  );
+  console.log("notifications ", response.data);
+
+  return response.data;
+};
+
+export const changeNotificationUnreadStatus = async () => {
+  const response = await axiosUserInstance.patch(
+    END_POINTS.CHANGE_NOTIFICATION_STATUS
+  );
 
   return response.data;
 };

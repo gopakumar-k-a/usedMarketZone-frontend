@@ -11,6 +11,9 @@ import { Constants } from "@/constants/config";
 import { Button } from "@/components/ui/button";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
+import { Link } from "react-router-dom";
+import useNotifications from "@/utils/hooks/userNotification/useNofication";
+import { Notification } from "@/types/Notification";
 // import { useNotificationContext } from "./NotificationContext";
 interface SocketContextType {
   socket: Socket | null;
@@ -20,6 +23,7 @@ enum NotificationType {
   COMMENT = "comment",
   BID = "bid",
   MESSAGE = "message",
+  FOLLOW="follow"
 }
 
 
@@ -41,6 +45,7 @@ interface NotificationData {
   createdAt: string;
   updatedAt: string;
   __v: number;
+  newNotification:Notification;
 }
 
 const SocketContext = createContext<SocketContextType | undefined>(undefined);
@@ -56,6 +61,7 @@ export const SocketContextProvider = ({
   const [socket, setSocket] = useState<Socket | null>(null);
   const [onlineUsers, setOnlineUsers] = useState<any[]>([]);
   const { toast } = useToast();
+  const {addOneNotification}=useNotifications()
   useEffect(() => {
     console.log("SocketContextProvider mounted");
     if (user) {
@@ -72,10 +78,10 @@ export const SocketContextProvider = ({
         // Handle the list of online users as needed
       });
 
-      newSocket?.on("notification", (data: NotificationData) => {
+      newSocket?.on("notification", (data: Notification) => {
         console.log(data, "data in notification");
 
-        notificationToast({ data, toast });
+        notificationToast({ data, toast ,addOneNotification});
       });
 
       return () => {
@@ -118,12 +124,28 @@ export const SocketContextProvider = ({
 const notificationToast = ({
   data,
   toast,
+  addOneNotification
 }: {
-  data: NotificationData;
+  data: Notification;
   toast: ReturnType<typeof useToast>["toast"];
+  addOneNotification:any
 }) => {
   let title = "";
   let description = ``;
+  console.log('notificationType:', data.notificationType);
+  console.log('data in toast ',data);
+  console.log('data.newNotification',data.newNotification);
+  
+  
+
+  if(data.newNotification){
+    console.log(' got notification');
+    
+    addOneNotification(data.newNotification)
+  }else {
+    console.log('No newNotification in data');
+  }
+
 
   switch (data.notificationType) {
     case NotificationType.COMMENT:
@@ -136,7 +158,12 @@ const notificationToast = ({
       title = "New Message";
       description=`From: ${data.senderId.userName}\nMessage: ${data.additionalInfo}`
       break;
+      case NotificationType.FOLLOW:
+      title="new follower";
+      description=`${data.description}`;
+      break;
     default:
+      console.log('data ',data)
       title = "New Notification";
       break;
   }
@@ -144,7 +171,7 @@ const notificationToast = ({
   toast({
     title,
     description,
-    action: <ToastAction altText="View Notification">View</ToastAction>,
+    action: <ToastAction altText="clear Notification">clear</ToastAction>,
   });
   // switch (data.notificationType) {
   //   case NotificationType.COMMENT:

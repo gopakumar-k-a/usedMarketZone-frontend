@@ -7,10 +7,11 @@ import Sidebar from "./components/user/sideNav/SideBar";
 import BottomBarMobile from "./components/user/sideNav/mobile/BottomBarMobile";
 import { Outlet } from "react-router-dom";
 import TopBarMobile from "./components/user/sideNav/mobile/TopBarMobile";
+import useNotifications from "./utils/hooks/userNotification/useNofication";
 function App() {
   const dispatch = useAppDispatch();
   //dark mode
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState<"dark"|"light">("light");
 
   useEffect(() => {
     if (theme == "dark") {
@@ -34,6 +35,7 @@ function App() {
   const toggleSidebar = () => {
     setIsExpanded(!isExpanded);
   };
+  const {isUnreadNotifications}=useNotifications()
 
   return (
     <>
@@ -46,6 +48,7 @@ function App() {
             handleLogout={handleLogout}
             handleThemeSwitch={handleThemeSwitch}
             theme={theme}
+            
           />
         </div>
         <div
@@ -57,6 +60,7 @@ function App() {
             handleLogout={handleLogout}
             handleThemeSwitch={handleThemeSwitch}
             theme={theme}
+            hasUnreadNotifications={isUnreadNotifications}
           />
         </div>
 

@@ -23,6 +23,8 @@ export const END_POINTS = {
   GET_FOLLOWING: "/api/user/following",
   SUBMIT_KYC_REQUEST:"/api/user/kyc-request",
   SEARCH_ON_APP:"/api/user/search",
+  GET_NOTIFICATIONS:"/api/user/get-notifications",
+  CHANGE_NOTIFICATION_STATUS:"/api/user/change-notification-status",
   //chat
   SEND_MESSAGE: "/api/message/send-message",
   SEND_POST_AS_MESSAGE:"/api/message/send-post",

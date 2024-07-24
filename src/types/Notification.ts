@@ -1,9 +1,11 @@
+import { NormalBackendRes } from "./login";
 
 
 export enum NotificationType {
   COMMENT = "comment",
   BID = "bid",
   MESSAGE = "message",
+  FOLLOW='follow'
 }
 
 export interface Notification {
@@ -26,7 +28,14 @@ export interface Notification {
   status: string;
   additionalInfo: string;
   priority: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   __v: number;
+  newNotification:Notification;
+  description:string;
+}
+
+
+export interface NotificationRes extends NormalBackendRes{
+  userNotifications:Notification[]
 }

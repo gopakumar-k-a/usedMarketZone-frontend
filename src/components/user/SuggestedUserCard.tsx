@@ -1,7 +1,7 @@
 import React from "react";
 import { FaRegUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
-
+import { useAppSelector } from "@/utils/hooks/reduxHooks";
 interface UserCardProps {
   userData: {
     imageUrl: string;
@@ -12,7 +12,9 @@ interface UserCardProps {
   };
 }
 
+
 const UserCard: React.FC<UserCardProps> = ({ userData }) => {
+  const myId=useAppSelector((state)=>state.auth.user?._id)
   return (
     <>
       <div className="flex justify-center pb-2">
@@ -36,7 +38,7 @@ const UserCard: React.FC<UserCardProps> = ({ userData }) => {
               </div>
             )}
           </div>
-          <Link to={"/user-profile"} state={{ userId: userData._id }}>
+          <Link to={`${myId==userData._id?'/profile/my-posts':'/user-profile'}`} state={{ userId: userData._id }}>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               View
             </button>

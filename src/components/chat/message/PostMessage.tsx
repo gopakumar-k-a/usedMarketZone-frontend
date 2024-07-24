@@ -44,10 +44,6 @@ function PostMessage({ message }: { message: Chat }) {
               createdAt={message.postCreatedAt}
               isBidding={message.postIsBidding}
             />
-
-
-
-
             
           </Link>
         </div>

@@ -2,21 +2,18 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
-  faHeart,
-  faBell,
-  faEnvelope,
-  faUser,
-  faBars,
-  faGreaterThan,
-  faLessThan,
   faMagnifyingGlass,
   faHandHoldingHeart,
   faGavel,
   faMessage,
+  faBell,
+  faUser,
   faGear,
   faRightFromBracket,
   faMoon,
   faSun,
+  faGreaterThan,
+  faLessThan,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
 
@@ -26,6 +23,14 @@ const Sidebar = ({
   handleLogout,
   theme,
   handleThemeSwitch,
+  hasUnreadNotifications,
+}:{
+  isExpanded:boolean,
+  toggleSidebar: () => void,
+  handleLogout: () => void,
+  theme:'dark'|'light',
+  handleThemeSwitch:()=>void,
+  hasUnreadNotifications:boolean
 }) => {
   const location = useLocation();
 
@@ -90,7 +95,9 @@ const Sidebar = ({
               <FontAwesomeIcon
                 icon={faHome}
                 className={`w-5 h-5 mr-3 ${
-                  location.pathname.includes("/home") ? "text-white" : "text-black"
+                  location.pathname.includes("/home")
+                    ? "text-white"
+                    : "text-black"
                 } dark:text-white`}
               />
               Home
@@ -120,7 +127,9 @@ const Sidebar = ({
               <FontAwesomeIcon
                 icon={faHandHoldingHeart}
                 className={`w-5 h-5 mr-3 ${
-                  location.pathname.includes("/post/sell-product") ? "text-white" : "text-black"
+                  location.pathname.includes("/post/sell-product")
+                    ? "text-white"
+                    : "text-black"
                 } dark:text-white`}
               />
               Sell
@@ -136,7 +145,9 @@ const Sidebar = ({
               <FontAwesomeIcon
                 icon={faGavel}
                 className={`w-5 h-5 mr-3 ${
-                  location.pathname.includes("/post/auction-product") ? "text-white" : "text-black"
+                  location.pathname.includes("/post/auction-product")
+                    ? "text-white"
+                    : "text-black"
                 } dark:text-white`}
               />
               Auction
@@ -157,7 +168,7 @@ const Sidebar = ({
             </Link>
             <Link
               to="/notifications"
-              className={`p-4 mb-2 flex items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${
+              className={`relative p-4 mb-2 flex items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${
                 location.pathname.includes("/notifications")
                   ? "bg-customOrange text-white"
                   : "bg-gray-200 dark:bg-gray-700"
@@ -167,6 +178,9 @@ const Sidebar = ({
                 icon={faBell}
                 className="w-5 h-5 mr-3 text-black dark:text-white"
               />
+              {hasUnreadNotifications && (
+                <span className="absolute right-0 top-0 w-3 h-3 bg-red-600 rounded-full"></span>
+              )}
               Notifications
             </Link>
             <Link
@@ -180,7 +194,9 @@ const Sidebar = ({
               <FontAwesomeIcon
                 icon={faUser}
                 className={`w-5 h-5 mr-3 ${
-                  location.pathname.includes("/profile") ? "text-white" : "text-black"
+                  location.pathname.includes("/profile")
+                    ? "text-white"
+                    : "text-black"
                 } dark:text-white`}
               />
               Profile
@@ -207,124 +223,161 @@ const Sidebar = ({
             <Link
               to="/home"
               className={`p-4 block text-gray-800 dark:text-white ${
-                location.pathname.includes("/home") ? "bg-customOrange text-white rounded-xl" : ""
+                location.pathname.includes("/home")
+                  ? "bg-customOrange text-white rounded-xl"
+                  : ""
               }`}
             >
               <FontAwesomeIcon
                 icon={faHome}
                 className={`w-6 h-6 ${
-                  location.pathname.includes("/home") ? "text-white" : "text-black"
+                  location.pathname.includes("/home")
+                    ? "text-white"
+                    : "text-black"
                 } dark:text-white`}
               />
             </Link>
             <Link
               to="/search"
               className={`p-4 block text-gray-800 dark:text-white ${
-                location.pathname.includes("/search") ? "bg-customOrange rounded-xl text-white" : ""
+                location.pathname.includes("/search")
+                  ? "bg-customOrange rounded-xl text-white"
+                  : ""
               }`}
             >
               <FontAwesomeIcon
                 icon={faMagnifyingGlass}
                 className={`w-6 h-6 ${
-                  location.pathname.includes("/search") ? "text-white" : "text-black"
+                  location.pathname.includes("/search")
+                    ? "text-white"
+                    : "text-black"
                 } dark:text-white`}
               />
             </Link>
             <Link
               to="/post/sell-product"
               className={`p-4 block text-gray-800 dark:text-white ${
-                location.pathname.includes("/post/sell-product") ? "bg-customOrange rounded-xl text-white" : ""
+                location.pathname.includes("/post/sell-product")
+                  ? "bg-customOrange rounded-xl text-white"
+                  : ""
               }`}
             >
               <FontAwesomeIcon
                 icon={faHandHoldingHeart}
                 className={`w-6 h-6 ${
-                  location.pathname.includes("/post/sell-product") ? "text-white" : "text-black"
+                  location.pathname.includes("/post/sell-product")
+                    ? "text-white"
+                    : "text-black"
                 } dark:text-white`}
               />
             </Link>
             <Link
               to="/post/auction-product"
               className={`p-4 block text-gray-800 dark:text-white ${
-                location.pathname.includes("/post/auction-product") ? "bg-customOrange rounded-xl text-white" : ""
+                location.pathname.includes("/post/auction-product")
+                  ? "bg-customOrange rounded-xl text-white"
+                  : ""
               }`}
             >
               <FontAwesomeIcon
                 icon={faGavel}
                 className={`w-6 h-6 ${
-                  location.pathname.includes("/post/auction-product") ? "text-white" : "text-black"
+                  location.pathname.includes("/post/auction-product")
+                    ? "text-white"
+                    : "text-black"
                 } dark:text-white`}
               />
             </Link>
             <Link
               to="/messages"
               className={`p-4 block text-gray-800 dark:text-white ${
-                location.pathname.includes("/messages") ? "bg-customOrange rounded-xl text-white" : ""
+                location.pathname.includes("/messages")
+                  ? "bg-customOrange rounded-xl text-white"
+                  : ""
               }`}
             >
               <FontAwesomeIcon
                 icon={faMessage}
                 className={`w-6 h-6 ${
-                  location.pathname.includes("/messages") ? "text-white" : "text-black"
+                  location.pathname.includes("/messages")
+                    ? "text-white"
+                    : "text-black"
                 } dark:text-white`}
               />
             </Link>
             <Link
               to="/notifications"
-              className={`p-4 block text-gray-800 dark:text-white ${
-                location.pathname.includes("/notifications") ? "bg-customOrange rounded-xl text-white" : ""
+              className={`relative p-4 block text-gray-800 dark:text-white ${
+                location.pathname.includes("/notifications")
+                  ? "bg-customOrange rounded-xl text-white"
+                  : ""
               }`}
             >
               <FontAwesomeIcon
                 icon={faBell}
                 className={`w-6 h-6 ${
-                  location.pathname.includes("/notifications") ? "text-white" : "text-black"
+                  location.pathname.includes("/notifications")
+                    ? "text-white"
+                    : "text-black"
                 } dark:text-white`}
               />
+              {hasUnreadNotifications && (
+                <span className="absolute right-1 top-2 w-2 h-2 bg-red-600 rounded-full"></span>
+              )}
             </Link>
             <Link
               to="/profile/my-posts"
               className={`p-4 block text-gray-800 dark:text-white ${
-                location.pathname.includes("/profile") ? "bg-customOrange rounded-xl text-white" : ""
+                location.pathname.includes("/profile")
+                  ? "bg-customOrange rounded-xl text-white"
+                  : ""
               }`}
             >
               <FontAwesomeIcon
                 icon={faUser}
                 className={`w-6 h-6 ${
-                  location.pathname.includes("/profile") ? "text-white" : "text-black"
+                  location.pathname.includes("/profile")
+                    ? "text-white"
+                    : "text-black"
                 } dark:text-white`}
               />
             </Link>
             <Link
               to="/settings"
               className={`p-4 block text-gray-800 dark:text-white ${
-                location.pathname.includes("/settings") ? "bg-customOrange rounded-xl text-white" : ""
+                location.pathname.includes("/settings")
+                  ? "bg-customOrange rounded-xl text-white"
+                  : ""
               }`}
             >
               <FontAwesomeIcon
                 icon={faGear}
                 className={`w-6 h-6 ${
-                  location.pathname.includes("/settings") ? "text-white" : "text-black"
+                  location.pathname.includes("/settings")
+                    ? "text-white"
+                    : "text-black"
                 } dark:text-white`}
               />
             </Link>
           </div>
         )}
       </div>
-
-      <div className="mt-2 mb-8">
-        <button
-          onClick={handleLogout}
-          className="flex items-center p-4 text-gray-800 dark:text-white"
-        >
+      <div className="flex flex-col items-center">
+        {isExpanded && (
+          <button
+            className="p-4 mb-4 flex items-center text-gray-800 dark:text-white hover:text-red-600"
+            onClick={handleLogout}
+          >
+            <FontAwesomeIcon icon={faRightFromBracket} className="w-5 h-5" />
+            <span className="ml-2">Logout</span>
+          </button>
+        )}
+        <Link to="/settings" className="p-4 block">
           <FontAwesomeIcon
-            icon={faRightFromBracket}
-            className="w-6 h-6 text-black dark:text-white"
+            icon={faGear}
+            className="w-6 h-6 text-gray-800 dark:text-white"
           />
-          {isExpanded && (
-            <span className="ml-2 dark:text-xl text-lg font-bold">Logout</span>
-          )}
-        </button>
+        </Link>
       </div>
     </div>
   );

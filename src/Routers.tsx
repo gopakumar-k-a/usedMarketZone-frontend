@@ -16,6 +16,7 @@ import {
   SettingsPage,
   SearchPage,
   OwnerBidStatus,
+  NotificationPage,
   //auth
   ErrorPage,
   AuthenticationPage,
@@ -82,9 +83,9 @@ export const AppRouter = createBrowserRouter([
             element: <OwnerBookmarks />,
           },
           {
-            path:"my-bids",
-            element:<OwnerBidStatus/>
-          }
+            path: "my-bids",
+            element: <OwnerBidStatus />,
+          },
         ],
       },
       {
@@ -148,6 +149,14 @@ export const AppRouter = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <SearchPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/notifications",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <NotificationPage />
           </Suspense>
         ),
       },
