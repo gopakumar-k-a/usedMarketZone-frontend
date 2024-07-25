@@ -1,10 +1,20 @@
 import { useAppSelector } from "@/utils/hooks/reduxHooks";
-
+import { IoArrowBack } from "react-icons/io5";
+import { setChatSelectedNull } from "@/redux/reducers/chat/chatSlice";
+import { useAppDispatch } from "@/utils/hooks/reduxHooks";
 function ChatHeader() {
   const { selectedChatUserData } = useAppSelector((state) => state.chat);
+  const dispatch = useAppDispatch();
+  const handleBackClick = () => {
+    dispatch(setChatSelectedNull());
+  };
   return (
     <header>
       <div className="flex items-center cursor-pointer  bg-gray-100 p-2 rounded-md">
+        <IoArrowBack
+          className="text-gray-600 w-6 h-6 mr-3"
+          onClick={handleBackClick}
+        />
         <div className="w-12 h-12 bg-gray-300 rounded-full mr-3">
           <img
             src={`${selectedChatUserData.imageUrl ? selectedChatUserData.imageUrl : "https://placehold.co/200x/ffa8e4/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato"}`}

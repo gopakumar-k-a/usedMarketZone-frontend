@@ -13,7 +13,7 @@ export interface Notification {
   notificationType: NotificationType;
   messageId: {
     _id: string;
-    messages: string;
+    message: string;
   };
   senderId: {
     _id: string;

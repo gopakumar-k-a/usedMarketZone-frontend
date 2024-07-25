@@ -3,6 +3,7 @@ import { END_POINTS } from "@/constants/endPoints.ts";
 import { ConversationsRes } from "@/types/chat.ts";
 import { NormalBackendRes } from "@/types/login.ts";
 import { NotificationRes } from "@/types/Notification.ts";
+import { MyKycDataRes } from "@/types/user.ts";
 import { AxiosError, AxiosResponse, isAxiosError } from "axios";
 import { toast } from "react-toastify";
 export const getSuggestedUsers = async () => {
@@ -118,6 +119,14 @@ export const getNotifications = async () => {
 export const changeNotificationUnreadStatus = async () => {
   const response = await axiosUserInstance.patch(
     END_POINTS.CHANGE_NOTIFICATION_STATUS
+  );
+
+  return response.data;
+};
+
+export const getMyKycData = async () => {
+  const response: AxiosResponse<MyKycDataRes> = await axiosUserInstance.get(
+    END_POINTS.MY_KYC_DATA
   );
 
   return response.data;

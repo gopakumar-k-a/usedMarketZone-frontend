@@ -50,3 +50,20 @@ export const getChat = async (recieverId: string) => {
 
   return response.data;
 };
+
+export const getUnreadMessages = async (senderId: string) => {
+  const response = await axiosUserInstance.get(
+    `${END_POINTS.GET_UNREAD_MESSAGES}/${senderId}`
+  );
+
+  console.log('response unread messages ',response.data);
+  
+
+  return response.data;
+};
+
+export const changeReadStatus=async(senderId:string)=>{
+  const response=await axiosUserInstance.patch(`${END_POINTS.CHANGE_READ_STATUS}/${senderId}`)
+
+  return response.data
+}

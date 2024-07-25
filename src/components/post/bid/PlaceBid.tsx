@@ -10,9 +10,6 @@ import { CustomAlertDialogue } from "@/components/alert/CustomAlertDialogue";
 import { useSocketContext } from "@/context/SocketContext";
 
 
-import { ToastAction } from "@/components/ui/toast"
-import { useToast } from "@/components/ui/use-toast"
-
 
 
 function PlaceBid({
@@ -99,26 +96,19 @@ const {socket}=useSocketContext()
 
   const confirmPlaceBidTitle = `Are sure Place Bid ${bidInput} this can't be unDone`;
   const confirmPlaceBidDescription = `Clicking Confirming will place Bid Amount of ${bidInput} and Can't be UnDone Click Confirm To Continue`;
+  const handleBidInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const parsedValue = parseFloat(value);
+    if (!isNaN(parsedValue) && parsedValue > 0 && parsedValue <= 10000000) {
+      setBidInput(value);
+    } else if (value === "") {
+      setBidInput("");
+    }
+  };
 
-  const { toast:customToast } = useToast()
   return (
     <>
-        <Button
-      variant="outline"
-      onClick={() => {
-        customToast({
-          title: "Scheduled: Catch up ",
-          description: "Friday, February 10, 2023 at 5:57 PM",
-          action: (
-            <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
-          ),
-        })
-      }}
-    >
 
-
-      Add to calendar
-    </Button>
     
       <div className="grid grid-cols-2 bg-gray-200 w-full p-2 sm:mb-0 mb-16">
         <div className="min-h-48 w-full">
@@ -158,15 +148,15 @@ const {socket}=useSocketContext()
         {myBid && bidInput && (
         <>
           <div className="current-bids">
-            <span className={`current-bid ${newBid >= highestBid ? '' : ''}`}>
+            <span className={`current-bid font-bold  text-lg text-green-500 ${newBid >= highestBid ? '' : ''}`}>
               &#8377; {myBid}
             </span>
-            <span>+</span>
-            <span className={`current-bid ${newBid >= highestBid ? '' : ''}`}>
+            <span className="font-bold  text-lg text-red-500">+</span>
+            <span className={`current-bid font-bold  text-lg text-blue-500 ${newBid >= highestBid ? '' : ''}`}>
               &#8377; {bidInput}
             </span>
           </div>
-          <div className="new-bid">my new bid: &#8377; {newBid}</div>
+          <div className="new-bid font-bold  text-lg text-black">my new bid: &#8377; {newBid}</div>
         </>
       )}
         </div>
@@ -179,7 +169,7 @@ const {socket}=useSocketContext()
                   className="w-2/3"
                   placeholder="place your bid amount"
                   value={bidInput}
-                  onChange={(e) => setBidInput(e.target.value)}
+                  onChange={(e) => handleBidInputChange(e)}
                 />
               </div>
               <div className="col-span-1">

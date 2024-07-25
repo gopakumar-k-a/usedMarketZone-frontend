@@ -5,13 +5,16 @@ import { logOut } from "./redux/reducers/auth/authSlice";
 import UserNavBar from "./components/user/navbar/UserNavBar";
 import Sidebar from "./components/user/sideNav/SideBar";
 import BottomBarMobile from "./components/user/sideNav/mobile/BottomBarMobile";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import TopBarMobile from "./components/user/sideNav/mobile/TopBarMobile";
 import useNotifications from "./utils/hooks/userNotification/useNofication";
+import { getNotifications } from "./api/user";
+import useGetMessage from "./utils/hooks/chat/useGetMessage";
+
 function App() {
   const dispatch = useAppDispatch();
   //dark mode
-  const [theme, setTheme] = useState<"dark"|"light">("light");
+  const [theme, setTheme] = useState<"dark" | "light">("light");
 
   useEffect(() => {
     if (theme == "dark") {
@@ -35,7 +38,22 @@ function App() {
   const toggleSidebar = () => {
     setIsExpanded(!isExpanded);
   };
-  const {isUnreadNotifications}=useNotifications()
+  const {
+    isUnreadNotifications,
+    // notifications,
+    setNotifications,
+    // markNotificationsRead,
+  } = useNotifications();
+
+  const fetchNotifications = async () => {
+    const { userNotifications } = await getNotifications();
+    setNotifications(userNotifications);
+  };
+
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
+
 
   return (
     <>
@@ -43,14 +61,17 @@ function App() {
         {/* <div className="h-12  bg-violet-500 col-span-12">
           <UserNavBar />
         </div> */}
-        <div className="h-16 w-full fixed top-0 bg-yellow-500 block  sm:block md:hidden  z-50">
+        {/* <div className="h-16 w-full fixed top-0 bg-yellow-500 block  sm:block md:hidden  z-50"> */}
+ 
+<div className="h-16 w-full  fixed top-0 bg-yellow-500 block sm:hidden z-50">
           <TopBarMobile
             handleLogout={handleLogout}
             handleThemeSwitch={handleThemeSwitch}
             theme={theme}
-            
           />
         </div>
+      
+        
         <div
           className={`h-full  bg-red-600 hidden sm:block ${isExpanded ? "sm:col-span-2" : "sm:col-span-1"}`}
         >

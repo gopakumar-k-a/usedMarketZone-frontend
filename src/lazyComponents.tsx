@@ -40,7 +40,7 @@ const AdminPageLayout = React.lazy(
   () => import("./pages/admin/AdminPageLayout")
 );
 const AdminDashboard = React.lazy(
-  () => import("./components/admin/AdminDashboard")
+  () => import("./pages/admin/AdminDashboardPage")
 );
 const UserManagement=React.lazy(()=>import("./pages/admin/UserManagement"))
 const PostMangement=React.lazy(()=>import("./pages/admin/PostManagementPage"))
@@ -48,6 +48,7 @@ const BidVerfication=React.lazy(()=>import("./pages/admin/bid/BidVerificationPag
 const UserProfileAdmin=React.lazy(()=>import("./pages/admin/UserProfileAdmin"))
 const PostIncidents=React.lazy(()=>import("./pages/admin/PostIncidentsPage"))
 const BidHistoryAdmin=React.lazy(()=>import("./components/admin/bidHistory/BidHistoryAdmin"))
+const KycRequestPage=React.lazy(()=>import("./pages/admin/KycRequestPage"))
 export {
   //user
   App,
@@ -83,6 +84,7 @@ export {
   UserProfileAdmin,
   BidVerfication,
   PostIncidents,
-  BidHistoryAdmin
+  BidHistoryAdmin,
+  KycRequestPage
   
 };

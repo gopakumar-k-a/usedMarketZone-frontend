@@ -372,12 +372,12 @@ const Sidebar = ({
             <span className="ml-2">Logout</span>
           </button>
         )}
-        <Link to="/settings" className="p-4 block">
+        {/* <Link to="/settings" className="p-4 block">
           <FontAwesomeIcon
             icon={faGear}
             className="w-6 h-6 text-gray-800 dark:text-white"
           />
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

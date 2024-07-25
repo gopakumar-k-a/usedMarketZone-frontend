@@ -7,6 +7,7 @@ import { LuSunMedium } from "react-icons/lu";
 // import { Link } from "react-router-dom";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { Link } from "react-router-dom";
 
 function TopBarMobile({ handleLogout, handleThemeSwitch, theme }) {
   const [isSettingsOpen, setSettingOpen] = useState(false);
@@ -36,7 +37,9 @@ function TopBarMobile({ handleLogout, handleThemeSwitch, theme }) {
         </div>
 
         <div className="flex w-full justify-end">
-          <MdOutlineMessage className="h-8 w-8 pr-2 text-white" />
+          <Link to={"/messages"}>
+          <MdOutlineMessage className="h-8 w-8 pr-2 text-white cursor-pointer" />
+          </Link>
         </div>
       </nav>
       {isSettingsOpen && (

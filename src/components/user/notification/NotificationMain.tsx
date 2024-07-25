@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import MessageNotification from "./MessageNotification";
 import PostMessageNotification from "./PostMessageNotification";
 import FollowingNotification from "./FollowingNotification";
@@ -22,9 +22,28 @@ function NotificationMain() {
   };
 
   useEffect(() => {
-    fetchNotifications();
     notificationStatusChangeApi();
+    fetchNotifications();
   }, []);
+  interface GroupedNotifications {
+    [date: string]: Notification[];
+  }
+
+  const groupNotificationsByDate = (notifications: Notification[]) => {
+    return notifications.reduce(
+      (groups: GroupedNotifications, notification: Notification) => {
+        const date = new Date(notification.createdAt).toDateString();
+        if (!groups[date]) {
+          groups[date] = [];
+        }
+        groups[date].push(notification);
+        return groups;
+      },
+      {}
+    );
+  };
+  const groupedNotifications = groupNotificationsByDate(notifications);
+
   return (
     <>
       <div
@@ -38,35 +57,51 @@ function NotificationMain() {
             </p>
           </div>
 
-          {notifications &&
+          {/* {notifications &&
             notifications.length > 0 &&
             notifications.map((notification) => {
               switch (notification.notificationType) {
                 case NotificationType.MESSAGE:
-                  return (
-                    <MessageNotification
-                      userName={notification?.senderId?.userName}
-                      message={notification?.messageId?.messages}
-                    />
-                  );
+                  return <MessageNotification notification={notification} />;
                 case NotificationType.FOLLOW:
-                  return (
-                    <FollowingNotification
-                      userName={notification.senderId.userName}
-                      createdAt={notification.createdAt}
-                    />
-                  );
+                  return <FollowingNotification notification={notification} />;
 
                 default:
                   return <div>test default</div>;
               }
-            })}
+            })} */}
+          <div>
+            {Object.keys(groupedNotifications).map((date) => (
+              <div key={date}>
+                <h1>{date}</h1>
+                {groupedNotifications[date].map((notification, index) => {
+                  switch (notification.notificationType) {
+                    case NotificationType.MESSAGE:
+                      return (
+                        <MessageNotification
+                          key={index}
+                          notification={notification}
+                        />
+                      );
+                    case NotificationType.FOLLOW:
+                      return (
+                        <FollowingNotification
+                          key={index}
+                          notification={notification}
+                        />
+                      );
+                    default:
+                      return <div key={index}>test default</div>;
+                  }
+                })}
+              </div>
+            ))}
+          </div>
 
-          {/* <MessageNotification /> */}
           <PostMessageNotification />
           <OutBidNotification />
 
-          <div className="w-full p-3 mt-8 bg-white rounded flex">
+          {/* <div className="w-full p-3 mt-8 bg-white rounded flex">
             <div
               aria-label="heart icon"
               role="img"
@@ -339,7 +374,7 @@ function NotificationMain() {
               Thats it for now :)
             </p>
             <hr className="w-full" />
-          </div>
+          </div> */}
         </div>
       </div>
     </>

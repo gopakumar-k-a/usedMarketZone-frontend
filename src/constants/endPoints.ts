@@ -25,11 +25,14 @@ export const END_POINTS = {
   SEARCH_ON_APP:"/api/user/search",
   GET_NOTIFICATIONS:"/api/user/get-notifications",
   CHANGE_NOTIFICATION_STATUS:"/api/user/change-notification-status",
+  MY_KYC_DATA:"/api/user/my-kyc",
   //chat
   SEND_MESSAGE: "/api/message/send-message",
   SEND_POST_AS_MESSAGE:"/api/message/send-post",
   SEND_POST_REPLY_AS_MESSAGE:"/api/message/reply-post",
   GET_CHAT: "/api/message/get-chat",
+  GET_UNREAD_MESSAGES:"/api/message/get-unread-messages",
+  CHANGE_READ_STATUS:"/api/message/change-message-status",
   //product
 
   POST_PRODUCT: "/api/product/post-product",
@@ -64,4 +67,6 @@ export const END_POINTS = {
   GET_POST_REPORTS: "/api/admin/get-post-reports",
   BLOCK_USER_POST:"/api/admin/block-post",
   GET_BID_HISTORY_ADMIN:"/api/admin/bid-history",
+  GET_ALL_BID_REQUESTS_ADMIN:"/api/admin/get-kyc-requests",
+  HANDLE_KYC_REQUEST:"/api/admin/handle-kyc-request"
 };

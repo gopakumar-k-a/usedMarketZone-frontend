@@ -24,7 +24,7 @@ import { AiOutlineDashboard, AiFillDashboard } from "react-icons/ai";
 import { RiGroup2Line, RiGroup2Fill } from "react-icons/ri";
 import { BsPostcard, BsPostcardFill } from "react-icons/bs";
 import { IoHammer, IoHammerOutline } from "react-icons/io5";
-import { MdReport, MdReportGmailerrorred } from "react-icons/md";
+import { MdReport, MdReportGmailerrorred,MdLockPerson,MdOutlineLockPerson } from "react-icons/md";
 
 import { Link, useLocation } from "react-router-dom";
 const AdminSideBar = ({
@@ -181,6 +181,24 @@ const AdminSideBar = ({
                 </>
               )}
             </Link>
+            <Link
+              to="/admin/kyc-requests"
+              className={`p-4 mb-2 flex items-center text-xl font-bold rounded-lg h-6 ${currentPath === "/admin/kyc-requests" ? "dark:bg-adminDarkLogo dark:bg-opacity-10 dark:text-white bg-gray-700 bg-opacity-20" : "bg-white dark:bg-adminBgDark"} text-gray-800 dark:text-white`}
+            >
+              {currentPath === "/admin/kyc-requests" ? (
+                <>
+                  <MdLockPerson className=" text-2xl font-bold text-adminDarkLogo mr-2" />
+                  <div className="text-adminDarkLogo">KYC Requests</div>
+                </>
+              ) : (
+                <>
+                  <MdOutlineLockPerson className="text-2xl font-bold mr-2" />
+                  <div className="text-black dark:text-white">
+                 Kyc Requests
+                  </div>
+                </>
+              )}
+            </Link>
           </>
         )}
 
@@ -253,6 +271,20 @@ const AdminSideBar = ({
               ) : (
                 <>
                   <MdReportGmailerrorred className="text-4xl font-bold" />
+                </>
+              )}
+            </Link>
+            <Link
+              to="/admin/post-incidents"
+              className={`p-4 block text-gray-800 dark:text-white rounded-2xl ${currentPath === "/admin/kyc-requests" ? "dark:bg-adminDarkLogo dark:bg-opacity-10 dark:text-white bg-gray-700 bg-opacity-20" : "bg-white dark:bg-adminBgDark"}`}
+            >
+              {currentPath === "/admin/kyc-requests" ? (
+                <>
+                  <MdLockPerson className="text-4xl font-bold text-adminDarkLogo" />
+                </>
+              ) : (
+                <>
+                  <MdOutlineLockPerson className="text-4xl font-bold" />
                 </>
               )}
             </Link>

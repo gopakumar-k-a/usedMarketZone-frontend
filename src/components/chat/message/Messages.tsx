@@ -24,7 +24,8 @@ function Messages() {
 
   return (
     <div className="flex h-[90vh]  flex-col">
-      <div className=" overflow-y-auto min-h-[80vh] p-4 pb-36">
+    {/* // <div className="flex flex-col h-full relative"> */}
+      <div className=" overflow-y-auto min-h-[80vh] p-4 pb-36 mt-16 sm:mt-20">
         {/* messages */}
         {messages && messages.length > 0 ? (
           messages.map((message, index) => (
@@ -47,7 +48,10 @@ function Messages() {
           </>
         )}
       </div>
+      <div className="fixed sm:bottom-0 bottom-16 sm:w-7/12 w-full ">
+
       <MessageInput />
+      </div>
       {loading ? (
         <>
           <div>loading</div>

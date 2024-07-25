@@ -4,6 +4,7 @@ import { END_POINTS } from "@/constants/endPoints";
 import { PostReportRes } from "@/types/admin/postReport";
 import { AxiosResponse } from "axios";
 import { GetBidHistoryOfProductRes } from "@/types/bid";
+import { KycAdminUpdatedData, KycDataAdmin } from "@/types/user";
 
 export const getAllUsers = async (page: number, limit: number) => {
   const response = await axiosAdminInstance.get(
@@ -80,8 +81,29 @@ export const blockPostAdmin = async (productId: string) => {
 };
 
 export const getBidHistoryOfProduct = async (bidProductId: string) => {
-  const response:AxiosResponse<GetBidHistoryOfProductRes> = await axiosAdminInstance.get(
-    `${END_POINTS.GET_BID_HISTORY_ADMIN}/${bidProductId}`
+  const response: AxiosResponse<GetBidHistoryOfProductRes> =
+    await axiosAdminInstance.get(
+      `${END_POINTS.GET_BID_HISTORY_ADMIN}/${bidProductId}`
+    );
+  return response.data;
+};
+
+export const getKycDataAdmin = async () => {
+  const response: AxiosResponse<KycDataAdmin> = await axiosAdminInstance.get(
+    `${END_POINTS.GET_ALL_BID_REQUESTS_ADMIN}`
   );
+
+  return response.data;
+};
+
+export const handleKycRequest = async (
+  kycId: string,
+  type: "accept" | "reject"
+) => {
+  const response:AxiosResponse<KycAdminUpdatedData> = await axiosAdminInstance.patch(
+    `${END_POINTS.HANDLE_KYC_REQUEST}/${kycId}`,
+    { type }
+  );
+
   return response.data;
 };

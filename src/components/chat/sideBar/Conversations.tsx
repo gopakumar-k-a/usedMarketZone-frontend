@@ -6,7 +6,7 @@ import Loader from "@/components/loader/Loader";
 function Conversations() {
   const { conversations, loading } = useGetConversations();
   return (
-    <div className="overflow-y-auto h-screen p-3 mb-9 pb-20">
+    <div className="overflow-y-auto h-screen p-3 mb-9 pb-20 pt-20">
       {conversations.map((conversation: FollowingUser) => (
         <Conversation key={`${conversation.following._id}`} conversation={conversation} />
       ))}
