@@ -7,6 +7,10 @@ function MessageInput() {
   const { loading, sendMessage } = useSendMessage();
 
   const handleSendMessage = () => {
+    const trimmedComment = newMessage.trim();
+    if (trimmedComment.length === 0) {
+      return;
+    }
     sendMessage(newMessage);
     setNewMessage("");
   };

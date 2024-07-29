@@ -90,6 +90,10 @@ const Discussion = ({ pId }) => {
 
   const handlePostComment = async () => {
     // console.log('post id ',postId);
+    const trimmedComment = newComment.trim();
+    if (trimmedComment.length === 0) {
+      return;
+    }
     console.log("post id ", pId);
 
     console.log("comment submitting ", newComment);

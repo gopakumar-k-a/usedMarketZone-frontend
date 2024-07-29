@@ -68,5 +68,7 @@ export const END_POINTS = {
   BLOCK_USER_POST:"/api/admin/block-post",
   GET_BID_HISTORY_ADMIN:"/api/admin/bid-history",
   GET_ALL_BID_REQUESTS_ADMIN:"/api/admin/get-kyc-requests",
-  HANDLE_KYC_REQUEST:"/api/admin/handle-kyc-request"
+  HANDLE_KYC_REQUEST:"/api/admin/handle-kyc-request",
+  GET_ALL_PRODUCT_POSTS_ADMIN:"/api/admin/all-product-posts",
+  GET_DASHBOARD_STATISTICS:"/api/admin/get-dashboard-statistics"
 };

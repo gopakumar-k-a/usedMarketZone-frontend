@@ -36,7 +36,9 @@ import {
   BidVerfication,
   PostIncidents,
   BidHistoryAdmin,
-  KycRequestPage
+  KycRequestPage,
+  ViewBidProductPageAdmin,
+  ViewProductPageAdmin,
 } from "./lazyComponents";
 import ForgotPass from "./components/auth/ForgotPass";
 
@@ -260,9 +262,17 @@ export const AppRouter = createBrowserRouter([
         element: <BidHistoryAdmin />,
       },
       {
-        path:"kyc-requests",
-        element:<KycRequestPage/>
-      }
+        path: "kyc-requests",
+        element: <KycRequestPage />,
+      },
+      {
+        path: "view-bid-product",
+        element: <ViewBidProductPageAdmin />,
+      },
+      {
+        path: "view-product",
+        element: <ViewProductPageAdmin />,
+      },
     ],
   },
 ]);

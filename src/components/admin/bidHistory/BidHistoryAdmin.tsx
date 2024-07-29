@@ -51,7 +51,7 @@ function BidHistory() {
       </div>
 
       <BidHistoryProductCard bidProductData={bidProductData} />
-      <BidsByUserTable bidProductId={bidProductData._id}/>
+      <BidsByUserTable bidProductId={bidProductId}/>
 
       
     </>

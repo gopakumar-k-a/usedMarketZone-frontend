@@ -1,3 +1,5 @@
+import { NormalBackendRes } from "./login";
+
 interface ProductInterface {
   _id: string;
   productName: string;
@@ -14,7 +16,7 @@ interface ProductInterface {
   address: string;
   bookmarkedUsers?: string[];
   bookmarkedCount: number;
-  isBlocked?: boolean;
+  isBlocked: boolean;
   isSold?: boolean;
   isOtpVerified?: boolean;
   postStatus?: "draft" | "active" | "deactivated";
@@ -28,7 +30,7 @@ interface ProductInterface {
   isBookmarked: boolean;
 
   bidEndTime: string;
-  bidAcceptedTime?: string;
+  bidAcceptedTime: string;
   isDeactivatedPost: boolean;
   currentHighestBid: string;
   previousBidSumOfUser: string;
@@ -39,4 +41,8 @@ export interface BidDuration {
   day: number;
   hour: number;
   minute: number;
+}
+
+export interface GetAllProductPostsAdminRes extends NormalBackendRes {
+  productPosts: ProductInterface[];
 }

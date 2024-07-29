@@ -3,7 +3,35 @@ import { Button } from "@/components/ui/button";
 import { addNewComment } from "@/api/product";
 
 function PostComment() {
-  
+  const [comments, setComments] = useState([
+    {
+      userImage: "https://avatars.githubusercontent.com/u/22263436?v=4",
+      userName: "User 1",
+      userLevel: "Level 1",
+      commentText: "this is sample comment",
+      replies: [
+        {
+          userImage: "https://avatars.githubusercontent.com/u/22263436?v=4",
+          userName: "User 2",
+          userLevel: "Level 1",
+          commentText: "this is sample comment",
+        },
+        {
+          userImage: "https://avatars.githubusercontent.com/u/22263436?v=4",
+          userName: "User 3",
+          userLevel: "Level 1",
+          commentText: "this is sample comment",
+        },
+      ],
+    },
+    {
+      userImage: "https://avatars.githubusercontent.com/u/22263436?v=4",
+      userName: "User 4",
+      userLevel: "Level 1",
+      commentText: "this is sample comment",
+      replies: [],
+    },
+  ]);
 
   const [newComment, setNewComment] = useState("");
 
