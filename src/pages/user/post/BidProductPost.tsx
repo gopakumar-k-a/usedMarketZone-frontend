@@ -293,36 +293,36 @@ const validImageTypes: string[] = [
     postalCode: Yup.string().required("Postal Code is required"),
     productCondition: Yup.string().required("Product Condition is required"),
     productAge: Yup.string().required("Product Age is Required"),
-    bidDuration: Yup.object()
-      .shape({
-        day: Yup.number()
-          .required("Days are required")
-          .integer("Days must be an integer")
-          .min(0, "Days cannot be negative"),
-        hour: Yup.number()
-          .required("Hours are required")
-          .integer("Hours must be an integer")
-          .min(0, "Hours cannot be negative")
-          .max(23, "Hours cannot be more than 23"),
-        minute: Yup.number()
-          .required("Minutes are required")
-          .integer("Minutes must be an integer")
-          .min(0, "Minutes cannot be negative")
-          .max(59, "Minutes cannot be more than 59"),
-      })
-      .test(
-        "is-valid-duration",
-        "The total duration must be at least 5 hours",
-        function (value) {
-          const { day, hour, minute } = value;
-          console.log("day, hour, minute", day, hour, minute);
+    // bidDuration: Yup.object()
+    //   .shape({
+    //     day: Yup.number()
+    //       .required("Days are required")
+    //       .integer("Days must be an integer")
+    //       .min(0, "Days cannot be negative"),
+    //     hour: Yup.number()
+    //       .required("Hours are required")
+    //       .integer("Hours must be an integer")
+    //       .min(0, "Hours cannot be negative")
+    //       .max(23, "Hours cannot be more than 23"),
+    //     minute: Yup.number()
+    //       .required("Minutes are required")
+    //       .integer("Minutes must be an integer")
+    //       .min(0, "Minutes cannot be negative")
+    //       .max(59, "Minutes cannot be more than 59"),
+    //   })
+    //   .test(
+    //     "is-valid-duration",
+    //     "The total duration must be at least 5 hours",
+    //     function (value) {
+    //       const { day, hour, minute } = value;
+    //       console.log("day, hour, minute", day, hour, minute);
 
-          const totalMinutes = day * 24 * 60 + hour * 60 + minute;
-          console.log("result ", totalMinutes >= 5 * 60);
+    //       const totalMinutes = day * 24 * 60 + hour * 60 + minute;
+    //       console.log("result ", totalMinutes >= 5 * 60);
 
-          return totalMinutes >= 5 * 60;
-        }
-      ),
+    //       return totalMinutes >= 5 * 60;
+    //     }
+    //   ),
     // productImages: Yup.array().min(1, "Please select at least one image"),
   });
 

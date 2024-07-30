@@ -2,7 +2,7 @@
 
 
 export interface NormalBackendRes {
-    status: string,
+    status: boolean,
     message: string
 }
 

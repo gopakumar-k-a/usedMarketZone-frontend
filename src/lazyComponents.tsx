@@ -23,6 +23,7 @@ const OwnerBookmarks = React.lazy(
 const OwnerBidStatus = React.lazy(
   () => import("./components/user/profilePage/MyBids")
 );
+const OwnerParticipatingBids=React.lazy(()=>import("./components/user/profilePage/myParticipatingBids/MyParticipatingBids"))
 const SettingsPage = React.lazy(
   () => import("./pages/user/settings/SettingsPage")
 );
@@ -40,6 +41,7 @@ const AuctionProductPost = React.lazy(
 const ShowPostDetails = React.lazy(
   () => import("./pages/user/post/ShowPostDetails")
 );
+
 //auth
 const AuthenticationPage = React.lazy(
   () => import("./pages/auth/AuthenticationPage")
@@ -100,6 +102,7 @@ export {
   Chat,
   OwnerPosts,
   OwnerBookmarks,
+  OwnerParticipatingBids,
   SettingsPage,
   SearchPage,
   OwnerBidStatus,

@@ -1,7 +1,7 @@
 import { NormalBackendRes } from "@/types/login.ts";
 import { axiosUserInstance } from "../axiosInstance/axiosUserInstance.ts";
 import { END_POINTS } from "@/constants/endPoints.ts";
-import { BidHistoryResponse, UserProfileBidRes } from "@/types/bid.ts";
+import { BidHistoryResponse, UserParticipatingRes, UserProfileBidRes } from "@/types/bid.ts";
 import { AxiosResponse } from "axios";
 export const bidProductPost = async (payload) => {
   const response = await axiosUserInstance.post(
@@ -43,6 +43,14 @@ export const getUserWistBid = async () => {
     await axiosUserInstance.get(END_POINTS.GET_USER_BIDS);
 
   console.log("getUserWistBid response data ", response.data);
+
+  return response.data;
+};
+
+export const getParticipatingBids = async () => {
+  const response:AxiosResponse<UserParticipatingRes> = await axiosUserInstance.get(
+    END_POINTS.GET_USER_PARTICIPATING_BIDS
+  );
 
   return response.data;
 };

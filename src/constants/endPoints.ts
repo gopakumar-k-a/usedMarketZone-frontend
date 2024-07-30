@@ -21,18 +21,18 @@ export const END_POINTS = {
   GET_NO_OF_FOLLOW: "/api/user/num-of-follow",
   GET_FOLLOWERS: "/api/user/followers",
   GET_FOLLOWING: "/api/user/following",
-  SUBMIT_KYC_REQUEST:"/api/user/kyc-request",
-  SEARCH_ON_APP:"/api/user/search",
-  GET_NOTIFICATIONS:"/api/user/get-notifications",
-  CHANGE_NOTIFICATION_STATUS:"/api/user/change-notification-status",
-  MY_KYC_DATA:"/api/user/my-kyc",
+  SUBMIT_KYC_REQUEST: "/api/user/kyc-request",
+  SEARCH_ON_APP: "/api/user/search",
+  GET_NOTIFICATIONS: "/api/user/get-notifications",
+  CHANGE_NOTIFICATION_STATUS: "/api/user/change-notification-status",
+  MY_KYC_DATA: "/api/user/my-kyc",
   //chat
   SEND_MESSAGE: "/api/message/send-message",
-  SEND_POST_AS_MESSAGE:"/api/message/send-post",
-  SEND_POST_REPLY_AS_MESSAGE:"/api/message/reply-post",
+  SEND_POST_AS_MESSAGE: "/api/message/send-post",
+  SEND_POST_REPLY_AS_MESSAGE: "/api/message/reply-post",
   GET_CHAT: "/api/message/get-chat",
-  GET_UNREAD_MESSAGES:"/api/message/get-unread-messages",
-  CHANGE_READ_STATUS:"/api/message/change-message-status",
+  GET_UNREAD_MESSAGES: "/api/message/get-unread-messages",
+  CHANGE_READ_STATUS: "/api/message/change-message-status",
   //product
 
   POST_PRODUCT: "/api/product/post-product",
@@ -46,15 +46,19 @@ export const END_POINTS = {
   GET_POST_COMMENTS: "/api/product/get-post-comments",
   GET_REPLY_COMMENTS: "/api/product/get-comment-reply",
   DELETE_COMMENT: "/api/product/delete-comment",
-  GET_BOOKMARK_IMAGE_LIST:"/api/product/owner/get-bookmark-list",
-  DEACTIVATE_PRODUCT_SELL_POST:"/api/product/deactivate-post",
+  GET_BOOKMARK_IMAGE_LIST: "/api/product/owner/get-bookmark-list",
+  DEACTIVATE_PRODUCT_SELL_POST: "/api/product/deactivate-post",
+  //payment
+
+  CREATE_PAYMENT_ORDER:"/api/payment/create-payment-order",
+  CAPTURE_PAYMENT:"/api/payment/capture-payment",
 
   //bid
   POST_BID_PRODUCT: "/api/bid/post-bid",
-  PLACE_BID_ON_PRODUCT:"/api/bid/place-bid",
-  GET_BID_HISTORY_ON_PRODUCT:"/api/bid/get-bid-history",
-  GET_USER_BIDS:"/api/bid/get-user-bids",
-
+  PLACE_BID_ON_PRODUCT: "/api/bid/place-bid",
+  GET_BID_HISTORY_ON_PRODUCT: "/api/bid/get-bid-history",
+  GET_USER_BIDS: "/api/bid/get-user-bids",
+  GET_USER_PARTICIPATING_BIDS: "/api/bid/my-participating-bids",
   //admin
 
   GET_ALL_USERS: "/api/admin/get-all-users",
@@ -65,10 +69,10 @@ export const END_POINTS = {
   GET_BID_REQUESTS: "/api/admin/get-bid-requests",
   ACCEPT_BID_PRODUCT: "/api/admin/accept-bid",
   GET_POST_REPORTS: "/api/admin/get-post-reports",
-  BLOCK_USER_POST:"/api/admin/block-post",
-  GET_BID_HISTORY_ADMIN:"/api/admin/bid-history",
-  GET_ALL_BID_REQUESTS_ADMIN:"/api/admin/get-kyc-requests",
-  HANDLE_KYC_REQUEST:"/api/admin/handle-kyc-request",
-  GET_ALL_PRODUCT_POSTS_ADMIN:"/api/admin/all-product-posts",
-  GET_DASHBOARD_STATISTICS:"/api/admin/get-dashboard-statistics"
+  BLOCK_USER_POST: "/api/admin/block-post",
+  GET_BID_HISTORY_ADMIN: "/api/admin/bid-history",
+  GET_ALL_BID_REQUESTS_ADMIN: "/api/admin/get-kyc-requests",
+  HANDLE_KYC_REQUEST: "/api/admin/handle-kyc-request",
+  GET_ALL_PRODUCT_POSTS_ADMIN: "/api/admin/all-product-posts",
+  GET_DASHBOARD_STATISTICS: "/api/admin/get-dashboard-statistics",
 };

@@ -17,6 +17,7 @@ export interface IBid {
 
 // Define the interface for the aggregated bid history data
 export interface IBidHistoryAdmin {
+  _id: string;
   bidderName: string;
   bids: IBid[];
   totalBidAmount: number;
@@ -40,4 +41,24 @@ export type UserProfileMyBids = {
 
 export interface UserProfileBidRes extends NormalBackendRes {
   userBids: UserProfileMyBids[];
+}
+
+export interface UserParticipatingBid {
+  _id: string;
+  totalBidAmount: number;
+  productId: string;
+  userId: string;
+  productName: string;
+  productBasePrice: number;
+  productImageUrls: string[];
+  isMyHighestBid: boolean;
+  isBidEnded: boolean;
+  // isAmountPaid: boolean;
+  highestBidAmount: number;
+  isBidAmountPaid: boolean;
+  claimedUserId: string;
+}
+
+export interface UserParticipatingRes extends NormalBackendRes {
+  userParticipatingBids: UserParticipatingBid[];
 }

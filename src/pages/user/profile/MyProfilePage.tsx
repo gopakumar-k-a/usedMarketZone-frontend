@@ -94,6 +94,16 @@ function ProfilePage() {
               </div>
             </Link>
           </li>
+          <li className="me-2">
+            <Link to={"/profile/my-participating-bids"}>
+              <div
+                aria-current="page"
+                className={`inline-block p-4   rounded-t-lg  ${location.pathname == "/profile/my-participating-bids" ? "text-blue-600 active bg-gray-100 dark:bg-gray-800 dark:text-blue-500" : ""} `}
+              >
+             Participating Bids
+              </div>
+            </Link>
+          </li>
         </ul>
 
         {/* <Tabs defaultValue="account" className=" mt-4">

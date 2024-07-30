@@ -17,6 +17,7 @@ import {
   SearchPage,
   OwnerBidStatus,
   NotificationPage,
+  OwnerParticipatingBids,
   //auth
   ErrorPage,
   AuthenticationPage,
@@ -89,6 +90,10 @@ export const AppRouter = createBrowserRouter([
             path: "my-bids",
             element: <OwnerBidStatus />,
           },
+          {
+            path:"my-participating-bids",
+            element:<OwnerParticipatingBids/>
+          }
         ],
       },
       {
