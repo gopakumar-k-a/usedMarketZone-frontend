@@ -4,6 +4,7 @@
 export interface NormalBackendRes {
     status: boolean,
     message: string
+    success:boolean
 }
 
 export interface User {

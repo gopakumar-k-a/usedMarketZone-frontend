@@ -11,13 +11,13 @@ function MessageContainer() {
   return (
     <>
       <div
-        className={`sm:block sm:w-3/4 ${chatSelected ? "w-full" : "hidden"}  max-h-screen bg-red-200 flex flex-col`}
+        className={`md:block md:w-3/4 ${chatSelected ? "w-full" : "hidden"}  max-h-screen bg-red-200 flex flex-col`}
       >
         {/* <!-- Main Chat Area --> */}
         {chatSelected ? (
           <div className="flex-1">
             {/* <!-- Chat Header --> */}
-            <div className="fixed top-16 sm:top-0 w-full z-50">
+            <div className="fixed top-16 md:top-0 w-full z-50">
               <ChatHeader />
             </div>
             <Messages />

@@ -1,7 +1,13 @@
 import { NormalBackendRes } from "@/types/login.ts";
 import { axiosUserInstance } from "../axiosInstance/axiosUserInstance.ts";
 import { END_POINTS } from "@/constants/endPoints.ts";
-import { BidHistoryResponse, UserParticipatingRes, UserProfileBidRes } from "@/types/bid.ts";
+import {
+  AddClaimerAddressRes,
+  BidHistoryResponse,
+  ClaimBidRes,
+  UserParticipatingRes,
+  UserProfileBidRes,
+} from "@/types/bid.ts";
 import { AxiosResponse } from "axios";
 export const bidProductPost = async (payload) => {
   const response = await axiosUserInstance.post(
@@ -48,8 +54,42 @@ export const getUserWistBid = async () => {
 };
 
 export const getParticipatingBids = async () => {
-  const response:AxiosResponse<UserParticipatingRes> = await axiosUserInstance.get(
-    END_POINTS.GET_USER_PARTICIPATING_BIDS
+  const response: AxiosResponse<UserParticipatingRes> =
+    await axiosUserInstance.get(END_POINTS.GET_USER_PARTICIPATING_BIDS);
+
+  return response.data;
+};
+
+export const getClaimBidDetails = async (productId: string) => {
+  const response: AxiosResponse<ClaimBidRes> = await axiosUserInstance.get(
+    `${END_POINTS.GET_CLAIM_BID_DETAILS}/${productId}`
+  );
+
+  return response.data;
+};
+
+export const addBidClaimerAddress = async (
+  address: {
+    country: string;
+    state: string;
+    district: string;
+    city: string;
+    postalCode: string;
+    phone: string;
+  },
+  bidId: string
+) => {
+  const response: AxiosResponse<AddClaimerAddressRes> =
+    await axiosUserInstance.post(
+      `${END_POINTS.ADD_BID_CLAIMER_ADDRESS}/${bidId}`,
+      address
+    );
+  return response.data;
+};
+
+export const getOwnerBidResult = async (bidId: string) => {
+  const response = await axiosUserInstance.get(
+    `${END_POINTS.GET_BID_RESULT_OWNER}/${bidId}`
   );
 
   return response.data;

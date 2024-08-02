@@ -1,6 +1,6 @@
 import { NormalBackendRes } from "./login";
 
-interface ProductInterface {
+export interface ProductInterface {
   _id: string;
   productName: string;
   basePrice: string;
@@ -45,4 +45,8 @@ export interface BidDuration {
 
 export interface GetAllProductPostsAdminRes extends NormalBackendRes {
   productPosts: ProductInterface[];
+}
+
+export interface GetPostDetailsRes extends NormalBackendRes{
+  postDetails:ProductInterface[]
 }

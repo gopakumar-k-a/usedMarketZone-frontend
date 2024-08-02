@@ -5,6 +5,7 @@ import { AxiosError, AxiosResponse, isAxiosError } from "axios";
 import { toast } from "react-toastify";
 import { handleAxiosErrorHelper } from "@/utils/helpers/handleAxiosErrorHelper.ts";
 import { NormalBackendRes } from "@/types/login.ts";
+import { GetPostDetailsRes } from "@/types/product.ts";
 
 export const postProduct = async (payload: any) => {
   const response = await axiosUserInstance.post(
@@ -40,9 +41,12 @@ export const postReport = async (payload: ReportPost) => {
 export const getUserPostDetails = async (postId: string) => {
   console.log("post id ", postId);
 
-  const response = await axiosUserInstance.get(
+  const response:AxiosResponse<GetPostDetailsRes> = await axiosUserInstance.get(
     `${END_POINTS.GET_POST_DETAILS}/${postId}`
   );
+
+  console.log('response ',response.data);
+  
   return response.data;
 };
 

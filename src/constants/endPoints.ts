@@ -50,8 +50,9 @@ export const END_POINTS = {
   DEACTIVATE_PRODUCT_SELL_POST: "/api/product/deactivate-post",
   //payment
 
-  CREATE_PAYMENT_ORDER:"/api/payment/create-payment-order",
-  CAPTURE_PAYMENT:"/api/payment/capture-payment",
+  CREATE_PAYMENT_ORDER: "/api/payment/create-payment-order",
+  CAPTURE_PAYMENT: "/api/payment/capture-payment",
+  DISPATCH_PRODUCT_TO_ADMIN:"/api/payment/ship-product-to-admin",
 
   //bid
   POST_BID_PRODUCT: "/api/bid/post-bid",
@@ -59,6 +60,9 @@ export const END_POINTS = {
   GET_BID_HISTORY_ON_PRODUCT: "/api/bid/get-bid-history",
   GET_USER_BIDS: "/api/bid/get-user-bids",
   GET_USER_PARTICIPATING_BIDS: "/api/bid/my-participating-bids",
+  GET_CLAIM_BID_DETAILS: "/api/bid/claim-bid-details",
+  ADD_BID_CLAIMER_ADDRESS:"/api/bid/add-claimer-address",
+  GET_BID_RESULT_OWNER:"/api/bid/bid-result-owner",
   //admin
 
   GET_ALL_USERS: "/api/admin/get-all-users",

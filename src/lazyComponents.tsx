@@ -42,6 +42,9 @@ const ShowPostDetails = React.lazy(
   () => import("./pages/user/post/ShowPostDetails")
 );
 
+const BidClaimPage=React.lazy(()=>import("./pages/user/post/BidClaimPage"))
+
+const BidResultPageOwner=React.lazy(()=>import("./pages/user/post/BidResultsPageOwner"))
 //auth
 const AuthenticationPage = React.lazy(
   () => import("./pages/auth/AuthenticationPage")
@@ -107,6 +110,8 @@ export {
   SearchPage,
   OwnerBidStatus,
   NotificationPage,
+  BidClaimPage,
+  BidResultPageOwner,
   //auth
   ErrorPage,
   AuthenticationPage,

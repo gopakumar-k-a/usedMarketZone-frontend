@@ -57,13 +57,13 @@ function App() {
 
   return (
     <>
-      <div className="sm:grid sm:grid-cols-12 flex flex-col h-screen">
+      <div className="md:grid md:grid-cols-12 flex flex-col h-screen">
         {/* <div className="h-12  bg-violet-500 col-span-12">
           <UserNavBar />
         </div> */}
-        {/* <div className="h-16 w-full fixed top-0 bg-yellow-500 block  sm:block md:hidden  z-50"> */}
+        {/* <div className="h-16 w-full fixed top-0 bg-yellow-500 block  md:block md:hidden  z-50"> */}
  
-<div className="h-16 w-full  fixed top-0 bg-yellow-500 block sm:hidden z-50">
+<div className="h-16 w-full  fixed top-0 bg-yellow-500 block md:hidden z-50">
           <TopBarMobile
             handleLogout={handleLogout}
             handleThemeSwitch={handleThemeSwitch}
@@ -73,7 +73,7 @@ function App() {
       
         
         <div
-          className={`h-full  bg-red-600 hidden sm:block ${isExpanded ? "sm:col-span-2" : "sm:col-span-1"}`}
+          className={`h-full  bg-red-600 hidden md:block ${isExpanded ? "md:col-span-2" : "md:col-span-1"}`}
         >
           <Sidebar
             isExpanded={isExpanded}
@@ -87,7 +87,7 @@ function App() {
 
         {/* Green Div: Always visible */}
         <div
-          className={`h-screen overflow-y-auto pb-16 pt-16 sm:p-0 bg-white dark:bg-gray-900 ${isExpanded ? "sm:col-span-10" : "sm:col-span-11"} pt-16  `}
+          className={`h-screen overflow-y-auto pb-16 pt-16 md:p-0 bg-white dark:bg-gray-900 ${isExpanded ? "md:col-span-10" : "md:col-span-11"} pt-16  `}
           // style={{ paddingTop: '4rem', paddingBottom: '4rem' }}
         >
           <Outlet />
@@ -95,11 +95,11 @@ function App() {
 
         {/* Blue Div: Hidden on small screens, visible on medium screens and above */}
         {/* <div
-          className={`h-full bg-blue-600 hidden sm:block ${isExpanded ? "sm:col-span-3" : "sm:col-span-3"}`}
+          className={`h-full bg-blue-600 hidden md:block ${isExpanded ? "md:col-span-3" : "md:col-span-3"}`}
         ></div> */}
 
         {/* Yellow Div: Visible on small screens, hidden on medium screens and above */}
-        <div className="h-16 w-full  fixed bottom-0 bg-yellow-500 block sm:hidden">
+        <div className="h-16 w-full  fixed bottom-0 bg-yellow-500 block md:hidden">
           <BottomBarMobile />
         </div>
       </div>

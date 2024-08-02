@@ -8,10 +8,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
 
 
-export function CustomAlertDialogue({ isOpen, onClose, title, description,onContinue }) {
+export function CustomAlertDialogue({ isOpen, onClose, title, description,onContinue }:{isOpen:boolean, onClose:()=>void, title:string, description:string,onContinue:()=>void }) {
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose} >
       <AlertDialogContent>

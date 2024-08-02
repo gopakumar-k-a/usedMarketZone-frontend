@@ -2,8 +2,13 @@ import { getUserWistBid } from "@/api/bid";
 import { useEffect, useState } from "react";
 import { UserProfileMyBids } from "@/types/bid";
 import { FaEye } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { formatDate, isBefore } from "date-fns";
+import { Badge } from "@/components/ui/badge";
 function MyBids() {
+
+  const navigate=useNavigate()
   const [myBids, setMyBids] = useState<UserProfileMyBids[]>([]);
   const fetchUserBids = async () => {
     try {
@@ -20,6 +25,7 @@ function MyBids() {
   useEffect(() => {
     fetchUserBids();
   }, []);
+  const isExpired = (time: Date) => isBefore(time, Date.now());
   return (
     <>
       <div className="flex justify-center w-full   h-screen">
@@ -45,12 +51,25 @@ function MyBids() {
                           <h5 className="font-bold text-xl dark:text-white">
                             {bid?.productName}
                           </h5>
-                          <p className="dark:text-gray-300">
+                          <p className="dark:text-gray-300  font-medium">
                             Category: {bid?.category}
                           </p>
-                          <p className="dark:text-gray-300">
+                          <p className="dark:text-gray-300  font-medium">
                             Sub Category: {bid?.subCategory}
                           </p>
+                          {bid.isAdminAccepted && (
+                            <p className="dark:text-gray-300  font-medium">
+                              bid EndTime:
+                              <span
+                                className={`${isExpired(new Date(bid.bidEndTime)) ? "text-red-500" : "text-green-500"} font-medium `}
+                              >
+                                {formatDate(
+                                  bid.bidEndTime,
+                                  "hh:mm:ss a , dd-MM-yyyy "
+                                )}
+                              </span>
+                            </p>
+                          )}
                         </div>
                         <div className="text-right">
                           <h4 className="text-xl font-bold dark:text-white">
@@ -69,18 +88,41 @@ function MyBids() {
                     <div className="p-4 flex justify-start items-center gap-2">
                       <div className="flex items-center flex-col">
                         {bid.isAdminAccepted ? (
-                          <Link
-                            to={"/post/post-details"}
-                            state={{ pId: bid?._id }}
-                          >
-                            <div className="bg-blue-400 hover:bg-blue-500 h-6 w-6 flex items-center justify-center rounded">
-                              <FaEye className="h-4 w-4 text-white" />
+                          <>
+                            <Link
+                              to={"/post/post-details"}
+                              state={{ pId: bid?._id }}
+                            >
+                              <div className="bg-blue-400 hover:bg-blue-500 h-6 w-6 flex items-center justify-center rounded">
+                                <FaEye className="h-4 w-4 text-white" />
+                              </div>
+                            </Link>
+                            <div className="mt-2">
+                              {isExpired(new Date(bid.bidEndTime)) ? (
+                                <>
+                                <div className="flex flex-col gap-2">
+
+                                  <Badge variant="destructive">bid ended</Badge>
+
+                                  <Button className="bg-green-500 hover:bg-green-600 text-white"
+                                  onClick={()=>navigate("/bid-result",{state:{bidId:bid._id}})}>Results</Button>
+                                </div>
+                                </>
+                              ) : (
+                                <Badge className="text-white bg-green-500">
+                                  active
+                                </Badge>
+                              )}
                             </div>
-                          </Link>
+                          </>
                         ) : (
                           <>
-                            <span>admin</span>
-                            <span>not verified</span>
+                            <div className="bg-blue-400 hover:bg-blue-500 opacity-50 h-6 w-6 flex items-center justify-center rounded">
+                              <FaEye className="h-4 w-4 text-white" />
+                            </div>
+                            <Badge variant="destructive" className="mt-2">
+                              admin not verified
+                            </Badge>
                           </>
                         )}
                       </div>
@@ -93,13 +135,6 @@ function MyBids() {
             <div>no bids</div>
           )}
           {/* cards ends */}
-
-          <div className="w-full bg-fuchsia-500 h-28"></div>
-          <div className="w-full bg-fuchsia-500 h-28"></div>
-          <div className="w-full bg-fuchsia-500 h-28"></div>
-          <div className="w-full bg-fuchsia-500 h-28"></div>
-          <div className="w-full bg-fuchsia-500 h-28"></div>
-          <div className="w-full bg-fuchsia-500 h-28"></div>
         </div>
 
         {/* </div> */}

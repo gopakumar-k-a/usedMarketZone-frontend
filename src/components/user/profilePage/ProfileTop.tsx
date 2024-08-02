@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { followUser, unFollowUser } from "@/api/user";
 import { store } from "@/redux/app/store";
 import { CustomAlertDialogue } from "@/components/alert/CustomAlertDialogue";
-
+import WalletDialgoue from "../wallet/WalletDialogue";
 function ProfileTop({
   userData,
   ownerProfile,
@@ -16,10 +16,10 @@ function ProfileTop({
   userData: User;
   ownerProfile: boolean;
 }) {
-
   const [isFollowingLoaderOn, serIsFollowingLoaderOn] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const [isUnfollowAlertOpen, setIsUnfollowAlertOpen] = useState(false);
+  const [isWalletDialogueOpen, setWalletDialogueOpen] = useState(false);
   const myUserId = store.getState().auth.user?._id;
   const checkIsFollowing = () => {
     const userCheck = userData.followers.find(
@@ -128,6 +128,7 @@ function ProfileTop({
                 <button
                   className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-green-600 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none flex items-center gap-3"
                   type="button"
+                  onClick={() => setWalletDialogueOpen(true)}
                 >
                   <FontAwesomeIcon icon={faWallet} />
                   Wallet
@@ -222,6 +223,12 @@ function ProfileTop({
           title={unfollowTitle}
           description={unfollowDescription}
           onContinue={() => handleUnFollowUser(userData._id)}
+        />
+      )}
+      {isWalletDialogueOpen && (
+        <WalletDialgoue
+          isOpen={isWalletDialogueOpen}
+          onClose={() => setWalletDialogueOpen(false)}
         />
       )}
     </>

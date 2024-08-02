@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import { UserParticipatingBid } from "@/types/bid";
 import { Button } from "@/components/ui/button";
@@ -18,7 +18,8 @@ interface UserParticipatingBidProps {
 const UserParticipatingBidCard: React.FC<UserParticipatingBidProps> = ({
   bid,
 }) => {
-  // const fromUserId 
+  // const fromUserId
+  const navigate = useNavigate();
   const fromUserId = useAppSelector((state) => state.auth.user?._id);
   const [statusMessage, setStatusMessage] = useState("");
   const [isProductClaimed, setIsProductClaimed] = useState(
@@ -89,9 +90,17 @@ const UserParticipatingBidCard: React.FC<UserParticipatingBidProps> = ({
     const rzp1 = new (window as any).Razorpay(options);
     rzp1.open();
   };
+
+  const isProductClaimable = (productId=bid.productId) => {
+    if (bid.isBidEnded && bid.isMyHighestBid) {
+      navigate("/claim-bid",{state:{productId}});
+    } else {
+      return;
+    }
+  };
   return (
     <>
-      <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-lg">
+      <div className="w-full bg-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700 dark:bg-gray-800 rounded-lg" onClick={()=>isProductClaimable()}>
         <div className="flex p-4 gap-4 mb-2">
           <div className="ml-2 max-w-16 max-h-16">
             <img
@@ -145,7 +154,6 @@ const UserParticipatingBidCard: React.FC<UserParticipatingBidProps> = ({
                   ) : (
                     <Button
                       className="bg-green-500 hover:bg-green-400"
-                      onClick={() => handlePayment()}
                     >
                       Claim Product
                     </Button>
