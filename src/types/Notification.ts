@@ -1,11 +1,12 @@
 import { NormalBackendRes } from "./login";
 
-
 export enum NotificationType {
   COMMENT = "comment",
-  BID = "bid",
+  OUTBID = "outBid",
+  BIDWIN = "bidWin",
+  BIDLOSE = "bidLose",
   MESSAGE = "message",
-  FOLLOW='follow'
+  FOLLOW = "follow",
 }
 
 export interface Notification {
@@ -23,6 +24,7 @@ export interface Notification {
   postId?: {
     _id: string;
     productImageUrls: string[];
+    productName:string;
   };
   receiverId: string;
   status: string;
@@ -31,11 +33,10 @@ export interface Notification {
   createdAt: string;
   updatedAt: string;
   __v: number;
-  newNotification:Notification;
-  description:string;
+  newNotification: Notification;
+  description: string;
 }
 
-
-export interface NotificationRes extends NormalBackendRes{
-  userNotifications:Notification[]
+export interface NotificationRes extends NormalBackendRes {
+  userNotifications: Notification[];
 }

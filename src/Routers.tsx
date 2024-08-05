@@ -42,8 +42,9 @@ import {
   KycRequestPage,
   ViewBidProductPageAdmin,
   ViewProductPageAdmin,
+  BidTransactionPage,
 } from "./lazyComponents";
-import ForgotPass from "./components/auth/ForgotPass";
+// import ForgotPass from "./components/auth/ForgotPass";
 
 const Loading = () => <div>Loading...</div>;
 
@@ -104,7 +105,7 @@ export const AppRouter = createBrowserRouter([
       },
       {
         path: "bid-result",
-        element:<BidResultPageOwner/>
+        element: <BidResultPageOwner />,
       },
       {
         path: "/edit-profile",
@@ -214,9 +215,9 @@ export const AppRouter = createBrowserRouter([
     path: "otp",
     element: (
       <Suspense fallback={<Loading />}>
-        {/* <OtpRouteGuard> */}
-        <Otp />
-        {/* </OtpRouteGuard> */}
+        <OtpRouteGuard>
+          <Otp />
+        </OtpRouteGuard>
       </Suspense>
     ),
   },
@@ -287,6 +288,10 @@ export const AppRouter = createBrowserRouter([
       {
         path: "view-product",
         element: <ViewProductPageAdmin />,
+      },
+      {
+        path: "bid-transaction",
+        element: <BidTransactionPage />,
       },
     ],
   },

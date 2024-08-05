@@ -13,6 +13,13 @@ function BidResultMain({ bidId }: { bidId: string }) {
   const [isProductClaimed, setProductClaimed] = useState(false);
   const [isDispatchToAdminDialogueOpen, setDispatchToAdminDialogueOpen] =
     useState(false);
+  const [shipmentStatus, setShipmentStatus] = useState<
+    | "not_shipped"
+    | "shipped_to_admin"
+    | "received_by_admin"
+    | "shipped_to_buyer"
+    | "delivered"
+  >("not_shipped");
   const fetchBidResultForOwner = async () => {
     const result: any = await getOwnerBidResult(bidId);
     console.log("result is ", result);
@@ -20,6 +27,7 @@ function BidResultMain({ bidId }: { bidId: string }) {
     if (result) {
       setBidData(result.bidResult);
       setProductClaimed(result.bidResult.isBidAmountPaid);
+      setShipmentStatus(result.bidResult.transactionData.shipmentStatus);
     }
   };
 
@@ -32,6 +40,8 @@ function BidResultMain({ bidId }: { bidId: string }) {
     await shipProductToAdmin({
       productId,
       trackingNumber,
+    }).then(() => {
+      setShipmentStatus("shipped_to_admin");
     });
     // Add your API call or logic here to handle the submission
   };
@@ -39,6 +49,53 @@ function BidResultMain({ bidId }: { bidId: string }) {
   useEffect(() => {
     fetchBidResultForOwner();
   }, []);
+  const renderActionButton = () => {
+    if (!isProductClaimed) {
+      return (
+        <button className="mt-6 md:w-auto bg-red-600 dark:bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-700 dark:hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 pb-2 flex">
+          Payment not Done By Winner
+        </button>
+      );
+    }
+
+    switch (shipmentStatus) {
+      case "not_shipped":
+        return (
+          <button
+            className="mt-6 md:w-auto bg-yellow-600 dark:bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-700 dark:hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50 pb-2 flex"
+            onClick={() => setDispatchToAdminDialogueOpen(true)}
+          >
+            Dispatch Product
+          </button>
+        );
+      case "shipped_to_admin":
+        return (
+          <button className="mt-6 md:w-auto bg-yellow-600 dark:bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-700 dark:hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50 pb-2 flex">
+            shipped to admin
+          </button>
+        );
+      case "received_by_admin":
+        return (
+          <button className="mt-6 md:w-auto bg-orange-600 dark:bg-orange-500 text-white py-2 px-4 rounded-lg hover:bg-orange-700 dark:hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 pb-2 flex">
+            Admin Processing
+          </button>
+        );
+      case "shipped_to_buyer":
+        return (
+          <button className="mt-6 md:w-auto bg-orange-600 dark:bg-orange-500 text-white py-2 px-4 rounded-lg hover:bg-orange-700 dark:hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 pb-2 flex">
+            shipped to buyer
+          </button>
+        );
+      case "delivered":
+        return (
+          <button className="mt-6 md:w-auto bg-green-600 dark:bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700 dark:hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 pb-2 flex">
+            Delivered
+          </button>
+        );
+      default:
+        return null;
+    }
+  };
   return (
     <>
       {bidData != null && (
@@ -93,14 +150,18 @@ function BidResultMain({ bidId }: { bidId: string }) {
                   <>
                     <div className="flex gap-2">
                       <button className="mt-6  md:w-auto bg-green-600 dark:bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700 dark:hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 pb-2 flex">
-                        Payment Done
+                        Payment Done to Admin By Winner
                       </button>
-                      <button
+                      {renderActionButton()}
+                      {/* <button
                         className="mt-6  md:w-auto bg-yellow-600 dark:bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-700 dark:hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50 pb-2 flex"
                         onClick={() => setDispatchToAdminDialogueOpen(true)}
                       >
                         Dispatch Product
                       </button>
+                      <button className="mt-6  md:w-auto bg-orange-600 dark:bg-orange-500 text-white py-2 px-4 rounded-lg hover:bg-orange-700 dark:hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 pb-2 flex">
+                        Admin Processing
+                      </button> */}
                     </div>
                   </>
                 ) : (

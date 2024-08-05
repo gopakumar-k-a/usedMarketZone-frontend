@@ -6,6 +6,8 @@ import OutBidNotification from "./OutBidNotification";
 import { changeNotificationUnreadStatus, getNotifications } from "@/api/user";
 import { NotificationType, Notification } from "@/types/Notification";
 import useNotifications from "@/utils/hooks/userNotification/useNofication";
+import BidWinNotification from "./BidWinNotification";
+import BidLoseNotification from "./BidLoseNotification";
 // import userNotifications
 function NotificationMain() {
   const { notifications, setNotifications, markNotificationsRead } =
@@ -57,19 +59,6 @@ function NotificationMain() {
             </p>
           </div>
 
-          {/* {notifications &&
-            notifications.length > 0 &&
-            notifications.map((notification) => {
-              switch (notification.notificationType) {
-                case NotificationType.MESSAGE:
-                  return <MessageNotification notification={notification} />;
-                case NotificationType.FOLLOW:
-                  return <FollowingNotification notification={notification} />;
-
-                default:
-                  return <div>test default</div>;
-              }
-            })} */}
           <div>
             {Object.keys(groupedNotifications).map((date) => (
               <div key={date}>
@@ -90,8 +79,25 @@ function NotificationMain() {
                           notification={notification}
                         />
                       );
+                    case NotificationType.OUTBID:
+                      return <OutBidNotification key={index} />;
+                    case NotificationType.BIDWIN:
+                      return (
+                        <BidWinNotification
+                          key={index}
+                          notification={notification}
+                        />
+                      );
+                    case NotificationType.BIDLOSE:
+                      return (
+                        <BidLoseNotification
+                          key={index}
+                          notification={notification}
+                        />
+                      );
+
                     default:
-                      return <div key={index}>test default</div>;
+                      return <div key={index}>You Have a notification</div>;
                   }
                 })}
               </div>
@@ -99,7 +105,6 @@ function NotificationMain() {
           </div>
 
           <PostMessageNotification />
-          <OutBidNotification />
 
           {/* <div className="w-full p-3 mt-8 bg-white rounded flex">
             <div

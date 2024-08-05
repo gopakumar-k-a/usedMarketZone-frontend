@@ -188,7 +188,7 @@ const {socket}=useSocketContext()
                       className="w-1/4 bg-green-500 text-white hover:bg-green-600"
                       onClick={() => setMyBidHistoryDialogue(true)}
                     >
-                      My Bid History <FaHistory className="ml-2" />
+                      <FaHistory />
                     </Button>
                   </div>
 

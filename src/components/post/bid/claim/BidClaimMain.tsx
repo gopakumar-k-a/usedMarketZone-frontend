@@ -209,7 +209,7 @@ function BidClaimMain() {
                       Payment Done
                     </button>
                  {/* <ProgressBar status={"Delivery"}/> */}
-          
+                    
                     </>
 
                   ) : (

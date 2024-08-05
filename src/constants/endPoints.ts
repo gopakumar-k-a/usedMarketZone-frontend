@@ -79,4 +79,8 @@ export const END_POINTS = {
   HANDLE_KYC_REQUEST: "/api/admin/handle-kyc-request",
   GET_ALL_PRODUCT_POSTS_ADMIN: "/api/admin/all-product-posts",
   GET_DASHBOARD_STATISTICS: "/api/admin/get-dashboard-statistics",
+  GET_BID_TRANSACTIONS_ADMIN:"/api/admin/get-bid-transactions",
+  CHANGE_TR_STATUS_ADMIN_RECIEVED:"/api/admin/admin-recieved-bid-product",
+  CHANGE_TR_STATUS_ADMIN_SEND_PRODUCT_WINNER:"/api/admin/admin-send-bid-product-winner",
+  CHANGE_TR_STATUS_ADMIN_PRODUCT_DELIVERED:"/api/admin/mark-product-delivered"
 };

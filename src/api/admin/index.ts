@@ -6,6 +6,7 @@ import { AxiosResponse } from "axios";
 import { GetBidHistoryOfProductRes } from "@/types/bid";
 import { KycAdminUpdatedData, KycDataAdmin } from "@/types/user";
 import { AdminStatisticsRes } from "@/types/admin/dashboard";
+import { TransactionRes } from "@/types/admin/transaction";
 
 export const getAllUsers = async (page: number, limit: number) => {
   const response = await axiosAdminInstance.get(
@@ -118,8 +119,46 @@ export const handleGetAllProductPostsAdmin = async () => {
 };
 
 export const getDashboardStatistics = async () => {
-  const response:AxiosResponse<AdminStatisticsRes> = await axiosAdminInstance.get(
-    END_POINTS.GET_DASHBOARD_STATISTICS
+  const response: AxiosResponse<AdminStatisticsRes> =
+    await axiosAdminInstance.get(END_POINTS.GET_DASHBOARD_STATISTICS);
+
+  return response.data;
+};
+
+export const getBidTransactions = async () => {
+  const response: AxiosResponse<TransactionRes> = await axiosAdminInstance.get(
+    END_POINTS.GET_BID_TRANSACTIONS_ADMIN
+  );
+  return response.data;
+};
+
+export const changeTransactionStatusToAdminRecieved = async (trId: string) => {
+  const response = await axiosAdminInstance.patch(
+    `${END_POINTS.CHANGE_TR_STATUS_ADMIN_RECIEVED}/${trId}`
+  );
+
+  return response.data;
+};
+
+export const sendProductToWinner = async (
+  trId: string,
+  winnerTrackingNumber: string
+) => {
+  const response = await axiosAdminInstance.patch(
+    `${END_POINTS.CHANGE_TR_STATUS_ADMIN_SEND_PRODUCT_WINNER}/${trId}`,
+    { winnerTrackingNumber }
+  );
+
+  return response.data;
+};
+
+export const markProductAsDelivered = async (
+  trId: string,
+  productOwnerId: string
+) => {
+  const response = await axiosAdminInstance.patch(
+    `${END_POINTS.CHANGE_TR_STATUS_ADMIN_PRODUCT_DELIVERED}/${trId}`,
+    { productOwnerId }
   );
 
   return response.data;

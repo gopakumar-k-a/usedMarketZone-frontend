@@ -2,19 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useAppDispatch } from "../../utils/hooks/reduxHooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faHome,
-  faHeart,
-  faBell,
-  faEnvelope,
-  faUser,
-  faBars,
-  faGreaterThan,
-  faLessThan,
-  faMagnifyingGlass,
-  faHandHoldingHeart,
-  faGavel,
-  faMessage,
-  faGear,
   faRightFromBracket,
   faMoon,
   faSun,
@@ -24,8 +11,13 @@ import { AiOutlineDashboard, AiFillDashboard } from "react-icons/ai";
 import { RiGroup2Line, RiGroup2Fill } from "react-icons/ri";
 import { BsPostcard, BsPostcardFill } from "react-icons/bs";
 import { IoHammer, IoHammerOutline } from "react-icons/io5";
-import { MdReport, MdReportGmailerrorred,MdLockPerson,MdOutlineLockPerson } from "react-icons/md";
-
+import {
+  MdReport,
+  MdReportGmailerrorred,
+  MdLockPerson,
+  MdOutlineLockPerson,
+} from "react-icons/md";
+import { PiPackageBold,PiPackageFill  } from "react-icons/pi";
 import { Link, useLocation } from "react-router-dom";
 const AdminSideBar = ({
   isExpanded,
@@ -53,11 +45,11 @@ const AdminSideBar = ({
         />
 
         <div className="p-4 mt-4 flex items-center ">
-          <FontAwesomeIcon
+          {/* <FontAwesomeIcon
             icon={isExpanded ? faLessThan : faGreaterThan}
             className="w-5 h-5 cursor-pointer text-gray-800 dark:text-white"
             onClick={toggleSidebar}
-          />
+          /> */}
 
           {isExpanded && (
             <>
@@ -193,8 +185,25 @@ const AdminSideBar = ({
               ) : (
                 <>
                   <MdOutlineLockPerson className="text-2xl font-bold mr-2" />
+                  <div className="text-black dark:text-white">Kyc Requests</div>
+                </>
+              )}
+            </Link>
+
+            <Link
+              to="/admin/bid-transaction"
+              className={`p-4 mb-2 flex items-center text-xl font-bold rounded-lg h-6 ${currentPath === "/admin/bid-transaction" ? "dark:bg-adminDarkLogo dark:bg-opacity-10 dark:text-white bg-gray-700 bg-opacity-20" : "bg-white dark:bg-adminBgDark"} text-gray-800 dark:text-white`}
+            >
+              {currentPath === "/admin/bid-transaction" ? (
+                <>
+                  <PiPackageFill className=" text-2xl font-bold text-adminDarkLogo mr-2" />
+                  <div className="text-adminDarkLogo">Bid Order Control</div>
+                </>
+              ) : (
+                <>
+                  <PiPackageBold className="text-2xl font-bold mr-2" />
                   <div className="text-black dark:text-white">
-                 Kyc Requests
+                    Bid Order Control
                   </div>
                 </>
               )}

@@ -64,7 +64,7 @@ const ResetPassModal = React.lazy(
 );
 //admin
 const AdminPageLayout = React.lazy(
-  () => import("./pages/admin/AdminPageLayout")
+  () => import("./pages/admin/layout/AdminPageLayout")
 );
 const AdminDashboard = React.lazy(
   () => import("./pages/admin/AdminDashboardPage")
@@ -92,6 +92,7 @@ const ViewBidProductPageAdmin = React.lazy(
 const ViewProductPageAdmin = React.lazy(
   () => import("./pages/admin/ViewProductAdminPage")
 );
+const BidTransactionPage=React.lazy(()=>import("./pages/admin/BidTransactionPage"))
 export {
   //user
   App,
@@ -134,4 +135,5 @@ export {
   KycRequestPage,
   ViewProductPageAdmin,
   ViewBidProductPageAdmin,
+  BidTransactionPage
 };
