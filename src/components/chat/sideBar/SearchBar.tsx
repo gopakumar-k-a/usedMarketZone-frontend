@@ -3,6 +3,7 @@ import { useState } from "react";
 import { setChatSelected } from "@/redux/reducers/chat/chatSlice";
 import { useAppDispatch } from "@/utils/hooks/reduxHooks";
 import { toast } from "react-toastify";
+import { ConversationData } from "@/types/chat";
 
 function SearchBar() {
   const dispatch = useAppDispatch();
@@ -14,13 +15,18 @@ function SearchBar() {
     if (search.length < 3) {
       return toast.error("search termn must be atleast 3 characters long");
     }
-    const conversation = conversations.find((c) =>
-      c.following.userName.toLowerCase().includes(search.toLowerCase())
+    // const conversation = conversations.find((c) =>
+    //   c.following.userName.toLowerCase().includes(search.toLowerCase())
+    // );
+    const conversation = conversations.find((c: ConversationData) =>
+      c.participantsData.some((p) =>
+        p.userName.toLowerCase().includes(search.toLowerCase())
+      )
     );
 
     if (conversation) {
       dispatch(
-        setChatSelected({ selectedChatUserData: conversation.following })
+        setChatSelected({ selectedChatUserData: conversation.participantsData[0]._id })
       );
       setSearch("");
     }

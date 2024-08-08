@@ -183,7 +183,7 @@ const validImageTypes: string[] = [
       };
 
       await bidProductPost(payload).then(() => {
-        navigate("/home");
+        navigate("/profile/my-bids");
       });
 
       // Update toast to success

@@ -1,4 +1,5 @@
 // razorpay.d.ts
+import { Transaction } from "./admin/transaction";
 import { NormalBackendRes } from "./login";
 export interface RazorpayOrder {
   id: string;
@@ -28,5 +29,6 @@ export interface CreatePaymentOrderResponse extends NormalBackendRes {
 }
 
 export interface CapturePaymentRes extends NormalBackendRes {
-    captureStatus: "captured" | "failed";
+  captureStatus: "captured" | "failed";
+  transactionData: Transaction;
 }

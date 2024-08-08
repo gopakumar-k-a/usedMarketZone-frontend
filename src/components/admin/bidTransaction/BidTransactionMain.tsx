@@ -86,11 +86,17 @@ function BidTransactionMain() {
               <th scope="col" className="px-6 py-3">
                 Payment Status
               </th>
-              <th scope="col" className="px-6 py-3">
+              {/* <th scope="col" className="px-6 py-3">
                 Base Bid Price
-              </th>
+              </th> */}
               <th scope="col" className="px-6 py-3">
                 Bid won price
+              </th>
+              <th scope="col" className="px-6 py-3">
+                commission (1%)
+              </th>
+              <th scope="col" className="px-6 py-3">
+                amount to owner
               </th>
               <th scope="col" className="px-6 py-3">
                 Actions
@@ -115,8 +121,15 @@ function BidTransactionMain() {
                   <td>transaction Not Done</td>
                 )}
 
-                <td className="px-6 py-4">{transaction.baseBidPrice}</td>
-                <td className="px-6 py-4">{transaction.wonPrice}</td>
+                {/* <td className="px-6 py-4">{transaction.baseBidPrice}</td> */}
+                <td className="px-6 py-4">&#8377; {transaction.wonPrice}</td>
+                <td className="px-6 py-4">
+                  &#8377; {(transaction.wonPrice * 1) / 100}
+                </td>
+                <td className="px-6 py-4">
+                  &#8377;{" "}
+                  {transaction.wonPrice - (transaction.wonPrice * 1) / 100}
+                </td>
                 <td className="px-6 py-4">
                   <PiDotsThreeCircleDuotone
                     className="h-6 w-6"
@@ -124,23 +137,6 @@ function BidTransactionMain() {
                       handleTransactionActionModalOpen(transaction)
                     }
                   />
-                  {/* <button
-                    onClick={() =>
-                      updateShipmentStatus(
-                        transaction.transactionId,
-                        "received_by_admin"
-                      )
-                    }
-                    className="text-blue-600 dark:text-blue-500 hover:underline"
-                  >
-                    Update Status
-                  </button>
-                  <button
-                    onClick={() => confirmReceipt(transaction.transactionId)}
-                    className="text-blue-600 dark:text-blue-500 hover:underline"
-                  >
-                    Confirm Receipt
-                  </button> */}
                 </td>
               </tr>
             ))}

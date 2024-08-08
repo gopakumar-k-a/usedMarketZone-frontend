@@ -33,6 +33,7 @@ export const END_POINTS = {
   GET_CHAT: "/api/message/get-chat",
   GET_UNREAD_MESSAGES: "/api/message/get-unread-messages",
   CHANGE_READ_STATUS: "/api/message/change-message-status",
+  GET_CONVERSATIONS: "/api/message/get-conversations",
   //product
 
   POST_PRODUCT: "/api/product/post-product",
@@ -52,7 +53,8 @@ export const END_POINTS = {
 
   CREATE_PAYMENT_ORDER: "/api/payment/create-payment-order",
   CAPTURE_PAYMENT: "/api/payment/capture-payment",
-  DISPATCH_PRODUCT_TO_ADMIN:"/api/payment/ship-product-to-admin",
+  DISPATCH_PRODUCT_TO_ADMIN: "/api/payment/ship-product-to-admin",
+  GET_WALLET_DATA: "/api/payment/user-wallet",
 
   //bid
   POST_BID_PRODUCT: "/api/bid/post-bid",
@@ -61,8 +63,8 @@ export const END_POINTS = {
   GET_USER_BIDS: "/api/bid/get-user-bids",
   GET_USER_PARTICIPATING_BIDS: "/api/bid/my-participating-bids",
   GET_CLAIM_BID_DETAILS: "/api/bid/claim-bid-details",
-  ADD_BID_CLAIMER_ADDRESS:"/api/bid/add-claimer-address",
-  GET_BID_RESULT_OWNER:"/api/bid/bid-result-owner",
+  ADD_BID_CLAIMER_ADDRESS: "/api/bid/add-claimer-address",
+  GET_BID_RESULT_OWNER: "/api/bid/bid-result-owner",
   //admin
 
   GET_ALL_USERS: "/api/admin/get-all-users",
@@ -79,8 +81,9 @@ export const END_POINTS = {
   HANDLE_KYC_REQUEST: "/api/admin/handle-kyc-request",
   GET_ALL_PRODUCT_POSTS_ADMIN: "/api/admin/all-product-posts",
   GET_DASHBOARD_STATISTICS: "/api/admin/get-dashboard-statistics",
-  GET_BID_TRANSACTIONS_ADMIN:"/api/admin/get-bid-transactions",
-  CHANGE_TR_STATUS_ADMIN_RECIEVED:"/api/admin/admin-recieved-bid-product",
-  CHANGE_TR_STATUS_ADMIN_SEND_PRODUCT_WINNER:"/api/admin/admin-send-bid-product-winner",
-  CHANGE_TR_STATUS_ADMIN_PRODUCT_DELIVERED:"/api/admin/mark-product-delivered"
+  GET_BID_TRANSACTIONS_ADMIN: "/api/admin/get-bid-transactions",
+  CHANGE_TR_STATUS_ADMIN_RECIEVED: "/api/admin/admin-recieved-bid-product",
+  CHANGE_TR_STATUS_ADMIN_SEND_PRODUCT_WINNER:
+    "/api/admin/admin-send-bid-product-winner",
+  CHANGE_TR_STATUS_ADMIN_PRODUCT_DELIVERED: "/api/admin/mark-product-delivered",
 };

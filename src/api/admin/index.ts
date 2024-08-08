@@ -154,11 +154,13 @@ export const sendProductToWinner = async (
 
 export const markProductAsDelivered = async (
   trId: string,
-  productOwnerId: string
+  productOwnerId: string,
+  productId: string,
+  bidId: string
 ) => {
   const response = await axiosAdminInstance.patch(
     `${END_POINTS.CHANGE_TR_STATUS_ADMIN_PRODUCT_DELIVERED}/${trId}`,
-    { productOwnerId }
+    { productOwnerId, productId, bidId }
   );
 
   return response.data;

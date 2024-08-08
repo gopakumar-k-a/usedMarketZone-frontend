@@ -37,7 +37,6 @@ const EditProfile = () => {
   const [isPasswordModalOpen, setPasswordModalOpen] = useState(false);
   const [isDeleteImageAlertOpen, setDeleteImageAlert] = useState(false);
 
-
   const onDeleteImageAlertClose = () => {
     setDeleteImageAlert(false);
   };
@@ -83,12 +82,12 @@ const EditProfile = () => {
       })
       .catch((error) => {
         console.error(error);
-      })
-    
+      });
   };
 
   const checkUserName = useDebounce(async (userName: string) => {
     console.log("checking for user name ", userName);
+    if (userName == "") return;
 
     if (userData.userName == userName) {
       setIsChecking(false);
@@ -101,7 +100,7 @@ const EditProfile = () => {
       return;
     }
 
-    if (userData.userName != userName) {
+    if (userData.userName != userName && userName != "") {
       try {
         setIsChecking(true);
 
@@ -110,12 +109,12 @@ const EditProfile = () => {
 
         setUserNameAvailable(availability);
 
-        setIsChecking(false);
         console.log(
           `Username '${userName}' is ${availability ? "available" : "not available"}.`
         );
       } catch (error) {
         console.error("Error checking username availability:", error);
+      } finally {
         setIsChecking(false);
       }
     }
@@ -172,7 +171,7 @@ const EditProfile = () => {
     lastName: Yup.string().required("Last name is required"),
     userName: Yup.string().required("User name is required"),
     phone: Yup.string().matches(/^\d+$/, "Phone must be a number").nullable(), // If phone can be null, add nullable()
-    bio: Yup.string().nullable(), // If bio can be null, add nullable()
+    bio: Yup.string().nullable(),
   });
 
   // Handle form submission
@@ -442,22 +441,14 @@ const EditProfile = () => {
                             className="text-red-500 text-sm"
                           />
                         </div>
-                        <div className="flex justify-end">
-                          {/* <button
-                            type="submit"
-                            disabled={isSubmitting || isChecking}
-                            className="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
-                          >
-                            Save
-                          </button> */}
+                        <div className="mt-4">
                           <Button
                             type="submit"
-                            disabled={
-                              isSubmitting || userNameAvailable == false
-                            }
-                            className="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
+                            className="py-3.5 px-7 text-base font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-200 dark:bg-indigo-800 dark:hover:bg-indigo-700 dark:focus:ring-indigo-500"
+                            // disabled={isSubmitting}
+                            disabled={isChecking}
                           >
-                            save
+                            {isSubmitting ? "Updating..." : "Update Profile"}
                           </Button>
                         </div>
                       </Form>

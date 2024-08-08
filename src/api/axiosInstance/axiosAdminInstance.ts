@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { store } from '../../redux/app/store';
 import { Constants } from '../../constants/config';
+import { handleAxiosErrorHelper } from '@/utils/helpers/handleAxiosErrorHelper';
 
 
 export const axiosAdminInstance = axios.create({
@@ -31,5 +32,13 @@ axiosAdminInstance.interceptors.request.use(
     }
   );
 
+  axiosAdminInstance.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+      console.log('error message from interceptor',error.message)
+      handleAxiosErrorHelper(error);
+      return Promise.reject(error);
+    }
+  );
 
 

@@ -1,6 +1,6 @@
 import { axiosUserInstance } from "../axiosInstance/axiosUserInstance.ts";
 import { END_POINTS } from "@/constants/endPoints.ts";
-import { SendMessageRes } from "@/types/chat.ts";
+import { GetConversationsRes, SendMessageRes } from "@/types/chat.ts";
 import { AxiosResponse } from "axios";
 import { GetChatRes } from "@/types/chat.ts";
 
@@ -56,14 +56,21 @@ export const getUnreadMessages = async (senderId: string) => {
     `${END_POINTS.GET_UNREAD_MESSAGES}/${senderId}`
   );
 
-  console.log('response unread messages ',response.data);
-  
+  console.log("response unread messages ", response.data);
 
   return response.data;
 };
 
-export const changeReadStatus=async(senderId:string)=>{
-  const response=await axiosUserInstance.patch(`${END_POINTS.CHANGE_READ_STATUS}/${senderId}`)
+export const changeReadStatus = async (senderId: string) => {
+  const response = await axiosUserInstance.patch(
+    `${END_POINTS.CHANGE_READ_STATUS}/${senderId}`
+  );
 
-  return response.data
-}
+  return response.data;
+};
+
+export const getConversationsWithUserData = async () => {
+  const response:AxiosResponse<GetConversationsRes> = await axiosUserInstance.get(END_POINTS.GET_CONVERSATIONS);
+
+  return response.data;
+};

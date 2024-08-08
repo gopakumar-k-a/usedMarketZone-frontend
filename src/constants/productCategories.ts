@@ -9,6 +9,7 @@ type ProductCategories = {
     toys: string[];
     beauty_health: string[];
     tools: string[];
+    art:string[];
   };
 
   export const productCategories: ProductCategories = {
@@ -71,6 +72,15 @@ type ProductCategories = {
       "Automotive Tools",
       "Measuring Tools",
     ],
+    art: [
+      "Paintings",
+      "Sculptures",
+      "Drawings",
+      "Prints",
+      "Photography",
+      "Crafts",
+      "Ceramics"
+    ]
   };
 
   type ProductConditions = {

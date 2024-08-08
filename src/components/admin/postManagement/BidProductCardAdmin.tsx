@@ -53,7 +53,14 @@ const BidProductCardAdmin = ({ product }: { product: ProductInterface }) => {
 
                 <p>
                   User Name:{" "}
-                  <span className="text-blue-600 cursor-pointer hover:text-blue-500" onClick={()=>navigate("/admin/user-profile",{state:{userId:product.userId}})}>
+                  <span
+                    className="text-blue-600 cursor-pointer hover:text-blue-500"
+                    onClick={() =>
+                      navigate("/admin/user-profile", {
+                        state: { userId: product.userId },
+                      })
+                    }
+                  >
                     {product.userDetails.userName}
                   </span>
                 </p>

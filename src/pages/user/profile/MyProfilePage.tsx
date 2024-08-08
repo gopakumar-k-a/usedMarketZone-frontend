@@ -90,7 +90,7 @@ function ProfilePage() {
                 aria-current="page"
                 className={`inline-block p-4   rounded-t-lg  ${location.pathname == "/profile/my-bids" ? "text-blue-600 active bg-gray-100 dark:bg-gray-800 dark:text-blue-500" : ""} `}
               >
-                Bid Status
+               My Bid Status
               </div>
             </Link>
           </li>

@@ -1,4 +1,4 @@
-import { FollowingUser } from "@/types/chat";
+import { ConversationData, FollowingUser } from "@/types/chat";
 import { useAppDispatch } from "@/utils/hooks/reduxHooks";
 // import { useAppSelector } from "@/utils/hooks/reduxHooks";
 import { setChatSelected } from "@/redux/reducers/chat/chatSlice";
@@ -6,20 +6,24 @@ import useGetMessage from "@/utils/hooks/chat/useGetMessage";
 import { useSocketContext } from "@/context/SocketContext";
 import { useEffect, useState } from "react";
 import { changeReadStatus, getUnreadMessages } from "@/api/chat";
-function Conversation({ conversation }: { conversation: FollowingUser }) {
+function Conversation({ conversation }: { conversation: ConversationData }) {
   const dispatch = useAppDispatch();
   const { chatSelected } = useGetMessage();
-  const isSelectedChat = chatSelected == conversation.following._id;
+  // const isSelectedChat = chatSelected == conversation.following._id;
+  const isSelectedChat = chatSelected == conversation.participantsData[0]._id;
   const SocketContext = useSocketContext();
   const [unseenCount, setUnseenCount] = useState<number>(0);
   let isOnline = false;
   if (SocketContext) {
     const { onlineUsers, socket } = SocketContext;
-    isOnline = onlineUsers.includes(conversation.following._id);
+    // isOnline = onlineUsers.includes(conversation.following._id);
+    isOnline = onlineUsers.includes(conversation.participantsData[0]._id);
     if (socket) {
       socket.on("newMessage", (data) => {
-        
-        if (data.senderId == conversation.following._id) {
+        // if (data.senderId == conversation.following._id) {
+        //   setUnseenCount((prevCount) => prevCount + 1);
+        // }
+        if (data.senderId == conversation.participantsData[0]._id) {
           setUnseenCount((prevCount) => prevCount + 1);
         }
       });
@@ -29,7 +33,10 @@ function Conversation({ conversation }: { conversation: FollowingUser }) {
   useEffect(() => {
     const fetchUnseenMessagesCount = async () => {
       try {
-        const res = await getUnreadMessages(conversation.following._id);
+        console.log('conversation.participantsData[0]._id ',conversation.participantsData[0]._id);
+        
+        const res = await getUnreadMessages( conversation.participantsData[0]._id);
+        // const res = await getUnreadMessages(conversation.following._id);
         if (res) {
           setUnseenCount(parseInt(res.unreadCount));
         }
@@ -42,10 +49,13 @@ function Conversation({ conversation }: { conversation: FollowingUser }) {
 
     const { socket } = SocketContext;
     if (socket) {
-      const handleNewMessage = (data) => {
-        if (data.senderId == conversation.following._id) {
+      const handleNewMessage = (data: any) => {
+        if (data.senderId ==  conversation.participantsData[0]._id) {
           setUnseenCount((prevCount) => prevCount + 1);
         }
+        // if (data.senderId == conversation.following._id) {
+        //   setUnseenCount((prevCount) => prevCount + 1);
+        // }
       };
 
       socket.on("newMessage", handleNewMessage);
@@ -55,12 +65,14 @@ function Conversation({ conversation }: { conversation: FollowingUser }) {
         socket.off("newMessage", handleNewMessage);
       };
     }
-  }, [SocketContext, conversation.following._id]);
+  }, [SocketContext,  conversation.participantsData[0]._id]);
+  // }, [SocketContext, conversation.following._id]);
 
   useEffect(() => {
     const fetchUnseenMessagesCount = async () => {
       try {
-        const res = await getUnreadMessages(conversation.following._id);
+        // const res = await getUnreadMessages(conversation.following._id);
+        const res = await getUnreadMessages( conversation.participantsData[0]._id);
         if (res) {
           setUnseenCount(parseInt(res.unreadCount));
         }
@@ -70,12 +82,15 @@ function Conversation({ conversation }: { conversation: FollowingUser }) {
     };
 
     fetchUnseenMessagesCount();
-  },  [conversation.following._id]);
+  // }, [conversation.following._id]);
+  }, [ conversation.participantsData[0]._id]);
 
   const handleSelectConversation = async (
-    senderId = conversation.following._id
+    senderId =  conversation.participantsData[0]._id
+    // senderId = conversation.following._id
   ) => {
-    dispatch(setChatSelected({ selectedChatUserData: conversation.following }));
+    dispatch(setChatSelected({ selectedChatUserData:  conversation.participantsData[0]}));
+    // dispatch(setChatSelected({ selectedChatUserData: conversation.following }));
     await changeReadStatus(senderId).then(() => {
       setUnseenCount(0);
     });
@@ -94,7 +109,7 @@ function Conversation({ conversation }: { conversation: FollowingUser }) {
     >
       <div className="relative w-12 h-12 bg-gray-300 rounded-full mr-3">
         <img
-          src={`${conversation.following.imageUrl ? conversation.following.imageUrl : "https://placehold.co/200x/ffa8e4/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato"}`}
+          src={`${conversation.participantsData[0].imageUrl ? conversation.participantsData[0].imageUrl : "https://placehold.co/200x/ffa8e4/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato"}`}
           alt="User Avatar"
           className="w-12 h-12 rounded-full"
         />
@@ -104,7 +119,7 @@ function Conversation({ conversation }: { conversation: FollowingUser }) {
       </div>
       <div className="flex-1">
         <h2 className="text-lg font-semibold">
-          {conversation.following.userName}
+          {conversation.participantsData[0].userName}
         </h2>
         <p className="text-gray-600">Hoorayy!!</p>
       </div>

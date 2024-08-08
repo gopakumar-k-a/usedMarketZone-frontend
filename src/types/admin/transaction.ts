@@ -1,3 +1,4 @@
+import { ShipmentStatus } from "../bid";
 import { NormalBackendRes } from "../login";
 import ProductInterface from "../product";
 
@@ -21,7 +22,7 @@ export interface Transaction {
   ownerId: string;
   claimerAddress: Address;
   transactionStatus: string;
-  shipmentStatus: string;
+  shipmentStatus: ShipmentStatus;
   trackingNumbers: TrackingNumbers;
   wonPrice: number;
   bidWinnerId: string;

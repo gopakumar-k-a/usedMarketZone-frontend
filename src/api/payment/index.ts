@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios";
+import { Axios, AxiosResponse } from "axios";
 import { axiosUserInstance } from "../axiosInstance/axiosUserInstance.ts";
 
 import { END_POINTS } from "@/constants/endPoints.ts";
@@ -6,6 +6,7 @@ import {
   CapturePaymentRes,
   CreatePaymentOrderResponse,
 } from "@/types/razorpay.ts";
+import { GetWalletRes } from "@/types/wallet.ts";
 
 export const createPaymentOrder = async (payload: any) => {
   const response: AxiosResponse<CreatePaymentOrderResponse> =
@@ -28,6 +29,14 @@ export const shipProductToAdmin = async (shipData: {
   const response = await axiosUserInstance.post(
     END_POINTS.DISPATCH_PRODUCT_TO_ADMIN,
     shipData
+  );
+
+  return response.data;
+};
+
+export const getWalletData = async () => {
+  const response: AxiosResponse<GetWalletRes> = await axiosUserInstance.get(
+    END_POINTS.GET_WALLET_DATA
   );
 
   return response.data;

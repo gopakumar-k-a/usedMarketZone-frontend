@@ -8,11 +8,14 @@ import ProductCard from "@/components/post/ProductCard";
 import Discussion from "../../../components/post/comment/Discussions";
 import PlaceBid from "@/components/post/bid/PlaceBid";
 import { ImHammer2 } from "react-icons/im";
+import { SharePostDialogue } from "@/components/post/SharePostModal";
 function ShowPostDetails() {
   const location = useLocation();
   // const [postId, setPostId] = useState("");
   const [loading, setLoading] = useState(true);
   const [postData, setPostData] = useState<ProductInterface | null>(null);
+  const [selectedPostIdShare, setSelectedPostIdShare] = useState<string>("");
+  const [isShareModalOpen, setShareModalOpen] = useState<boolean>(false);
   const { pId } = location.state;
   const isBidEnded = (bidEndTime: string) => {
     const currentTime = new Date().getTime();
@@ -37,43 +40,7 @@ function ShowPostDetails() {
         setLoading(true);
         try {
           const { postDetails } = await getUserPostDetails(pId);
-          //   {
-          //     "success": true,
-          //     "message": "owner post image list retrived successfully",
-          //     "postDetails": {
-          //         "isBidding": false,
-          //         "isAdminAccepted": false,
-          //         "_id": "66790013c2739aea895a11da",
-          //         "productName": "sdfdsf",
-          //         "basePrice": 455563434,
-          //         "userId": "666092075d83d5cf5b71f485",
-          //         "productImageUrls": [
-          //             "https://res.cloudinary.com/dwjw8biat/image/upload/v1719205906/t1kcr5gcbvvgkevfodv1.png",
-          //             "https://res.cloudinary.com/dwjw8biat/image/upload/v1719205906/y18g48wzl7fu1qztwr1p.png",
-          //             "https://res.cloudinary.com/dwjw8biat/image/upload/v1719205906/hyamf8mvwwqqmapt37bw.png"
-          //         ],
-          //         "category": "books",
-          //         "subCategory": "Non-Fiction",
-          //         "phone": 9388867491,
-          //         "description": "dsfdsfsdf",
-          //         "productCondition": "Good",
-          //         "productAge": "2 year used",
-          //         "address": "India, Kerala, Kanayannur, Thrippunithura, 682304",
-          //         "bookmarkedUsers": [
-          //             "666092075d83d5cf5b71f485"
-          //         ],
-          //         "bookmarkedCount": 1,
-          //         "isBlocked": false,
-          //         "isSold": false,
-          //         "isOtpVerified": false,
-          //         "postStatus": "draft",
-          //         "createdAt": "2024-06-24T05:11:47.890Z",
-          //         "updatedAt": "2024-06-24T05:16:55.051Z",
-          //         "__v": 0,
-          //         "bidHistory": []
-          //     }
-          // }
-          // const postData = await getUserPostDetails(pId);
+
           console.log("post data ", postDetails);
 
           setPostData(postDetails[0]);
@@ -89,7 +56,13 @@ function ShowPostDetails() {
     if (postData?.bidEndTime)
       console.log("  postData.bidEndTime ", postData.bidEndTime);
   }, []);
-
+  const postIdCallBack = (postId: string) => {
+    console.log(" postIdCallBack", postId);
+    setSelectedPostIdShare(postId);
+  };
+  const handleShareModalClose = () => {
+    setShareModalOpen(false);
+  };
   return (
     <>
       {!loading && postData && (
@@ -102,11 +75,28 @@ function ShowPostDetails() {
             <div className="flex  justify-center ">
               <div className="w-5/6  h-screen  ">
                 {postData.isBidding ? (
-                  <BidCard post={postData} />
+                  <BidCard
+                    key={postData._id}
+                    post={postData}
+                    postIdCallBack={postIdCallBack}
+                    setShareModalOpen={setShareModalOpen}
+                  />
                 ) : (
-                  <ProductCard post={postData} />
+                  <ProductCard
+                    key={postData._id}
+                    post={postData}
+                    postIdCallBack={postIdCallBack}
+                    setShareModalOpen={setShareModalOpen}
+                  />
                 )}
               </div>
+              {/* <ProductCard
+                key={post._id}
+                post={post}
+                setShareModalOpen={setShareModalOpen}
+                postIdCallBack={postIdCallBack}
+
+              /> */}
             </div>
           </div>
           <div className="sm:col-span-2 col-span-5 w-full flex justify-center-center border-gray-200 border-l-2 ">
@@ -121,7 +111,6 @@ function ShowPostDetails() {
                       basePrice={postData.basePrice}
                       highestBid={postData.currentHighestBid}
                       previousBidSumOfUser={postData.previousBidSumOfUser}
-              
                     />
                   )
                 ) : (
@@ -139,6 +128,13 @@ function ShowPostDetails() {
         </div>
       )}
       {loading && <Loader />}
+      {isShareModalOpen && selectedPostIdShare && (
+        <SharePostDialogue
+          isOpen={isShareModalOpen}
+          onClose={handleShareModalClose}
+          selectedPostIdShare={selectedPostIdShare}
+        />
+      )}
     </>
   );
 }

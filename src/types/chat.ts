@@ -14,6 +14,8 @@ export interface FollowingUser {
     imageUrl: string;
     createdAt: string;
     _id: string;
+    firstName:string;
+    lastName:string;
   };
 }
 export interface ConversationsRes extends NormalBackendRes {
@@ -24,19 +26,19 @@ export interface Chat {
   recieverId: string;
   message: string;
   createdAt: string;
-  isPost:boolean;
-  isPostReply:boolean;
+  isPost: boolean;
+  isPostReply: boolean;
   postId: string;
   postImageUrl: string[];
-  postDescription:string;
-  postIsBidding:boolean;
-  postOwnerId:string;
-  postOwnerUserName:string;
-  postCreatedAt:string;
+  postDescription: string;
+  postIsBidding: boolean;
+  postOwnerId: string;
+  postOwnerUserName: string;
+  postCreatedAt: string;
 }
 export interface IMessage {
   id: number;
-  chat:Chat
+  chat: Chat;
 }
 
 export interface SendMessageRes extends NormalBackendRes {
@@ -47,15 +49,23 @@ export interface GetChatRes extends NormalBackendRes {
   chats: Chat[];
 }
 
-
 export interface Following {
   _id: string;
   userName: string;
   imageUrl: string;
-  createdAt: Date;
+  createdAt: string;
 }
 
-export interface Conversation {
+export type ParticipantData = {
   _id: string;
-  following: Following;
+  userName: string;
+  imageUrl: string;
+  createdAt: string; 
+};
+export interface ConversationData {
+  _id: string;
+  participantsData: ParticipantData[];
+}
+export interface GetConversationsRes extends NormalBackendRes{
+  conversations:ConversationData[]
 }

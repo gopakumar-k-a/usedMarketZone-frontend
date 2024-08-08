@@ -2,11 +2,17 @@ import { useAppSelector } from "@/utils/hooks/reduxHooks";
 import { IoArrowBack } from "react-icons/io5";
 import { setChatSelectedNull } from "@/redux/reducers/chat/chatSlice";
 import { useAppDispatch } from "@/utils/hooks/reduxHooks";
+import { Navigate, useNavigate } from "react-router-dom";
 function ChatHeader() {
   const { selectedChatUserData } = useAppSelector((state) => state.chat);
   const dispatch = useAppDispatch();
   const handleBackClick = () => {
     dispatch(setChatSelectedNull());
+  };
+  const navigate=useNavigate()
+
+  const navigateToUserProfile = (id: string = selectedChatUserData._id) => {
+    navigate("/user-profile", { state: { userId: id } });
   };
   return (
     <header>
@@ -23,7 +29,7 @@ function ChatHeader() {
           />
         </div>
         <div className="flex-1">
-          <h2 className="text-lg font-semibold">
+          <h2 className="text-lg font-semibold" onClick={()=>navigateToUserProfile()}>
             {" "}
             {selectedChatUserData.userName
               ? selectedChatUserData.userName

@@ -28,6 +28,13 @@ export interface IBidHistoryAdmin {
 export interface GetBidHistoryOfProductRes extends NormalBackendRes {
   bidHistory: IBidHistoryAdmin[];
 }
+export type ProductStatus =
+  | "processing"
+  | "not_shipped"
+  | "shipped_to_admin"
+  | "received_by_admin"
+  | "shipped_to_buyer"
+  | "Delivered";
 
 export type UserProfileMyBids = {
   isAdminAccepted: boolean;
@@ -37,7 +44,8 @@ export type UserProfileMyBids = {
   productImageUrls: string[];
   category: string;
   subCategory: string;
-  bidEndTime:string;
+  bidEndTime: string;
+  productStatus: ProductStatus;
 };
 
 export interface UserProfileBidRes extends NormalBackendRes {
@@ -53,13 +61,20 @@ export interface ClaimerAddress {
   phone: string;
 }
 
-export interface OwnerData{
+export interface OwnerData {
   imageUrl: string;
   userName: string;
   _id: string;
-  firstName:string;
-  lastName:string
+  firstName: string;
+  lastName: string;
 }
+export type ShipmentStatus =
+  | "not_shipped"
+  | "shipped_to_admin"
+  | "received_by_admin"
+  | "shipped_to_buyer"
+  | "delivered";
+
 export interface UserParticipatingBid {
   _id: string;
   totalBidAmount: number;
@@ -78,8 +93,10 @@ export interface UserParticipatingBid {
   isClaimerAddressAdded: boolean;
   bidId: string;
   claimerAddress: ClaimerAddress;
-  ownerData:OwnerData;
-
+  ownerData: OwnerData;
+  transactionData: {
+    shipmentStatus: ShipmentStatus;
+  };
 }
 
 export interface UserParticipatingRes extends NormalBackendRes {
@@ -90,6 +107,6 @@ export interface ClaimBidRes extends NormalBackendRes {
   bidData: UserParticipatingBid;
 }
 
-export interface AddClaimerAddressRes extends NormalBackendRes{
-  newAddress:ClaimerAddress
+export interface AddClaimerAddressRes extends NormalBackendRes {
+  newAddress: ClaimerAddress;
 }

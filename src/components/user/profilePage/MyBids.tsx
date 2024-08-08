@@ -6,9 +6,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { formatDate, isBefore } from "date-fns";
 import { Badge } from "@/components/ui/badge";
+import ProductStatusComponent from "./BidProductDeliveryStatus";
+import StatusButtonMyBid from "./StatusButtonMyBid";
 function MyBids() {
-
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const [myBids, setMyBids] = useState<UserProfileMyBids[]>([]);
   const fetchUserBids = async () => {
     try {
@@ -26,6 +27,9 @@ function MyBids() {
     fetchUserBids();
   }, []);
   const isExpired = (time: Date) => isBefore(time, Date.now());
+  const handleNavigate = (bidId: string) => {
+    navigate("/bid-result", { state: { bidId } });
+  };
   return (
     <>
       <div className="flex justify-center w-full   h-screen">
@@ -100,13 +104,29 @@ function MyBids() {
                             <div className="mt-2">
                               {isExpired(new Date(bid.bidEndTime)) ? (
                                 <>
-                                <div className="flex flex-col gap-2">
+                                  <div className="flex flex-col gap-2">
+                                    <Badge variant="destructive">
+                                      bid ended
+                                    </Badge>
 
-                                  <Badge variant="destructive">bid ended</Badge>
-
-                                  <Button className="bg-green-500 hover:bg-green-600 text-white"
-                                  onClick={()=>navigate("/bid-result",{state:{bidId:bid._id}})}>Results</Button>
-                                </div>
+                                    {/* <Button
+                                      className="bg-green-500 hover:bg-green-600 text-white"
+                                      onClick={() =>
+                                        navigate("/bid-result", {
+                                          state: { bidId: bid._id },
+                                        })
+                                      }
+                                    >
+                                      Results
+                                    </Button> */}
+                                    <StatusButtonMyBid
+                                      key={bid._id}
+                                      handleNavigate={() =>
+                                        handleNavigate(bid._id)
+                                      }
+                                      productStatus={bid.productStatus}
+                                    />
+                                  </div>
                                 </>
                               ) : (
                                 <Badge className="text-white bg-green-500">
@@ -128,6 +148,9 @@ function MyBids() {
                       </div>
                     </div>
                   </div>
+                  {bid.isAdminAccepted && (
+                    <ProductStatusComponent productStatus={bid.productStatus} />
+                  )}
                 </div>
               );
             })

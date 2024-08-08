@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import DispatchToAdminTrackingIdDialogue from "./DispatchToAdminTrackingIdDialogue";
 import { shipProductToAdmin } from "@/api/payment";
+import BidResultProgressBar from "../orderTrack/BidResultProgressBar";
 function BidResultMain({ bidId }: { bidId: string }) {
   const [bidData, setBidData] = useState<any | null>(null);
   const [isProductClaimed, setProductClaimed] = useState(false);
@@ -89,11 +90,15 @@ function BidResultMain({ bidId }: { bidId: string }) {
       case "delivered":
         return (
           <button className="mt-6 md:w-auto bg-green-600 dark:bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700 dark:hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 pb-2 flex">
-            Delivered
+            Delivered and payment recieved in wallet
           </button>
         );
       default:
-        return null;
+        return (
+          <button className="mt-6 md:w-auto bg-blue-600 dark:bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 pb-2 flex">
+            waiting for bid winner to make payment
+          </button>
+        );
     }
   };
   return (
@@ -149,9 +154,9 @@ function BidResultMain({ bidId }: { bidId: string }) {
                 {isProductClaimed ? (
                   <>
                     <div className="flex gap-2">
-                      <button className="mt-6  md:w-auto bg-green-600 dark:bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700 dark:hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 pb-2 flex">
+                      {/* <button className="mt-6  md:w-auto bg-green-600 dark:bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700 dark:hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 pb-2 flex">
                         Payment Done to Admin By Winner
-                      </button>
+                      </button> */}
                       {renderActionButton()}
                       {/* <button
                         className="mt-6  md:w-auto bg-yellow-600 dark:bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-700 dark:hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50 pb-2 flex"
@@ -169,9 +174,16 @@ function BidResultMain({ bidId }: { bidId: string }) {
                     payment not Done By Winner
                   </button>
                 )}
+                <div className="w-full"></div>
               </div>
+              {isProductClaimed ? (
+                <BidResultProgressBar currentStep={shipmentStatus} role={"forSeller"} />
+              ) : (
+                <p>waiting for winner to make payment</p>
+              )}
             </div>
           </div>
+
           {isDispatchToAdminDialogueOpen && (
             <DispatchToAdminTrackingIdDialogue
               isOpen={isDispatchToAdminDialogueOpen}

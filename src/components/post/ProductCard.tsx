@@ -5,7 +5,7 @@ import DropdownMenuComponent from "./DropdownMenuComponent";
 import { bookmarkPost } from "@/api/product";
 import { format, isToday, isYesterday } from "date-fns";
 import { formatAddress } from "@/utils/formatAddress";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { store } from "@/redux/app/store";
 // import Carousel from "./Curosal";
 import AskProductDialogue from "./AskProductDialogue";
@@ -35,6 +35,7 @@ const ProductCard = ({
   const [isDeActive, setDeActive] = useState(post.isDeactivatedPost);
 
   const ownerId = store.getState().auth.user?._id;
+  const navigate=useNavigate()
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -69,7 +70,9 @@ const ProductCard = ({
       alert("Failed to update bookmark. Please try again.");
     }
   };
-
+  const navigateToUserProfile = (id: string = post.userId) => {
+    navigate("/user-profile", { state: { userId: id } });
+  };
   return (
     // <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800 mb-2 border-2 border-gray-200 dark:border-gray-700">
     // <div className="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800 mb-2 border-2 border-gray-200 dark:border-gray-700">
@@ -79,7 +82,7 @@ const ProductCard = ({
           {/* <div className="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded-lg overflow-hidden shadow-lg bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700"> */}
           <div className="px-6 py-4 flex items-center justify-between">
             <div className="flex items-center">
-              <div className="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center overflow-hidden">
+              <div className="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center overflow-hidden cursor-pointer"  onClick={()=>navigateToUserProfile()}>
                 <img
                   src={post?.userDetails?.imageUrl}
                   alt="user profile image"
@@ -87,7 +90,7 @@ const ProductCard = ({
                 />
               </div>
               <div className="ml-4">
-                <div className="text-lg font-bold dark:text-white">
+                <div className="text-lg font-bold dark:text-white cursor-pointer"  onClick={()=>navigateToUserProfile()}>
                   {post?.userDetails.userName}
                 </div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">

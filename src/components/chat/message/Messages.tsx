@@ -9,10 +9,9 @@ import PostMessage from "./PostMessage";
 import PostReplyMessage from "./PostReplyMessage";
 function Messages() {
   const { loading, messages } = useGetMessage();
-  useEffect(()=>{
-    console.log('messages ',messages);
-    
-  })
+  useEffect(() => {
+    console.log("messages ", messages);
+  });
 
   const lastMessageRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -24,33 +23,32 @@ function Messages() {
 
   return (
     <div className="flex h-[90vh]  flex-col">
-    {/* // <div className="flex flex-col h-full relative"> */}
+      {/* // <div className="flex flex-col h-full relative"> */}
       <div className=" overflow-y-auto min-h-[80vh] p-4 pb-36 mt-16 md:mt-20">
         {/* messages */}
         {messages && messages.length > 0 ? (
           messages.map((message, index) => (
             <div ref={lastMessageRef} key={`${message.recieverId}${index}`}>
-            {message.isPostReply ? (
-              <PostReplyMessage message={message} />
-              // <div>this is reply</div>
-            ) : message.isPost ? (
-              <PostMessage message={message} />
-            ) : (
-              <Message message={message} />
-            )}
-          </div>
+              {message.isPostReply ? (
+                <PostReplyMessage message={message} />
+              ) : // <div>this is reply</div>
+              message.isPost ? (
+                <PostMessage message={message} />
+              ) : (
+                <Message message={message} />
+              )}
+            </div>
           ))
         ) : (
           <>
-            <div className="flex items-center">
-              no chats send your first message to start conversation
-            </div>
+            <p className="flex items-center justify-center bg-gray-500 rounded-lg text-gray-100 font-medium">
+              no recend chats send your first message to start conversation
+            </p>
           </>
         )}
       </div>
       <div className="fixed md:bottom-0 bottom-16 md:w-7/12 w-full ">
-
-      <MessageInput />
+        <MessageInput />
       </div>
       {loading ? (
         <>

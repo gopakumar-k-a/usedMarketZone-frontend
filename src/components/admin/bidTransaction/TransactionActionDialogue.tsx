@@ -51,6 +51,7 @@ export function TransactionActionDialogue({
     setSelectedShipmentStatus(event.target.value);
   };
   const [initialShipmentStatus] = useState(transaction.shipmentStatus);
+
   const handleSaveChanges = async () => {
     if (selectedShipmentStatus !== initialShipmentStatus) {
       console.log("shipment status", selectedShipmentStatus);
@@ -103,11 +104,12 @@ export function TransactionActionDialogue({
           break;
         case "delivered":
           try {
-            if (buyerTrackingNumber == "") return;
             setIsSaving(true);
             await markProductAsDelivered(
               transaction.transactionId,
-              transaction.ownerId
+              transaction.ownerId,
+              transaction.productId,
+              transaction.bidId
             ).then(() => {
               setSelectedShipmentStatus("delivered");
               onUpdateTransaction(
@@ -153,18 +155,30 @@ export function TransactionActionDialogue({
           </h1>
           <p>
             <span className="font-medium">Shipment Status:</span>
-
-            <select
-              value={selectedShipmentStatus}
-              onChange={handleShipmentStatusChange}
-              className="ml-2 border rounded px-2 py-1 dark:bg-gray-800 dark:text-white"
-            >
-              {shipmentStatuses.map((status) => (
-                <option key={status} value={status}>
-                  {status}
-                </option>
-              ))}
-            </select>
+            {initialShipmentStatus == "delivered" ? (
+              <select
+                value={initialShipmentStatus}
+                className="ml-2 border rounded px-2 py-1 dark:bg-gray-800 dark:text-white"
+              >
+              
+                  <option  value='delivered'>
+                  delivered
+                  </option>
+          
+              </select>
+            ) : (
+              <select
+                value={selectedShipmentStatus}
+                onChange={handleShipmentStatusChange}
+                className="ml-2 border rounded px-2 py-1 dark:bg-gray-800 dark:text-white"
+              >
+                {shipmentStatuses.map((status) => (
+                  <option key={status} value={status}>
+                    {status}
+                  </option>
+                ))}
+              </select>
+            )}
           </p>
           {selectedShipmentStatus !== initialShipmentStatus &&
             selectedShipmentStatus === "shipped_to_buyer" && (

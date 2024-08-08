@@ -5,7 +5,11 @@ import { Link, useLocation } from "react-router-dom";
 import { ProductInterface } from "@/types/product";
 import SlideCurosal from "../../SlideCurosal";
 import { getClaimBidDetails } from "@/api/bid";
-import { ClaimerAddress, UserParticipatingBid } from "@/types/bid";
+import {
+  ClaimerAddress,
+  ShipmentStatus,
+  UserParticipatingBid,
+} from "@/types/bid";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { Button } from "@/components/ui/button";
 import { IoLocationSharp } from "react-icons/io5";
@@ -19,6 +23,8 @@ import Loader from "@/components/loader/Loader";
 import UserCard from "@/components/user/SuggestedUserCard";
 import { ImHammer2 } from "react-icons/im";
 import OrderTracking from "../orderTrack/OrderTracking";
+import BidResultProgressBar from "../orderTrack/BidResultProgressBar";
+import { Transaction } from "@/types/admin/transaction";
 // import OrderTracking from "../orderTrack/OrderTracking";
 // import ProgressBar from "../orderTrack/OrderTracking";
 function BidClaimMain() {
@@ -35,40 +41,10 @@ function BidClaimMain() {
   const [loading, setLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
   const location = useLocation();
+  const [transactionShipmentStatus, setTransactionShipmentStatus] =
+    useState<ShipmentStatus | null>(null);
   const { productId } = location.state;
 
-  const steps = [
-    {
-      title: 'Order Placed',
-      date: '08/06/2023',
-      description: 'Pretium lectus quam id leo. Urna et pharetra aliquam vestibulum morbi blandit cursus risus.',
-      isActive: true
-    },
-    {
-      title: 'Order Shipped',
-      date: '09/06/2023',
-      description: 'Pretium lectus quam id leo. Urna et pharetra aliquam vestibulum morbi blandit cursus risus.',
-      isActive: true
-    },
-    {
-      title: 'In Transit',
-      date: '10/06/2023',
-      description: 'Pretium lectus quam id leo. Urna et pharetra aliquam vestibulum morbi blandit cursus risus.',
-      isActive: true
-    },
-    {
-      title: 'Out of Delivery',
-      date: '12/06/2023',
-      description: 'Pretium lectus quam id leo. Urna et pharetra aliquam vestibulum morbi blandit cursus risus.',
-      isActive: true
-    },
-    {
-      title: 'Delivered',
-      date: 'Exp. 12/08/2023',
-      description: 'Pretium lectus quam id leo. Urna et pharetra aliquam vestibulum morbi blandit cursus risus.',
-      isActive: false
-    }
-  ];
   const handleShowAddressForm = () => {
     setShowAddressForm(true);
   };
@@ -85,6 +61,11 @@ function BidClaimMain() {
         bidData.isBidAmountPaid && bidData.claimedUserId == fromUserId
           ? true
           : false
+      );
+      setTransactionShipmentStatus(
+        bidData.transactionData.shipmentStatus
+          ? bidData.transactionData.shipmentStatus
+          : null
       );
       // bidData.isBidAmountPaid && bidData.claimedUserId == fromUserId ? true : false
     }
@@ -144,6 +125,11 @@ function BidClaimMain() {
           if (paymentCaptureResponse.captureStatus == "captured") {
             setStatusMessage("Payment successful");
             setIsProductClaimed(true);
+            setTransactionShipmentStatus(
+              paymentCaptureResponse.transactionData.shipmentStatus
+                ? paymentCaptureResponse.transactionData.shipmentStatus
+                : null
+            );
             // await handleClaimProduct(paymentCaptureResponse.data.transactionId);
           } else {
             setStatusMessage("Payment failed");
@@ -205,20 +191,21 @@ function BidClaimMain() {
                 <>
                   {isProductClaimed ? (
                     <>
-                    <button className="mt-6 md:w-auto bg-green-600 dark:bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700 dark:hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 pb-2 flex">
-                      Payment Done
-                    </button>
-                 {/* <ProgressBar status={"Delivery"}/> */}
-                    
-                    </>
+                      <button className="mt-6 md:w-auto bg-green-600 dark:bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-700 dark:hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 pb-2 flex">
+                        Payment Done
+                      </button>
 
+                      {/* <ProgressBar status={"Delivery"}/> */}
+                    </>
                   ) : (
-                    <button
-                      className="mt-6  md:w-auto bg-blue-600 dark:bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 pb-2 flex"
-                      onClick={() => handlePayment()}
-                    >
-                      make payment <SiRazorpay className="h-5 w-5 ml-2" />
-                    </button>
+                    <>
+                      <button
+                        className="mt-6  md:w-auto bg-blue-600 dark:bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 pb-2 flex"
+                        onClick={() => handlePayment()}
+                      >
+                        make payment <SiRazorpay className="h-5 w-5 ml-2" />
+                      </button>
+                    </>
                   )}
                   <div>
                     {!isProductClaimed && (
@@ -227,10 +214,10 @@ function BidClaimMain() {
                           Please click the button to complete your payment
                           before claiming your product.
                         </h1>
-                        <h1 className="text-red-400">
+                        {/* <h1 className="text-red-400">
                           Note: For your safety, make the payment only after
                           meeting and verifying the product with the owner.
-                        </h1>
+                        </h1> */}
                       </>
                     )}
 
@@ -263,6 +250,13 @@ function BidClaimMain() {
                 />
               )}
             </div>
+
+            {isProductClaimed && transactionShipmentStatus && (
+              <BidResultProgressBar
+                currentStep={transactionShipmentStatus}
+                role={"forWinner"}
+              />
+            )}
           </div>
         </div>
       )}

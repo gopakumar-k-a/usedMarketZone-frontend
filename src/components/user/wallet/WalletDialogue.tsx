@@ -10,6 +10,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import WalletHistory from "./WalletHistory";
+import { getWalletData } from "@/api/payment";
+import { useEffect, useState } from "react";
+import { Wallet } from "@/types/wallet";
 
 const WalletDialgoue = ({
   isOpen,
@@ -18,6 +21,23 @@ const WalletDialgoue = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
+  const [walletData, setWalletData] = useState<Wallet | null>(null);
+  const [loading, setLoading] = useState(false);
+  const fetchWalletData = async () => {
+    try {
+      setLoading(true);
+      const { wallet } = await getWalletData();
+      setWalletData(wallet);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchWalletData();
+  }, []);
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
@@ -30,7 +50,11 @@ const WalletDialgoue = ({
         <div className="grid gap-4 py-4">
           <div className="flex justify-end mr-4">
             <h1 className="dark:text-white  text-lg">balance</h1>
-            <h1 className="dark:text-white font-bold text-2xl ml-2">&#8377;100</h1>
+            <h1 className="dark:text-white font-bold text-2xl ml-2">
+              {walletData
+                ? `${walletData.walletBalance}₹`
+                : "not available"}
+            </h1>
           </div>
           <WalletHistory />
         </div>
