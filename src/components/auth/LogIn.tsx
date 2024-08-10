@@ -75,13 +75,13 @@ function LogIn() {
       )
       .then((response: UserLoginResponse) => {
         console.log("response is ", response);
-        const { user, token, role } = response;
+        const { user, accessToken, role } = response;
 
         console.log("log in page   user, token, role", user);
 
         // dispatch(loginSuccess({ user: JSON.stringify(user), token }));
 
-        dispatch(setCredentials({ user, token, role }));
+        dispatch(setCredentials({ user, accessToken, role }));
         console.log('user role UserLoginResponse ',user.role);
         
         if (user.role == "user") {

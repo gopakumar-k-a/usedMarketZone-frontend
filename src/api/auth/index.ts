@@ -1,6 +1,9 @@
-import { axiosRefreshInstance } from "../axiosInstance/axiosUserInstance.ts";
+import {
+  axiosRefreshInstance,
+  axiosUserInstance,
+} from "../axiosInstance/axiosUserInstance.ts";
 import { END_POINTS } from "../../constants/endPoints.ts";
-import { User, UserLogin } from "../../types/login.ts";
+import { RefreshAccessToken, User, UserLogin } from "../../types/login.ts";
 
 import {
   SendOtpResponseSignUp,
@@ -8,6 +11,7 @@ import {
   UserLoginResponse,
   verifyOtpSuccess,
 } from "../../types/login.ts";
+import { AxiosResponse } from "axios";
 
 export const userOtpSignUp = async (
   payload: User
@@ -58,6 +62,12 @@ export const userLoginAuthenticate = async (payload: UserLogin) => {
 
   console.log("response user login ", response.data);
 
+  return response.data;
+};
+
+export const refreshAccessToken = async () => {
+  const response: AxiosResponse<RefreshAccessToken> =
+    await axiosUserInstance.get(END_POINTS.REFRESH_ACCESS_TOKEN);
   return response.data;
 };
 

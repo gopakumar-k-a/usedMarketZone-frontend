@@ -5,18 +5,18 @@ import { User } from "../../../types/login";
 interface InitialState {
   isAuthenticated: boolean;
   user: User | null; // Adjust the type according to your actual User type
-  token: string | null;
+  accessToken: string | null;
   role: string | null;
 }
 
-const token = localStorage.getItem("token") || null;
+const accessToken = localStorage.getItem("accessToken") || null;
 const userString = localStorage.getItem("user") || null;
 const role = localStorage.getItem("role") || null;
 
 const initialState: InitialState = {
-  isAuthenticated: !!token,
+  isAuthenticated: !!accessToken,
   user: userString ? JSON.parse(userString) : null, // Parse the user string
-  token: token || null,
+  accessToken: accessToken || null,
   role: role || null,
 };
 
@@ -26,13 +26,13 @@ const authSlice = createSlice({
   reducers: {
     setCredentials: (
       state,
-      action: PayloadAction<{ user: User; token: string; role: string }>
+      action: PayloadAction<{ user: User; accessToken: string; role: string }>
     ) => {
-      const { user, token, role } = action.payload;
+      const { user, accessToken, role } = action.payload;
       state.user = user;
       localStorage.setItem("user", JSON.stringify(user));
-      state.token = token;
-      localStorage.setItem("token", token);
+      state.accessToken = accessToken;
+      localStorage.setItem("accessToken", accessToken);
       state.role = role;
       localStorage.setItem("role", role);
       state.isAuthenticated = true;
@@ -45,10 +45,10 @@ const authSlice = createSlice({
     logOut: (state) => {
       state.isAuthenticated = false;
       state.user = null;
-      state.token = null;
+      state.accessToken = null;
       state.role = null;
       localStorage.removeItem("user");
-      localStorage.removeItem("token");
+      localStorage.removeItem("accessToken");
       localStorage.removeItem("role");
     },
 
@@ -56,7 +56,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { setCredentials, updateUserCredentials, logOut,updateNoOfFollowers } =
+export const { setCredentials, updateUserCredentials, logOut } =
   authSlice.actions;
 
 export default authSlice.reducer;

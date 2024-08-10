@@ -48,6 +48,10 @@ function BidHistory() {
           bid ends:{" "}
           {bidProductData?.bidEndTime && formatDate(bidProductData?.bidEndTime)}
         </div>
+        <div>
+          {/* <span className="text-black dark:text-white">bid winner:</span> */}
+          <span></span>
+        </div>
       </div>
 
       <BidHistoryProductCard bidProductData={bidProductData} />

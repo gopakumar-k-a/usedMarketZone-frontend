@@ -310,19 +310,6 @@ const validImageTypes: string[] = [
           .min(0, "Minutes cannot be negative")
           .max(59, "Minutes cannot be more than 59"),
       }),
-    //   .test(
-    //     "is-valid-duration",
-    //     "The total duration must be at least 5 hours",
-    //     function (value) {
-    //       const { day, hour, minute } = value;
-    //       console.log("day, hour, minute", day, hour, minute);
-
-    //       const totalMinutes = day * 24 * 60 + hour * 60 + minute;
-    //       console.log("result ", totalMinutes >= 5 * 60);
-
-    //       return totalMinutes >= 5 * 60;
-    //     }
-    //   ),
     productImages: Yup.array().min(1, "Please select at least one image"),
   });
 
@@ -367,10 +354,7 @@ const validImageTypes: string[] = [
       }
 
       setProductImages([...productImages, ...validImages.slice(0, 4)]);
-      // formik.setFieldValue("productImages", [
-      //   ...productImages,
-      //   ...validImages.slice(0, 4),
-      // ]);
+
     }
   };
   const setErrorFromImageCount = (imageCount: number) => {

@@ -39,11 +39,11 @@ function AdminPage() {
   return (
     <>
       {" "}
-      <div className="sm:grid sm:grid-cols-12 flex flex-col h-screen">
+      <div className="md:grid md:grid-cols-12 flex flex-col h-screen">
         {/* <div className="h-12  bg-violet-500 col-span-12">
           <UserNavBar />
         </div> */}
-        <div className="h-16 w-full fixed top-0 bg-yellow-500 block  sm:hidden">
+        <div className="h-16 w-full fixed top-0 bg-yellow-500 block  md:hidden">
           {/* <SideBarMobile /> */}
           <AdminTopBar
             handleLogout={handleLogout}
@@ -52,7 +52,7 @@ function AdminPage() {
           />
         </div>
         <div
-          className={`h-full  bg-red-600 hidden sm:block ${isExpanded ? "sm:col-span-2" : "sm:col-span-1"}`}
+          className={`h-full  bg-red-600 hidden md:block ${isExpanded ? "md:col-span-2" : "md:col-span-1"}`}
         >
           <AdminSideBar
             isExpanded={isExpanded}
@@ -65,13 +65,13 @@ function AdminPage() {
 
         {/* Green Div: Always visible */}
         <div
-          className={`h-full overflow-y-scroll  bg-white dark:bg-adminBgDark ${isExpanded ? "sm:col-span-10" : "sm:col-span-11"} pt-16 sm:pt-0`}
+          className={`h-full overflow-y-scroll  bg-white dark:bg-adminBgDark ${isExpanded ? "md:col-span-10" : "md:col-span-11"} pt-16 md:pt-0`}
         >
           <Outlet />
         </div>
 
         {/* Yellow Div: Visible on small screens, hidden on medium screens and above */}
-        {/* <div className="h-16 w-full  fixed bottom-0 bg-yellow-500 block sm:hidden">
+        {/* <div className="h-16 w-full  fixed bottom-0 bg-yellow-500 block md:hidden">
          
         </div> */}
       </div>

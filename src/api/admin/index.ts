@@ -7,6 +7,7 @@ import { GetBidHistoryOfProductRes } from "@/types/bid";
 import { KycAdminUpdatedData, KycDataAdmin } from "@/types/user";
 import { AdminStatisticsRes } from "@/types/admin/dashboard";
 import { TransactionRes } from "@/types/admin/transaction";
+import { DashboardTransactionStatisticsRes, ITransaction } from "@/types/transactions";
 
 export const getAllUsers = async (page: number, limit: number) => {
   const response = await axiosAdminInstance.get(
@@ -122,6 +123,13 @@ export const getDashboardStatistics = async () => {
   const response: AxiosResponse<AdminStatisticsRes> =
     await axiosAdminInstance.get(END_POINTS.GET_DASHBOARD_STATISTICS);
 
+  return response.data;
+};
+
+export const getTransactionStatisctics = async () => {
+  const response: AxiosResponse<DashboardTransactionStatisticsRes> = await axiosAdminInstance.get(
+    END_POINTS.GET_TRANSACTION_STATISTICS
+  );
   return response.data;
 };
 

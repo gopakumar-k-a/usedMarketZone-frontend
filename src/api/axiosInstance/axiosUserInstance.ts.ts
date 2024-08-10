@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 
 import { logOut } from "@/redux/reducers/auth/authSlice";
 import { handleAxiosErrorHelper } from "@/utils/helpers/handleAxiosErrorHelper";
+import { setCredentials } from "@/redux/reducers/auth/authSlice";
+import { refreshAccessToken } from "../auth";
 // import { useAppDispatch } from "@/utils/hooks/reduxHooks";
 
 // const dispatch = useAppDispatch();
@@ -21,12 +23,12 @@ export const axiosRefreshInstance = axios.create({
 
 axiosUserInstance.interceptors.request.use(
   (config) => {
-    const { token } = store.getState().auth;
-    console.log("token is ", token);
+    const { accessToken } = store.getState().auth;
+    console.log("accessToken is ", accessToken);
 
-    if (token) {
-      // config.headers.authorization = 'Bearer ' +token;
-      config.headers.authorization = `Bearer ${token}`;
+    if (accessToken) {
+      // config.headers.authorization = 'Bearer ' +accessToken;
+      config.headers.authorization = `Bearer ${accessToken}`;
     }
     return config;
   },
@@ -38,9 +40,8 @@ axiosUserInstance.interceptors.request.use(
 axiosUserInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    console.log('error message from interceptor',error.message)
+    console.log("error message from interceptor", error.message);
     const originalRequest = error.config;
-    handleAxiosErrorHelper(error);
     if (
       error.response &&
       error.response.status === 401 &&
@@ -53,7 +54,25 @@ axiosUserInstance.interceptors.response.use(
         store.dispatch(logOut());
         return Promise.reject(error);
       }
+      try {
+        const { user, role } = store.getState().auth;
+        const { accessToken } = await refreshAccessToken();
+        if (!accessToken || !user || !role) {
+          throw new Error("Refresh token failed.");
+        }
+
+        store.dispatch(setCredentials({ user, accessToken, role }));
+        originalRequest.headers.authorization = `Bearer ${accessToken}`;
+        return axiosUserInstance(originalRequest);
+      } catch (refreshError) {
+        toast.error("refresh token expired");
+        store.dispatch(logOut());
+        return Promise.reject(refreshError);
+      }
+
     }
+    handleAxiosErrorHelper(error);
+
     return Promise.reject(error);
   }
 );

@@ -51,12 +51,14 @@ const WalletDialgoue = ({
           <div className="flex justify-end mr-4">
             <h1 className="dark:text-white  text-lg">balance</h1>
             <h1 className="dark:text-white font-bold text-2xl ml-2">
-              {walletData
-                ? `${walletData.walletBalance}₹`
-                : "not available"}
+              {walletData ? `${walletData.walletBalance}₹` : 0}
             </h1>
           </div>
-          <WalletHistory />
+          {walletData &&
+            walletData.walletHistory &&
+            walletData.walletHistory.length > 0 && (
+              <WalletHistory walletHistory={walletData.walletHistory} />
+            )}
         </div>
         <DialogFooter>
           <Button type="submit">Submit</Button>

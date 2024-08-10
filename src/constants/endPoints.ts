@@ -8,6 +8,7 @@ export const END_POINTS = {
   FORGOT_PASSWORD: "api/auth/forgot-password",
   VERIFY_OTP_FORGOT_PASS: "api/auth/verfiy-forgot-password",
   RESET_PASSWORD: "/api/auth/reset-password",
+  REFRESH_ACCESS_TOKEN: "/api/auth/refresh-access-token",
   //user
   GET_USER_INFO: "/api/user/profile",
   USER_NAME_AVILABILITY: "/api/user/username-check",
@@ -81,6 +82,7 @@ export const END_POINTS = {
   HANDLE_KYC_REQUEST: "/api/admin/handle-kyc-request",
   GET_ALL_PRODUCT_POSTS_ADMIN: "/api/admin/all-product-posts",
   GET_DASHBOARD_STATISTICS: "/api/admin/get-dashboard-statistics",
+  GET_TRANSACTION_STATISTICS: "/api/admin/get-dashboard-transactions",
   GET_BID_TRANSACTIONS_ADMIN: "/api/admin/get-bid-transactions",
   CHANGE_TR_STATUS_ADMIN_RECIEVED: "/api/admin/admin-recieved-bid-product",
   CHANGE_TR_STATUS_ADMIN_SEND_PRODUCT_WINNER:
