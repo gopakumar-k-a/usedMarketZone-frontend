@@ -3,6 +3,12 @@ import { TransactionActionDialogue } from "./TransactionActionDialogue";
 import { PiDotsThreeCircleDuotone } from "react-icons/pi";
 import { getBidTransactions } from "@/api/admin";
 import { Transaction } from "@/types/admin/transaction";
+import { useSearchParams } from "react-router-dom";
+import { DebouncedSearchInput } from "@/components/debounceSearch/DebouncedSearchInput";
+import { SortDropdown } from "@/components/sort/SortDropDown";
+import ShipmentFilterComponent from "./ShipmentFilter";
+import PaymentFilterComponent from "./PaymentFilterComponent";
+import { Pagination } from "@/components/pagination/Pagination";
 
 // const transactions = [
 //   {
@@ -40,13 +46,39 @@ function BidTransactionMain() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [selectedTransaction, setSelectedTransaction] =
     useState<Transaction | null>(null);
-  const fetchBidTransactions = async () => {
-    const { transactions } = await getBidTransactions();
+  const [totalDocuments, setTotalDocuments] = useState(0);
+  const [searchParams] = useSearchParams();
+  const limit = 5;
+  const fetchBidTransactions = async (
+    page: number = 1,
+    search: string | null = "",
+    sort: string | null,
+    shipmentStatus: string,
+    paymentStatus: string
+  ) => {
+    const { transactions, totalDocuments } = await getBidTransactions(
+      page,
+      search,
+      sort,
+      limit,
+      shipmentStatus,
+      paymentStatus
+    );
+    console.log("transactions ", transactions);
+
     setTransactions(transactions);
+    setTotalDocuments(totalDocuments);
   };
   useEffect(() => {
-    fetchBidTransactions();
-  }, []);
+    const page = searchParams.get("page")
+      ? parseInt(searchParams.get("page")!)
+      : 1;
+    const search = searchParams.get("search") ? searchParams.get("search") : "";
+    const sort = searchParams.get("sort") ? searchParams.get("sort") : "";
+    const shipmentStatus = searchParams.get("shipmentStatus") || "";
+    const paymentStatus = searchParams.get("paymentStatus") || "";
+    fetchBidTransactions(page, search, sort, shipmentStatus, paymentStatus);
+  }, [searchParams]);
   const handleTransactionActionModalOpen = (transaction: Transaction) => {
     setSelectedTransaction(transaction);
     setTransactionActionDialogueOpen(true);
@@ -71,8 +103,20 @@ function BidTransactionMain() {
       )
     );
   };
+  const options = [
+    { value: "createdAt_desc", label: "Newest" },
+    { value: "createdAt_asc", label: "Oldest" },
+    { value: "price_asc", label: "Price: Low to High" },
+    { value: "price_desc", label: "Price: High to Low" },
+  ];
   return (
     <>
+      <div className="flex gap-2">
+        {/* <DebouncedSearchInput /> */}
+        <SortDropdown options={options} />
+        <ShipmentFilterComponent />
+        <PaymentFilterComponent />
+      </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -143,7 +187,9 @@ function BidTransactionMain() {
           </tbody>
         </table>
       </div>
-
+      {transactions && transactions.length > 0 && (
+        <Pagination pageSize={limit} totalCount={totalDocuments} />
+      )}
       {isTransactionActionDialogueOpen && selectedTransaction && (
         <TransactionActionDialogue
           isOpen={isTransactionActionDialogueOpen}

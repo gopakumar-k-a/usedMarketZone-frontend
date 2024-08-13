@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { DataTable } from "../../components/admin/userManagement/data-table";
 import { getAllUsers } from "@/api/admin";
-import Pagination from "@/components/pagination/Pagination";
+import Pagination from "@/components/pagination/ShadCnPagination";
 import {  useSearchParams } from "react-router-dom";
 import { User, columns } from "../../components/admin/userManagement/columns";
 import { useNavigate } from "react-router-dom";

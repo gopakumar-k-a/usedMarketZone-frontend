@@ -2,6 +2,8 @@ export interface NormalBackendRes {
   status: boolean;
   message: string;
   success: boolean;
+  totalDocuments: number;
+  currentPage: number;
 }
 
 export interface User {

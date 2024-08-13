@@ -7,7 +7,10 @@ import { GetBidHistoryOfProductRes } from "@/types/bid";
 import { KycAdminUpdatedData, KycDataAdmin } from "@/types/user";
 import { AdminStatisticsRes } from "@/types/admin/dashboard";
 import { TransactionRes } from "@/types/admin/transaction";
-import { DashboardTransactionStatisticsRes, ITransaction } from "@/types/transactions";
+import {
+  DashboardTransactionStatisticsRes,
+  ITransaction,
+} from "@/types/transactions";
 
 export const getAllUsers = async (page: number, limit: number) => {
   const response = await axiosAdminInstance.get(
@@ -52,8 +55,20 @@ export const getUserPostDetailsInAdmin = async (postId: string) => {
   return response.data;
 };
 
-export const getBidRequests = async () => {
-  const response = await axiosAdminInstance.get(END_POINTS.GET_BID_REQUESTS);
+export const getBidRequests = async (
+  page: number = 1,
+  search: string | null = "",
+  sort: string | null,
+  limit: number = 5
+) => {
+  const response = await axiosAdminInstance.get(END_POINTS.GET_BID_REQUESTS, {
+    params: {
+      page,
+      limit,
+      searchQuery: search,
+      sort,
+    },
+  });
   return response.data;
 };
 
@@ -91,9 +106,22 @@ export const getBidHistoryOfProduct = async (bidProductId: string) => {
   return response.data;
 };
 
-export const getKycDataAdmin = async () => {
+export const getKycDataAdmin = async (
+  page: number = 1,
+  search: string | null = "",
+  sort: string | null,
+  limit: number = 5
+) => {
   const response: AxiosResponse<KycDataAdmin> = await axiosAdminInstance.get(
-    `${END_POINTS.GET_ALL_BID_REQUESTS_ADMIN}`
+    `${END_POINTS.GET_ALL_BID_REQUESTS_ADMIN}`,
+    {
+      params: {
+        page,
+        limit,
+        searchQuery: search,
+        sort,
+      },
+    }
   );
 
   return response.data;
@@ -112,9 +140,21 @@ export const handleKycRequest = async (
   return response.data;
 };
 
-export const handleGetAllProductPostsAdmin = async () => {
+export const handleGetAllProductPostsAdmin = async (
+  page: number = 1,
+  limit: number = 5,
+  search: string | null,
+  sort: string | null
+) => {
   const response: AxiosResponse<GetAllProductPostsAdminRes> =
-    await axiosAdminInstance.get(END_POINTS.GET_ALL_PRODUCT_POSTS_ADMIN);
+    await axiosAdminInstance.get(END_POINTS.GET_ALL_PRODUCT_POSTS_ADMIN, {
+      params: {
+        page,
+        limit,
+        searchQuery: search,
+        sort,
+      },
+    });
 
   return response.data;
 };
@@ -127,15 +167,31 @@ export const getDashboardStatistics = async () => {
 };
 
 export const getTransactionStatisctics = async () => {
-  const response: AxiosResponse<DashboardTransactionStatisticsRes> = await axiosAdminInstance.get(
-    END_POINTS.GET_TRANSACTION_STATISTICS
-  );
+  const response: AxiosResponse<DashboardTransactionStatisticsRes> =
+    await axiosAdminInstance.get(END_POINTS.GET_TRANSACTION_STATISTICS);
   return response.data;
 };
 
-export const getBidTransactions = async () => {
+export const getBidTransactions = async (
+  page: number = 1,
+  search: string | null = "",
+  sort: string | null,
+  limit: number = 5,
+  shipmentStatus: string,
+  paymentStatus: string
+) => {
   const response: AxiosResponse<TransactionRes> = await axiosAdminInstance.get(
-    END_POINTS.GET_BID_TRANSACTIONS_ADMIN
+    END_POINTS.GET_BID_TRANSACTIONS_ADMIN,
+    {
+      params: {
+        page,
+        limit,
+        searchQuery: search,
+        sort,
+        shipmentStatus,
+        paymentStatus,
+      },
+    }
   );
   return response.data;
 };

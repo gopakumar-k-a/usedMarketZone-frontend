@@ -9,6 +9,10 @@ import { followUser, unFollowUser } from "@/api/user";
 import { store } from "@/redux/app/store";
 import { CustomAlertDialogue } from "@/components/alert/CustomAlertDialogue";
 import WalletDialgoue from "../wallet/WalletDialogue";
+import { MdHistory } from "react-icons/md";
+import { motion } from "framer-motion";
+import PaymentHistoryDialogue from "./paymentHistory/PaymentHistoryDialogue";
+import FollowersFollowingDialogue from "./followList/FollowersFollowingDialogue";
 function ProfileTop({
   userData,
   ownerProfile,
@@ -20,6 +24,11 @@ function ProfileTop({
   const [isFollowing, setIsFollowing] = useState(false);
   const [isUnfollowAlertOpen, setIsUnfollowAlertOpen] = useState(false);
   const [isWalletDialogueOpen, setWalletDialogueOpen] = useState(false);
+  const [isPaymentHistoryOpen, setPaymentHistoryOpen] = useState(false);
+  const [isFollowDialogueOpen, setFollowDialogueOpen] = useState(false);
+  const [selectedFollowTab, setSelectedFollowTab] = useState<
+    "followers" | "following" | null
+  >(null);
   const myUserId = store.getState().auth.user?._id;
   const checkIsFollowing = () => {
     const userCheck = userData.followers.find(
@@ -62,6 +71,15 @@ function ProfileTop({
   // isOpen, onClose, title, description,onContinue
   const unfollowTitle = "do you want to unfollow";
   const unfollowDescription = "Clicking continue will unfollow the user";
+  const handleFollowersDetailsOnDialogueOpen = () => {
+    setFollowDialogueOpen(true);
+    setSelectedFollowTab("followers");
+  };
+  const handleFollowingDetailsOnDialogueOpen = () => {
+    setFollowDialogueOpen(true);
+    setSelectedFollowTab("following");
+  };
+
   return (
     <>
       <div className=" w-full bg-red-200 dark:bg-gray-800 flex justify-center items-center">
@@ -74,7 +92,7 @@ function ProfileTop({
             />
           </div>
           {ownerProfile && (
-            <div className="w-full h-20 flex sm:pt-10 pt-2 justify-end">
+            <motion.div className="w-full h-20 flex sm:pt-10 pt-2 justify-end">
               <Link to={"/edit-profile"}>
                 <button
                   type="button"
@@ -83,7 +101,7 @@ function ProfileTop({
                   Edit Profile
                 </button>
               </Link>
-            </div>
+            </motion.div>
           )}
 
           <div className="flex justify-center px-5 -mt-12">
@@ -124,7 +142,10 @@ function ProfileTop({
                 </Link>
               </div> */}
 
-              <div className="bg-white dark:bg-gray-900 flex justify-center">
+              <motion.div
+                className="bg-white dark:bg-gray-900 flex justify-center"
+                whileHover={{ scale: 1.1 }}
+              >
                 <button
                   className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-green-600 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none flex items-center gap-3"
                   type="button"
@@ -133,7 +154,20 @@ function ProfileTop({
                   <FontAwesomeIcon icon={faWallet} />
                   Wallet
                 </button>
-              </div>
+              </motion.div>
+              <motion.div
+                className="bg-white dark:bg-gray-900 flex justify-center"
+                whileHover={{ scale: 1.1 }}
+              >
+                <button
+                  className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-blue-600 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none flex items-center gap-3"
+                  type="button"
+                  onClick={() => setPaymentHistoryOpen(true)}
+                >
+                  <MdHistory className="h-5 w-5" />
+                  Payment History
+                </button>
+              </motion.div>
             </div>
           ) : (
             <div className="flex justify-center gap-4 mt-4">
@@ -177,35 +211,23 @@ function ProfileTop({
 
           <hr className="mt-6" />
 
-          {/* {ownerProfile ? (
-            <>
-              {" "}
-              <div className="flex border-t border-b">
-                <div className="text-center w-1/2 p-4 hover:bg-gray-100 cursor-pointer">
-                  <p>
-                    <span className="font-semibold">2.5k </span> Followers
-                  </p>
-                </div>
-                <div className="border"></div>
-                <div className="text-center w-1/2 p-4 hover:bg-gray-100 cursor-pointer">
-                  <p>
-                    <span className="font-semibold">2.0k </span> Following
-                  </p>
-                </div>
-              </div>
-            </>
-          ) : ( */}
           <>
             {" "}
             <div className="flex border-t border-b">
-              <div className="text-center w-1/2 p-4 hover:bg-gray-100 cursor-pointer">
+              <div
+                className="text-center w-1/2 p-4 hover:bg-gray-100 cursor-pointer"
+                onClick={handleFollowersDetailsOnDialogueOpen}
+              >
                 <p>
                   <span className="font-semibold"> </span> Followers{" "}
                   {userData.numOfFollowers}
                 </p>
               </div>
               <div className="border"></div>
-              <div className="text-center w-1/2 p-4 hover:bg-gray-100 cursor-pointer">
+              <div
+                className="text-center w-1/2 p-4 hover:bg-gray-100 cursor-pointer"
+                onClick={ handleFollowingDetailsOnDialogueOpen}
+              >
                 <p>
                   <span className="font-semibold"> </span> Following{" "}
                   {userData.numOfFollowing}
@@ -229,6 +251,21 @@ function ProfileTop({
         <WalletDialgoue
           isOpen={isWalletDialogueOpen}
           onClose={() => setWalletDialogueOpen(false)}
+        />
+      )}
+
+      {isPaymentHistoryOpen && (
+        <PaymentHistoryDialogue
+          isOpen={isPaymentHistoryOpen}
+          onClose={() => setPaymentHistoryOpen(false)}
+        />
+      )}
+
+      {isFollowDialogueOpen && selectedFollowTab && (
+        <FollowersFollowingDialogue
+          isOpen={isFollowDialogueOpen}
+          onClose={() => setFollowDialogueOpen(false)}
+          initialActiveTab={selectedFollowTab}
         />
       )}
     </>

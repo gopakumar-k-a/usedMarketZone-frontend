@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import ProfileTop from "@/components/user/profilePage/ProfileTop";
 import { User } from "@/types/login";
 import { getOwnerPostsListImage } from "@/api/profile";
-import { getNumOfFollow } from "@/api/user";
+import { getFollowers, getFollowing, getNumOfFollow } from "@/api/user";
 import { Link, Outlet } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { Console } from "console";
@@ -17,7 +17,8 @@ function ProfilePage() {
     try {
       const { ownerPostsImageList } = await getOwnerPostsListImage();
       console.log("ownerPostsImageList ", ownerPostsImageList);
-
+// await getFollowing()
+await getFollowers()
       setPostImagesList(ownerPostsImageList);
       // setPostImagesList([]);
       console.log("image data ", postImagesList);

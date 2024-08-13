@@ -9,8 +9,8 @@ import { MdOutlineArrowOutward } from "react-icons/md";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Link, useNavigate } from "react-router-dom";
-
-function TopBarMobile({ handleLogout, handleThemeSwitch, theme,   }) {
+import { motion } from "framer-motion";
+function TopBarMobile({ handleLogout, handleThemeSwitch, theme }) {
   const [isSettingsOpen, setSettingOpen] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
@@ -27,7 +27,17 @@ function TopBarMobile({ handleLogout, handleThemeSwitch, theme,   }) {
   };
   return (
     <>
-      <nav className="bg-gray-800 p-4 flex justify-around h-full">
+      <motion.nav
+        className="bg-gray-800 p-4 flex justify-around h-full"
+        initial={{ y: "-100vw" }}
+        animate={{ y: 0 }}
+        transition={{
+          type: "spring",
+          stiffness: 70,
+          damping: 10,
+          mass: 0.5,
+        }}
+      >
         <div className="flex w-full justify-start">
           {isSettingsOpen ? (
             <IoSettingsOutline
@@ -47,7 +57,7 @@ function TopBarMobile({ handleLogout, handleThemeSwitch, theme,   }) {
             <MdOutlineMessage className="h-8 w-8 pr-2 text-white cursor-pointer" />
           </Link>
         </div>
-      </nav>
+      </motion.nav>
       {isSettingsOpen && (
         <div className="w-52 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white cursor-pointer">
           <li

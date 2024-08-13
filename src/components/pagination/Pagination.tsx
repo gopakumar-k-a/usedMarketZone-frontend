@@ -1,73 +1,106 @@
-import React from 'react';
-import { Button } from '../ui/button';
+import { Link, useSearchParams } from "react-router-dom";
+import { FiMoreHorizontal } from "react-icons/fi";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import {DOTS, usePagination } from "@/utils/hooks/usePagination";
 
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-  const maxPageButtons = 7; // Maximum number of page buttons to display
-  const pageButtonsToShow = Math.min(totalPages, maxPageButtons); // Limit to totalPages or maxPageButtons
-
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      onPageChange(currentPage - 1);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      onPageChange(currentPage + 1);
-    }
-  };
-
-  const getPageNumbers = () => {
-    const pageNumbers = [];
-    const halfButtons = Math.floor(pageButtonsToShow / 2);
-    let startPage = Math.max(1, currentPage - halfButtons);
-    let endPage = startPage + pageButtonsToShow - 1;
-
-    if (endPage > totalPages) {
-      endPage = totalPages;
-      startPage = Math.max(1, endPage - pageButtonsToShow + 1);
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(i);
-    }
-
-    return pageNumbers;
-  };
-
-  return (
-    <div className="flex items-center justify-center my-4 space-x-2">
-      <Button
-        onClick={handlePreviousPage}
-        disabled={currentPage === 1}
-        className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
-      >
-        Previous
-      </Button>
-
-      {getPageNumbers().map((pageNumber) => (
-        <Button
-          key={pageNumber}
-          onClick={() => onPageChange(pageNumber)}
-          className={`px-4 py-2 ${
-            pageNumber === currentPage
-              ? 'bg-blue-600 text-white'
-              : 'bg-blue-500 text-blue-900'
-          } rounded hover:bg-blue-600`}
-        >
-          {pageNumber}
-        </Button>
-      ))}
-
-      <Button
-        onClick={handleNextPage}
-        disabled={currentPage === totalPages}
-        className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
-      >
-        Next
-      </Button>
-    </div>
-  );
+type PaginationPropsType = {
+  totalCount: number;
+  siblingCount?: number;
+  pageSize: number;
 };
 
-export default Pagination;
+/**
+ * Pagination component for handling pagination logic and rendering pagination UI.
+ * @param {PaginationPropsType} props - Pagination props including totalCount, pageSize, and siblingCount.
+ * @returns {JSX.Element | null} Pagination UI elements.
+ */
+
+export function Pagination({
+  totalCount,
+  pageSize,
+  siblingCount = 1,
+}: PaginationPropsType) {
+  const pageParam = "page";
+
+  const [queryParams] = useSearchParams();
+
+  const currentPage = Number(queryParams.get(pageParam) || 1);
+
+  const paginationRange = usePagination({
+    currentPage,
+    totalCount,
+    siblingCount,
+    pageSize,
+  });
+  // const totalPages = Math.ceil(totalCount / pageSize);
+
+  const previousQuery = new URLSearchParams(queryParams);
+  previousQuery.set(pageParam, String(currentPage - 1));
+
+  const nextQuery = new URLSearchParams(queryParams);
+  nextQuery.set(pageParam, String(currentPage + 1));
+
+  const pageChange = new URLSearchParams(queryParams);
+
+  if (currentPage === 0 || (paginationRange && paginationRange.length < 2)) {
+    return null;
+  }
+
+  const lastPage =
+    paginationRange && paginationRange[paginationRange.length - 1];
+
+  const isPreviousButtonDisabled = currentPage === 1;
+
+  const isNextButtonDisabled = currentPage >= Number(lastPage);
+
+  return (
+    <div className="justify-end py-4 mx-auto flex w-full">
+      <div className="justify-center items-center gap-x-3 flex">
+        <Link
+          to={`?${previousQuery.toString()}`}
+          aria-disabled={isPreviousButtonDisabled}
+          className={
+            isPreviousButtonDisabled
+              ? "pointer-events-none"
+              : "border p-2 rounded-md"
+          }
+          tabIndex={isPreviousButtonDisabled ? -1 : undefined}
+        >
+          <FaAngleLeft />
+        </Link>
+        {paginationRange &&
+          paginationRange.map((pageNumber, index) => {
+            if (pageNumber === DOTS) {
+              return <FiMoreHorizontal className="h-4 w-4" key={index} />;
+            }
+            const isActiveButton = currentPage === pageNumber;
+
+            pageChange.set(pageParam, String(pageNumber));
+            return (
+              <Link
+                key={index}
+                className={`border py-1 px-2.5 rounded-md ${
+                  isActiveButton ? "bg-blue-400 text-white" : ""
+                }`}
+                to={`?${pageChange.toString()}`}
+              >
+                {pageNumber}
+              </Link>
+            );
+          })}
+        <Link
+          to={`?${nextQuery.toString()}`}
+          aria-disabled={isNextButtonDisabled}
+          className={
+            isNextButtonDisabled
+              ? "pointer-events-none"
+              : "border p-2 rounded-md"
+          }
+          tabIndex={isNextButtonDisabled ? -1 : undefined}
+        >
+          <FaAngleRight />
+        </Link>
+      </div>
+    </div>
+  );
+}

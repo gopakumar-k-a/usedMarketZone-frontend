@@ -1,6 +1,6 @@
 import { axiosUserInstance } from "../axiosInstance/axiosUserInstance.ts";
 import { END_POINTS } from "@/constants/endPoints.ts";
-import { ConversationsRes } from "@/types/chat.ts";
+import { ConversationsRes, FollowUserRes } from "@/types/chat.ts";
 import { NormalBackendRes } from "@/types/login.ts";
 import { NotificationRes } from "@/types/Notification.ts";
 import { MyKycDataRes } from "@/types/user.ts";
@@ -47,6 +47,16 @@ export const getNumOfFollow = async (userId: string) => {
 export const getFollowing = async (): Promise<ConversationsRes> => {
   const response: AxiosResponse<ConversationsRes> = await axiosUserInstance.get(
     END_POINTS.GET_FOLLOWING
+  );
+
+  console.log("get following api ", response.data);
+
+  return response.data;
+};
+
+export const getFollowers = async () => {
+  const response: AxiosResponse<FollowUserRes> = await axiosUserInstance.get(
+    END_POINTS.GET_FOLLOWERS
   );
 
   console.log("get following api ", response.data);

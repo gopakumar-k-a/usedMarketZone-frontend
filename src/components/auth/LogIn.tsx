@@ -19,7 +19,7 @@ import { useAppDispatch } from "../../utils/hooks/reduxHooks";
 import { UserLoginResponse } from "../../types/login";
 import { setCredentialsAdmin } from "../../redux/reducers/admin/auth/adminSlice";
 import GoogleButton from "./GoogleButton";
-
+import { motion } from "framer-motion";
 function LogIn() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -60,7 +60,7 @@ function LogIn() {
               }
               return `Failed to LogIn: ${data.message}`;
             },
-          }
+          },
         },
         {
           position: "top-right",
@@ -82,11 +82,11 @@ function LogIn() {
         // dispatch(loginSuccess({ user: JSON.stringify(user), token }));
 
         dispatch(setCredentials({ user, accessToken, role }));
-        console.log('user role UserLoginResponse ',user.role);
-        
+        console.log("user role UserLoginResponse ", user.role);
+
         if (user.role == "user") {
           console.log(`if (user.role == "user")`);
-          
+
           navigate("/");
         } else if (user.role == "admin") {
           console.log(`else if (user.role == "admin")`);
@@ -114,10 +114,12 @@ function LogIn() {
 
   return (
     <>
-      <section className="flex items-center justify-center ">
+      <motion.section
+        className="flex items-center justify-center "
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+      >
         <div className="xl:mx-auto xl:w-full shadow-md p-4 xl:max-w-sm 2xl:max-w-md  bg-white rounded-lg">
-     
-
           <h2 className="text-left text-2xl font-bold leading-tight text-black">
             Log In
           </h2>
@@ -242,7 +244,7 @@ function LogIn() {
           </Formik>
           <GoogleButton />
         </div>
-      </section>
+      </motion.section>
       {isLoading && <Loader />}
     </>
   );

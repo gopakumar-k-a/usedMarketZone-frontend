@@ -5,6 +5,7 @@ import { END_POINTS } from "@/constants/endPoints.ts";
 import {
   CapturePaymentRes,
   CreatePaymentOrderResponse,
+  PaymentHistoryRes,
 } from "@/types/razorpay.ts";
 import { GetWalletRes } from "@/types/wallet.ts";
 
@@ -38,6 +39,12 @@ export const getWalletData = async () => {
   const response: AxiosResponse<GetWalletRes> = await axiosUserInstance.get(
     END_POINTS.GET_WALLET_DATA
   );
+
+  return response.data;
+};
+
+export const getPaymentHistoryUser = async () => {
+  const response:AxiosResponse<PaymentHistoryRes> = await axiosUserInstance.get(END_POINTS.GET_PAYMENT_HISTORY);
 
   return response.data;
 };

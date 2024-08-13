@@ -7,19 +7,29 @@ import { NormalBackendRes } from "./login";
 //       createdAt: 2024-06-17T15:05:41.077Z
 //     }
 //   },
+
+export interface FollowUser {
+  userName: string;
+  imageUrl: string;
+  createdAt: string;
+  _id: string;
+  firstName: string;
+  lastName: string;
+}
 export interface FollowingUser {
   _id: string;
-  following: {
-    userName: string;
-    imageUrl: string;
-    createdAt: string;
-    _id: string;
-    firstName:string;
-    lastName:string;
-  };
+  following: FollowUser;
 }
 export interface ConversationsRes extends NormalBackendRes {
   followingUsers: FollowingUser[];
+}
+
+export interface FollowerUsers {
+  followers: FollowUser;
+}
+
+export interface FollowUserRes extends NormalBackendRes {
+  followerUsers: FollowerUsers[];
 }
 export interface Chat {
   senderId: string;
@@ -60,12 +70,12 @@ export type ParticipantData = {
   _id: string;
   userName: string;
   imageUrl: string;
-  createdAt: string; 
+  createdAt: string;
 };
 export interface ConversationData {
   _id: string;
   participantsData: ParticipantData[];
 }
-export interface GetConversationsRes extends NormalBackendRes{
-  conversations:ConversationData[]
+export interface GetConversationsRes extends NormalBackendRes {
+  conversations: ConversationData[];
 }

@@ -32,3 +32,14 @@ export interface CapturePaymentRes extends NormalBackendRes {
   captureStatus: "captured" | "failed";
   transactionData: Transaction;
 }
+
+export interface PaymentHistoryUser {
+  _id: string;
+  amount: number;
+  productId: string;
+  createdAt: string;
+}
+
+export interface PaymentHistoryRes extends NormalBackendRes {
+  transactionHistory: PaymentHistoryUser[];
+}

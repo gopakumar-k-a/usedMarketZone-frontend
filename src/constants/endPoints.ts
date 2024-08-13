@@ -56,6 +56,7 @@ export const END_POINTS = {
   CAPTURE_PAYMENT: "/api/payment/capture-payment",
   DISPATCH_PRODUCT_TO_ADMIN: "/api/payment/ship-product-to-admin",
   GET_WALLET_DATA: "/api/payment/user-wallet",
+  GET_PAYMENT_HISTORY: "/api/payment/transaction-history",
 
   //bid
   POST_BID_PRODUCT: "/api/bid/post-bid",

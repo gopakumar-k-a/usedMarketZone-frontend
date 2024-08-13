@@ -2,15 +2,15 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import { useAppDispatch } from "./utils/hooks/reduxHooks";
 import { logOut } from "./redux/reducers/auth/authSlice";
-import UserNavBar from "./components/user/navbar/UserNavBar";
+// import UserNavBar from "./components/user/navbar/UserNavBar";
 import Sidebar from "./components/user/sideNav/SideBar";
 import BottomBarMobile from "./components/user/sideNav/mobile/BottomBarMobile";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import TopBarMobile from "./components/user/sideNav/mobile/TopBarMobile";
 import useNotifications from "./utils/hooks/userNotification/useNofication";
 import { getNotifications } from "./api/user";
-import useGetMessage from "./utils/hooks/chat/useGetMessage";
-
+// import useGetMessage from "./utils/hooks/chat/useGetMessage";
+import { motion } from "framer-motion";
 function App() {
   const dispatch = useAppDispatch();
   //dark mode
@@ -62,7 +62,7 @@ function App() {
         </div> */}
         {/* <div className="h-16 w-full fixed top-0 bg-yellow-500 block  md:block md:hidden  z-50"> */}
 
-        <div className="h-16 w-full  fixed top-0 bg-yellow-500 block md:hidden z-50">
+        <div className="h-16 w-full  fixed top-0 block md:hidden z-50">
           <TopBarMobile
             handleLogout={handleLogout}
             handleThemeSwitch={handleThemeSwitch}
@@ -70,8 +70,11 @@ function App() {
           />
         </div>
 
-        <div
+        <motion.div
           className={`h-full  bg-red-600 hidden md:block ${isExpanded ? "md:col-span-2" : "md:col-span-1"}`}
+          initial={{x:'-100vw'}}
+          animate={{x:0}}
+          transition={{delay:.2,duration:.3}}
         >
           <Sidebar
             isExpanded={isExpanded}
@@ -81,7 +84,7 @@ function App() {
             theme={theme}
             hasUnreadNotifications={isUnreadNotifications}
           />
-        </div>
+        </motion.div>
 
         {/* Green Div: Always visible */}
         <div
@@ -97,7 +100,7 @@ function App() {
         ></div> */}
 
         {/* Yellow Div: Visible on small screens, hidden on medium screens and above */}
-        <div className="h-16 w-full  fixed bottom-0 bg-yellow-500 block md:hidden">
+        <div className="h-16 w-full  fixed bottom-0  block md:hidden">
           <BottomBarMobile hasUnreadNotifications={isUnreadNotifications} />
         </div>
       </div>

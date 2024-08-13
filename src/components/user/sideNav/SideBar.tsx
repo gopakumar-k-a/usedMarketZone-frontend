@@ -16,7 +16,50 @@ import {
   faLessThan,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
-
+import { motion } from "framer-motion";
+const menuItems = [
+  {
+    path: "/home",
+    label: "Home",
+    icon: faHome,
+  },
+  {
+    path: "/search",
+    label: "Search",
+    icon: faMagnifyingGlass,
+  },
+  {
+    path: "/post/sell-product",
+    label: "Sell",
+    icon: faHandHoldingHeart,
+  },
+  {
+    path: "/post/auction-product",
+    label: "Auction",
+    icon: faGavel,
+  },
+  {
+    path: "/messages",
+    label: "Messages",
+    icon: faMessage,
+  },
+  {
+    path: "/notifications",
+    label: "Notifications",
+    icon: faBell,
+    hasNotificationBadge: true,
+  },
+  {
+    path: "/profile/my-posts",
+    label: "Profile",
+    icon: faUser,
+  },
+  {
+    path: "/settings",
+    label: "Settings",
+    icon: faGear,
+  },
+];
 const Sidebar = ({
   isExpanded,
   toggleSidebar,
@@ -24,19 +67,19 @@ const Sidebar = ({
   theme,
   handleThemeSwitch,
   hasUnreadNotifications,
-}:{
-  isExpanded:boolean,
-  toggleSidebar: () => void,
-  handleLogout: () => void,
-  theme:'dark'|'light',
-  handleThemeSwitch:()=>void,
-  hasUnreadNotifications:boolean
+}: {
+  isExpanded: boolean;
+  toggleSidebar: () => void;
+  handleLogout: () => void;
+  theme: "dark" | "light";
+  handleThemeSwitch: () => void;
+  hasUnreadNotifications: boolean;
 }) => {
   const location = useLocation();
 
   return (
     <div
-      className={`h-screen ${isExpanded ? "w-full" : "w-full"} flex flex-col items-center border-r-2 border-gray-400 justify-between transition-all duration-300 bg-white dark:bg-gray-900`}
+      className={`h-screen ${isExpanded ? "w-full" : "w-full"} flex flex-col items-center border-r-2 border-gray-200 justify-between transition-all duration-300 bg-white dark:bg-gray-900`}
     >
       <div className="mt-4 ">
         <img
@@ -84,282 +127,200 @@ const Sidebar = ({
         </div>
         {isExpanded && (
           <>
-            <Link
-              to="/home"
-              className={`p-4 mb-2 flex items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${
-                location.pathname.includes("/home")
-                  ? "bg-customOrange text-white"
-                  : "bg-gray-200 dark:bg-gray-700"
-              } text-gray-800 dark:text-white`}
-            >
-              <FontAwesomeIcon
-                icon={faHome}
-                className={`w-5 h-5 mr-3 ${
-                  location.pathname.includes("/home")
-                    ? "text-white"
-                    : "text-black"
-                } dark:text-white`}
-              />
-              Home
-            </Link>
-            <Link
-              to="/search"
-              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${
-                location.pathname.includes("/search")
-                  ? "bg-customOrange text-white"
-                  : "bg-gray-200 dark:bg-gray-700"
-              } text-gray-800 dark:text-white`}
-            >
-              <FontAwesomeIcon
-                icon={faMagnifyingGlass}
-                className="w-5 h-5 mr-3 text-black dark:text-white"
-              />
-              Search
-            </Link>
-            <Link
-              to="/post/sell-product"
-              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${
-                location.pathname.includes("/post/sell-product")
-                  ? "bg-customOrange text-white"
-                  : "bg-gray-200 dark:bg-gray-700"
-              } text-gray-800 dark:text-white`}
-            >
-              <FontAwesomeIcon
-                icon={faHandHoldingHeart}
-                className={`w-5 h-5 mr-3 ${
-                  location.pathname.includes("/post/sell-product")
-                    ? "text-white"
-                    : "text-black"
-                } dark:text-white`}
-              />
-              Sell
-            </Link>
-            <Link
-              to="/post/auction-product"
-              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${
-                location.pathname.includes("/post/auction-product")
-                  ? "bg-customOrange text-white"
-                  : "bg-gray-200 dark:bg-gray-700"
-              } text-gray-800 dark:text-white`}
-            >
-              <FontAwesomeIcon
-                icon={faGavel}
-                className={`w-5 h-5 mr-3 ${
-                  location.pathname.includes("/post/auction-product")
-                    ? "text-white"
-                    : "text-black"
-                } dark:text-white`}
-              />
-              Auction
-            </Link>
-            <Link
-              to="/messages"
-              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${
-                location.pathname.includes("/messages")
-                  ? "bg-customOrange text-white"
-                  : "bg-gray-200 dark:bg-gray-700"
-              } text-gray-800 dark:text-white`}
-            >
-              <FontAwesomeIcon
-                icon={faMessage}
-                className="w-5 h-5 mr-3 text-black dark:text-white"
-              />
-              Messages
-            </Link>
-            <Link
-              to="/notifications"
-              className={`relative p-4 mb-2 flex items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${
-                location.pathname.includes("/notifications")
-                  ? "bg-customOrange text-white"
-                  : "bg-gray-200 dark:bg-gray-700"
-              } text-gray-800 dark:text-white`}
-            >
-              <FontAwesomeIcon
-                icon={faBell}
-                className="w-5 h-5 mr-3 text-black dark:text-white"
-              />
-              {hasUnreadNotifications && (
-                <span className="absolute right-0 top-0 w-3 h-3 bg-red-600 rounded-full"></span>
-              )}
-              Notifications
-            </Link>
-            <Link
-              to="/profile/my-posts"
-              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${
-                location.pathname.includes("/profile")
-                  ? "bg-customOrange text-white"
-                  : "bg-gray-200 dark:bg-gray-700"
-              } text-gray-800 dark:text-white`}
-            >
-              <FontAwesomeIcon
-                icon={faUser}
-                className={`w-5 h-5 mr-3 ${
-                  location.pathname.includes("/profile")
-                    ? "text-white"
-                    : "text-black"
-                } dark:text-white`}
-              />
-              Profile
-            </Link>
-            <Link
-              to="/settings"
-              className={`p-4 flex mb-2 items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${
-                location.pathname.includes("/settings")
-                  ? "bg-customOrange text-white"
-                  : "bg-gray-200 dark:bg-gray-700"
-              } text-gray-800 dark:text-white`}
-            >
-              <FontAwesomeIcon
-                icon={faGear}
-                className="w-5 h-5 mr-3 text-black dark:text-white"
-              />
-              Settings
-            </Link>
+            <motion.div className="mt-2" initial={{ x: 50 }} animate={{ x: 0 }}>
+              {menuItems.map(({ path, label, icon, hasNotificationBadge }) => (
+                <motion.div
+                  key={path}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.85 }}
+                >
+                  <Link
+                    to={path}
+                    className={`p-4 mb-2 flex items-center dark:font-bold dark:text-xl text-lg font-bold rounded-lg h-6 ${
+                      location.pathname.includes(path)
+                        ? "bg-customOrange text-white"
+                        : "bg-gray-200 dark:bg-gray-700"
+                    } text-gray-800 dark:text-white`}
+                  >
+                    <FontAwesomeIcon
+                      icon={icon}
+                      className={`w-5 h-5 mr-3 ${
+                        location.pathname.includes(path)
+                          ? "text-white"
+                          : "text-black"
+                      } dark:text-white`}
+                    />
+                    {label}
+                    {hasNotificationBadge && hasUnreadNotifications && (
+                      <span className="absolute right-0 top-0 w-3 h-3 bg-red-600 rounded-full"></span>
+                    )}
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.div>
+           
           </>
         )}
 
         {!isExpanded && (
-          <div className="mt-2">
-            <Link
-              to="/home"
-              className={`p-4 block text-gray-800 dark:text-white ${
-                location.pathname.includes("/home")
-                  ? "bg-customOrange text-white rounded-xl"
-                  : ""
-              }`}
-            >
-              <FontAwesomeIcon
-                icon={faHome}
-                className={`w-6 h-6 ${
+          <motion.div className="mt-2" initial={{ x: 50 }} animate={{ x: 0 }}>
+            <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.85 }}>
+              <Link
+                to="/home"
+                className={`p-4 block text-gray-800 dark:text-white ${
                   location.pathname.includes("/home")
-                    ? "text-white"
-                    : "text-black"
-                } dark:text-white`}
-              />
-            </Link>
-            <Link
-              to="/search"
-              className={`p-4 block text-gray-800 dark:text-white ${
-                location.pathname.includes("/search")
-                  ? "bg-customOrange rounded-xl text-white"
-                  : ""
-              }`}
-            >
-              <FontAwesomeIcon
-                icon={faMagnifyingGlass}
-                className={`w-6 h-6 ${
+                    ? "bg-customOrange text-white rounded-xl"
+                    : ""
+                }`}
+              >
+                <FontAwesomeIcon
+                  icon={faHome}
+                  className={`w-6 h-6 ${
+                    location.pathname.includes("/home")
+                      ? "text-white"
+                      : "text-black"
+                  } dark:text-white`}
+                />
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.85 }}>
+              <Link
+                to="/search"
+                className={`p-4 block text-gray-800 dark:text-white ${
                   location.pathname.includes("/search")
-                    ? "text-white"
-                    : "text-black"
-                } dark:text-white`}
-              />
-            </Link>
-            <Link
-              to="/post/sell-product"
-              className={`p-4 block text-gray-800 dark:text-white ${
-                location.pathname.includes("/post/sell-product")
-                  ? "bg-customOrange rounded-xl text-white"
-                  : ""
-              }`}
-            >
-              <FontAwesomeIcon
-                icon={faHandHoldingHeart}
-                className={`w-6 h-6 ${
+                    ? "bg-customOrange rounded-xl text-white"
+                    : ""
+                }`}
+              >
+                <FontAwesomeIcon
+                  icon={faMagnifyingGlass}
+                  className={`w-6 h-6 ${
+                    location.pathname.includes("/search")
+                      ? "text-white"
+                      : "text-black"
+                  } dark:text-white`}
+                />
+              </Link>
+            </motion.div>
+
+            <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.85 }}>
+              <Link
+                to="/post/sell-product"
+                className={`p-4 block text-gray-800 dark:text-white ${
                   location.pathname.includes("/post/sell-product")
-                    ? "text-white"
-                    : "text-black"
-                } dark:text-white`}
-              />
-            </Link>
-            <Link
-              to="/post/auction-product"
-              className={`p-4 block text-gray-800 dark:text-white ${
-                location.pathname.includes("/post/auction-product")
-                  ? "bg-customOrange rounded-xl text-white"
-                  : ""
-              }`}
-            >
-              <FontAwesomeIcon
-                icon={faGavel}
-                className={`w-6 h-6 ${
+                    ? "bg-customOrange rounded-xl text-white"
+                    : ""
+                }`}
+              >
+                <FontAwesomeIcon
+                  icon={faHandHoldingHeart}
+                  className={`w-6 h-6 ${
+                    location.pathname.includes("/post/sell-product")
+                      ? "text-white"
+                      : "text-black"
+                  } dark:text-white`}
+                />
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.85 }}>
+              <Link
+                to="/post/auction-product"
+                className={`p-4 block text-gray-800 dark:text-white ${
                   location.pathname.includes("/post/auction-product")
-                    ? "text-white"
-                    : "text-black"
-                } dark:text-white`}
-              />
-            </Link>
-            <Link
-              to="/messages"
-              className={`p-4 block text-gray-800 dark:text-white ${
-                location.pathname.includes("/messages")
-                  ? "bg-customOrange rounded-xl text-white"
-                  : ""
-              }`}
-            >
-              <FontAwesomeIcon
-                icon={faMessage}
-                className={`w-6 h-6 ${
+                    ? "bg-customOrange rounded-xl text-white"
+                    : ""
+                }`}
+              >
+                <FontAwesomeIcon
+                  icon={faGavel}
+                  className={`w-6 h-6 ${
+                    location.pathname.includes("/post/auction-product")
+                      ? "text-white"
+                      : "text-black"
+                  } dark:text-white`}
+                />
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.85 }}>
+              <Link
+                to="/messages"
+                className={`p-4 block text-gray-800 dark:text-white ${
                   location.pathname.includes("/messages")
-                    ? "text-white"
-                    : "text-black"
-                } dark:text-white`}
-              />
-            </Link>
-            <Link
-              to="/notifications"
-              className={`relative p-4 block text-gray-800 dark:text-white ${
-                location.pathname.includes("/notifications")
-                  ? "bg-customOrange rounded-xl text-white"
-                  : ""
-              }`}
-            >
-              <FontAwesomeIcon
-                icon={faBell}
-                className={`w-6 h-6 ${
+                    ? "bg-customOrange rounded-xl text-white"
+                    : ""
+                }`}
+              >
+                <FontAwesomeIcon
+                  icon={faMessage}
+                  className={`w-6 h-6 ${
+                    location.pathname.includes("/messages")
+                      ? "text-white"
+                      : "text-black"
+                  } dark:text-white`}
+                />
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.85 }}>
+              <Link
+                to="/notifications"
+                className={`relative p-4 block text-gray-800 dark:text-white ${
                   location.pathname.includes("/notifications")
-                    ? "text-white"
-                    : "text-black"
-                } dark:text-white`}
-              />
-              {hasUnreadNotifications && (
-                <span className="absolute right-1 top-2 w-2 h-2 bg-red-600 rounded-full"></span>
-              )}
-            </Link>
-            <Link
-              to="/profile/my-posts"
-              className={`p-4 block text-gray-800 dark:text-white ${
-                location.pathname.includes("/profile")
-                  ? "bg-customOrange rounded-xl text-white"
-                  : ""
-              }`}
-            >
-              <FontAwesomeIcon
-                icon={faUser}
-                className={`w-6 h-6 ${
+                    ? "bg-customOrange rounded-xl text-white"
+                    : ""
+                }`}
+              >
+                <FontAwesomeIcon
+                  icon={faBell}
+                  className={`w-6 h-6 ${
+                    location.pathname.includes("/notifications")
+                      ? "text-white"
+                      : "text-black"
+                  } dark:text-white`}
+                />
+                {hasUnreadNotifications && (
+                  <span className="absolute right-1 top-2 w-2 h-2 bg-red-600 rounded-full"></span>
+                )}
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.85 }}>
+              <Link
+                to="/profile/my-posts"
+                className={`p-4 block text-gray-800 dark:text-white ${
                   location.pathname.includes("/profile")
-                    ? "text-white"
-                    : "text-black"
-                } dark:text-white`}
-              />
-            </Link>
-            <Link
-              to="/settings"
-              className={`p-4 block text-gray-800 dark:text-white ${
-                location.pathname.includes("/settings")
-                  ? "bg-customOrange rounded-xl text-white"
-                  : ""
-              }`}
-            >
-              <FontAwesomeIcon
-                icon={faGear}
-                className={`w-6 h-6 ${
+                    ? "bg-customOrange rounded-xl text-white"
+                    : ""
+                }`}
+              >
+                <FontAwesomeIcon
+                  icon={faUser}
+                  className={`w-6 h-6 ${
+                    location.pathname.includes("/profile")
+                      ? "text-white"
+                      : "text-black"
+                  } dark:text-white`}
+                />
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.85 }}>
+              <Link
+                to="/settings"
+                className={`p-4 block text-gray-800 dark:text-white ${
                   location.pathname.includes("/settings")
-                    ? "text-white"
-                    : "text-black"
-                } dark:text-white`}
-              />
-            </Link>
-          </div>
+                    ? "bg-customOrange rounded-xl text-white"
+                    : ""
+                }`}
+              >
+                <FontAwesomeIcon
+                  icon={faGear}
+                  className={`w-6 h-6 ${
+                    location.pathname.includes("/settings")
+                      ? "text-white"
+                      : "text-black"
+                  } dark:text-white`}
+                />
+              </Link>
+            </motion.div>
+          </motion.div>
         )}
       </div>
       <div className="flex flex-col items-center">
@@ -372,12 +333,7 @@ const Sidebar = ({
             <span className="ml-2">Logout</span>
           </button>
         )}
-        {/* <Link to="/settings" className="p-4 block">
-          <FontAwesomeIcon
-            icon={faGear}
-            className="w-6 h-6 text-gray-800 dark:text-white"
-          />
-        </Link> */}
+
       </div>
     </div>
   );

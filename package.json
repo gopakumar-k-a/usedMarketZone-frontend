@@ -41,6 +41,7 @@
     "firebase": "^10.12.2",
     "flowbite": "^2.4.1",
     "formik": "^2.4.6",
+    "framer-motion": "^11.3.24",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.394.0",
     "moment": "^2.30.1",

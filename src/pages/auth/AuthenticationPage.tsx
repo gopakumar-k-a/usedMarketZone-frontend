@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ForgotPass from "../../components/auth/ForgotPass";
 import LogIn from "../../components/auth/LogIn";
@@ -6,7 +6,7 @@ import SignUp from "../../components/auth/SignUp";
 import Otp from "../../components/auth/Otp";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import GradientBackground from "@/components/auth/GradientBackGround";
-
+import { motion } from "framer-motion";
 function AuthenticationPage() {
   const location = useLocation();
   const slideText = [
@@ -17,6 +17,7 @@ function AuthenticationPage() {
     `<span class="font-bold sm:text-2xl text-xl">Product Discovery:</span> Follow users to see the items they have added for auction, creating a personalized shopping experience based on your network.`,
   ];
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -33,11 +34,29 @@ function AuthenticationPage() {
       (prevIndex) => (prevIndex - 1 + slideText.length) % slideText.length
     );
   };
+
+  useEffect(() => {
+    setIsFirstLoad(false); // After the first load, set it to false
+  }, []);
+
+  const authenticationComponentVariant = {
+    initial: {
+      y: "100vh",
+    },
+    animate: {
+      y: 0,
+      transition: {
+        delay: 0.3,
+        duration: 0.5,
+      },
+    },
+  };
   return (
     <>
       <GradientBackground>
         <div className="p-5">
-          <div
+          {/* <FadeIn> */}
+          <motion.div
             className="xl:mx-auto xl:w-full shadow-md p-4 xl:max-w-sm 2xl:max-w-md mb-6 flex  bg-white rounded-lg"
             style={{
               backgroundImage: `
@@ -48,11 +67,15 @@ function AuthenticationPage() {
         url(https://res.cloudinary.com/dwjw8biat/image/upload/v1720537160/wallpapersden.com_blue-violet-color-texture_4000x6000_hjbedk.jpg)
       `,
             }}
+            initial={{ y: -100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.7, delay: 0.4 }}
           >
             <h1 className=" font-bold sm:text-3xl text-2xl mx-auto inline-flex justify-center text-white">
               Used Market Zone
             </h1>
-          </div>
+          </motion.div>
+          {/* </FadeIn> */}
           <div className="w-full sm:w-1/2 flex justify-center">
             {/* <h1 className=" font-extrabold sm:text-4xl text-2xl ">
             Used Market Zone
@@ -60,12 +83,60 @@ function AuthenticationPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
-            {location.pathname == "/login" && <LogIn />}
-            {location.pathname == "/otp" && <Otp />}
-            {location.pathname == "/signup" && <SignUp />}
-            {location.pathname == "/forgot-password" && <ForgotPass />}
+            <motion.div
+              // initial={{ x: -60, opacity: 0 }}
+              // animate={{ x: 0, opacity: 1 }}
+              // transition={{ delay: 0.4, duration: 0.7 }}
+      
+            >
+              {location.pathname == "/login" && (
+                <motion.div
+                  // initial={{ opacity: 0 }}
+                  // animate={{ opacity: 1 }}
+                  // exit={{ opacity: 0 }}
+                  // transition={{ duration: 0.7 }}
+                  variants={authenticationComponentVariant}
+                  initial="initial"
+                  animate="animate"
+                >
+                  <LogIn />
+                </motion.div>
+              )}
+              {location.pathname == "/otp" && (
+                <motion.div
+                variants={authenticationComponentVariant}
+                initial="initial"
+                animate="animate"
+                >
+                  <Otp />
+                </motion.div>
+              )}
+              {location.pathname == "/signup" && (
+                <motion.div
+                variants={authenticationComponentVariant}
+                initial="initial"
+                animate="animate"
+                >
+                  <SignUp />
+                </motion.div>
+              )}
+              {location.pathname == "/forgot-password" && (
+                <motion.div
+                variants={authenticationComponentVariant}
+                  initial="initial"
+                  animate="animate"
+                >
+                  <ForgotPass />
+                </motion.div>
+              )}
+            </motion.div>
 
-            <aside className="">
+            <motion.aside
+              className=""
+              initial={{ x: 60, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.7 }}
+            >
               <div
                 className="relative p-8 rounded-2xl bg-red-200 sm:max-h-96 h-full"
                 style={{
@@ -115,7 +186,7 @@ function AuthenticationPage() {
                   </div>
                 </div>
               </div>
-            </aside>
+            </motion.aside>
           </div>
         </div>
         {/* <div className="flex items-center justify-center"> */}

@@ -8,7 +8,7 @@ import { RiNotification2Fill, RiNotification2Line } from "react-icons/ri";
 import { FaRegUser, FaUser } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
-
+import { motion } from "framer-motion";
 const BottomBarMobile = ({
   hasUnreadNotifications,
 }: {
@@ -24,7 +24,16 @@ const BottomBarMobile = ({
 
   return (
     <>
-      <nav className="bg-gray-800 p-4 flex justify-around h-full">
+      <motion.nav className="bg-gray-800 p-4 flex justify-around h-full"
+      initial={{y:'100vw'}}
+      animate={{y:0}}
+      transition={{
+        type: "spring",
+        stiffness: 70,
+        damping: 10,
+        mass: 0.5,
+      }}
+      >
         <Link to={"/home"} className="text-white">
           {currentPath == "/home" ? (
             <GoHomeFill className="w-5 h-5" />
@@ -94,7 +103,7 @@ const BottomBarMobile = ({
           )}
        
         </Link>
-      </nav>
+      </motion.nav>
     </>
   );
 };
