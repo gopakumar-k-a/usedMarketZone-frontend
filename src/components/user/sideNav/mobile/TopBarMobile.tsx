@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 import { FaMoon } from "react-icons/fa";
 import { LuSunMedium } from "react-icons/lu";
 import { MdOutlineArrowOutward } from "react-icons/md";
-// import { Link } from "react-router-dom";
-import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-function TopBarMobile({ handleLogout, handleThemeSwitch, theme }) {
+function TopBarMobile({ handleLogout, handleThemeSwitch }: {
+  handleLogout: () => void;
+  handleThemeSwitch: () => void;
+
+}) {
   const [isSettingsOpen, setSettingOpen] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {

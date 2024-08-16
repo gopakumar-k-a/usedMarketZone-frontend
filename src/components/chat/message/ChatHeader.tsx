@@ -2,7 +2,7 @@ import { useAppSelector } from "@/utils/hooks/reduxHooks";
 import { IoArrowBack } from "react-icons/io5";
 import { setChatSelectedNull } from "@/redux/reducers/chat/chatSlice";
 import { useAppDispatch } from "@/utils/hooks/reduxHooks";
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 function ChatHeader() {
   const { selectedChatUserData } = useAppSelector((state) => state.chat);
   const dispatch = useAppDispatch();

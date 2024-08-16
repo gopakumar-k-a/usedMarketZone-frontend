@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { DataTable } from "../../components/admin/userManagement/data-table";
 import { getAllUsers } from "@/api/admin";
 import Pagination from "@/components/pagination/ShadCnPagination";
 import {  useSearchParams } from "react-router-dom";
-import { User, columns } from "../../components/admin/userManagement/columns";
+import {  columns } from "../../components/admin/userManagement/columns";
 import { useNavigate } from "react-router-dom";
 import PageHeading from "@/components/admin/PageHeading";
 import { RiGroup2Line } from "react-icons/ri";
-
+import { User } from "@/types/login";
 function UserManagement() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState<number>(1);

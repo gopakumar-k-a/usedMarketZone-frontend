@@ -8,10 +8,8 @@ import {
 import { useAppSelector } from "@/utils/hooks/reduxHooks";
 import io, { Socket } from "socket.io-client";
 import { Constants } from "@/constants/config";
-import { Button } from "@/components/ui/button";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
-import { Link } from "react-router-dom";
 import useNotifications from "@/utils/hooks/userNotification/useNofication";
 import { Notification } from "@/types/Notification";
 import { NotificationType } from "@/types/Notification";
@@ -20,33 +18,9 @@ interface SocketContextType {
   socket: Socket | null;
   onlineUsers: any[];
 }
-// enum NotificationType {
-//   COMMENT = "comment",
-//   BID = "bid",
-//   MESSAGE = "message",
-//   FOLLOW="follow"
-// }
 
-interface NotificationData {
-  title: string;
-  description: string;
-  _id: string;
-  notificationType: NotificationType;
-  messageId: { _id: string };
-  senderId: {
-    _id: string;
-    userName: string;
-    imageUrl: string;
-  };
-  receiverId: string;
-  status: string;
-  additionalInfo: string;
-  priority: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-  newNotification: Notification;
-}
+
+
 
 const SocketContext = createContext<SocketContextType | undefined>(undefined);
 

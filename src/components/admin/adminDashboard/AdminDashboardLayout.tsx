@@ -1,5 +1,5 @@
 import { getDashboardStatistics, getTransactionStatisctics } from "@/api/admin";
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { FaUsers, FaBox, FaFlag } from "react-icons/fa";
 import { AdminStatistics } from "@/types/admin/dashboard";
 import AdminStatisticsChart from "./AdminStatisticsChart";

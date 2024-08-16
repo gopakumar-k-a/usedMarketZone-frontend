@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { RiTimerFlashLine } from "react-icons/ri";
 import { FaCheck } from "react-icons/fa";
 

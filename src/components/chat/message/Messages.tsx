@@ -1,9 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import  { useEffect, useRef } from "react";
 import Message from "./Message";
 import MessageInput from "./MessageInput";
-import { useAppSelector } from "@/utils/hooks/reduxHooks";
 import useGetMessage from "@/utils/hooks/chat/useGetMessage";
-import { Chat } from "@/types/chat";
 import useListenMessages from "@/utils/hooks/chat/useListenMessages";
 import PostMessage from "./PostMessage";
 import PostReplyMessage from "./PostReplyMessage";

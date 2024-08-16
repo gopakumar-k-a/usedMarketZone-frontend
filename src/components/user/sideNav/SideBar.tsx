@@ -1,4 +1,3 @@
-import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
@@ -16,7 +15,7 @@ import {
   faLessThan,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
-import { animate, motion } from "framer-motion";
+import {  motion } from "framer-motion";
 const menuItems = [
   {
     path: "/home",

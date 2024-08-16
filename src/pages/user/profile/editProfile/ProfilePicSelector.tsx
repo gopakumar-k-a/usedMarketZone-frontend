@@ -42,6 +42,8 @@ function ProfilePicSelector() {
   const onCropComplete = useCallback(
     (croppedArea: any, croppedAreaPixels: any) => {
       setCroppedAreaPixels(croppedAreaPixels);
+      console.log(croppedArea);
+      
     },
     []
   );

@@ -1,12 +1,11 @@
 "use client";
 
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 import {
   Dialog,
@@ -17,8 +16,18 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { updateUserPassword } from "@/api/profile";
-
-const PasswordUpdateDialogue = ({ isOpen, onClose }) => {
+export interface PasswordFormValues {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+const PasswordUpdateDialogue = ({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) => {
   const validationSchema = Yup.object().shape({
     currentPassword: Yup.string().required("Current Password is required"),
     newPassword: Yup.string()
@@ -28,7 +37,7 @@ const PasswordUpdateDialogue = ({ isOpen, onClose }) => {
         "Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character"
       ),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref("newPassword"), null], "Passwords must match")
+      .oneOf([Yup.ref("newPassword")], "Passwords must match")
       .required("Confirm Password is required"),
   });
 
@@ -39,7 +48,10 @@ const PasswordUpdateDialogue = ({ isOpen, onClose }) => {
     // const { currentPassword, newPassword, confirmPassword } = req.body;
   };
 
-  const handleSubmit = async (values, { setSubmitting, setFieldError }) => {
+  const handleSubmit = async (
+    values: PasswordFormValues,
+    { setSubmitting, setFieldError }: FormikHelpers<PasswordFormValues>
+  ) => {
     console.log("Form values", values);
     // Handle password update logic here4
     setSubmitting(true);
@@ -54,7 +66,8 @@ const PasswordUpdateDialogue = ({ isOpen, onClose }) => {
           {
             pending: "Resetting password...",
             success: "Password reset successful!",
-            error: "Failed to reset password. Please Check Your Current Password",
+            error:
+              "Failed to reset password. Please Check Your Current Password",
           },
           {
             position: "top-right",
@@ -68,9 +81,9 @@ const PasswordUpdateDialogue = ({ isOpen, onClose }) => {
           }
         )
         .then((response: any) => {
-            toast.success(response.message)
+          toast.success(response.message);
           console.log("response in update user password ", response);
-          onClose()
+          onClose();
         });
     } catch (error) {
       console.error(error);

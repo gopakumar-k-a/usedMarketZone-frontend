@@ -1,6 +1,5 @@
 import PageHeading from "@/components/admin/PageHeading";
 import PostManagementMain from "@/components/admin/postManagement/PostManagementMain";
-import React from "react";
 import { BsPostcardFill } from "react-icons/bs";
 
 function PostManagementPage() {

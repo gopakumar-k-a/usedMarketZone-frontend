@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import WinnerAddress from "./WinnerAddress";
-import { getUserPostDetails } from "@/api/product";
 import { Link, useLocation } from "react-router-dom";
-import { ProductInterface } from "@/types/product";
 import SlideCurosal from "../../SlideCurosal";
 import { getClaimBidDetails } from "@/api/bid";
 import {
@@ -22,11 +20,7 @@ import { toast } from "react-toastify";
 import Loader from "@/components/loader/Loader";
 import UserCard from "@/components/user/SuggestedUserCard";
 import { ImHammer2 } from "react-icons/im";
-import OrderTracking from "../orderTrack/OrderTracking";
 import BidResultProgressBar from "../orderTrack/BidResultProgressBar";
-import { Transaction } from "@/types/admin/transaction";
-// import OrderTracking from "../orderTrack/OrderTracking";
-// import ProgressBar from "../orderTrack/OrderTracking";
 function BidClaimMain() {
   const fromUserId = useAppSelector((state) => state.auth.user?._id);
 
@@ -268,6 +262,11 @@ function BidClaimMain() {
         />
       )}
       {loading && <Loader />}
+      {statusMessage && (
+        <div className="text-center text-green-500 font-bold">
+          {statusMessage}
+        </div>
+      )}
     </>
   );
 }

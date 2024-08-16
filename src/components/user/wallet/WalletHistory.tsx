@@ -1,5 +1,4 @@
 import { WalletHistoryItem } from "@/types/wallet";
-import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const WalletHistory = ({

@@ -10,7 +10,7 @@ import { ForgotPasswordResponse } from "../../types/login";
 import ResetPassModal from "./ResetPasswModal";
 import { AlertResetPassModalClose } from "./AlertResetModalClose";
 import { authorizeUserOtpPage } from "@/redux/reducers/user/auth/otpProtect/otpProtectSlice";
-import {  resendOtpSignUp } from "../../api/auth";
+import { resendOtpSignUp } from "../../api/auth";
 import { useTimer } from "@gabrielyotoo/react-use-timer";
 
 function Otp() {
@@ -26,19 +26,18 @@ function Otp() {
   const [isResetPassModalOpen, setResetPassModalOpen] = useState(false);
   const [isResetPassAlertOpen, setResetPassAlertOpen] = useState(false);
   const [finished, setFinished] = useState(false);
-  const { currentTime, isRunning, start } = useTimer(60,{
+  const { currentTime, start } = useTimer(60, {
     onFinish: () => {
       setFinished(true);
     },
     onStart: () => {
       setFinished(false);
-    }
+    },
   });
 
   let email = location.state.email || localStorage.getItem("verifyingEmail");
   let purpose = location.state.purpose || localStorage.getItem("purpose");
   let otpToken = location.state.otpToken || localStorage.getItem("otpToken");
-
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -59,10 +58,9 @@ function Otp() {
   // timer
 
   useEffect(() => {
-    //start timer 
+    //start timer
     start();
   }, []);
-
 
   // useEffect(() => {
   //   const endTime = localStorage.getItem("otpEndTime");
@@ -182,6 +180,7 @@ function Otp() {
             localStorage.removeItem("purpose");
             localStorage.removeItem("otpToken");
             handleResetPassModalOpen(true);
+            console.log(timer);
 
             // navigate("/reset-password", {
             //   state: { email: response.email, otpToken },
@@ -202,8 +201,6 @@ function Otp() {
 
   const resendOtpFn = async () => {
     if (purpose === "register") {
-      // const { confirmPassword, ...formData } = values;
-
       const userDataString = localStorage.getItem("userData");
       if (!userDataString) {
         setError(
@@ -212,7 +209,6 @@ function Otp() {
         return;
       }
       const userData: User = JSON.parse(userDataString);
-      // const responseObj: VerifyOtpSignUp = { userData, otp };
       setLoading(true);
 
       await toast
@@ -221,15 +217,6 @@ function Otp() {
           {
             pending: "Sending Otp",
             success: "Successfully sent OTP To Your Account",
-            error: {
-              render({ data }) {
-                // Extracting error message from response
-                if (data.response && data.response.data) {
-                  return ` ${data.response.data.message}`;
-                }
-                return ` ${data.message}`;
-              },
-            },
           },
           {
             position: "top-right",
@@ -248,8 +235,7 @@ function Otp() {
           // For registration
           // localStorage.setItem("otpToken",response.otpToken);
           console.log("response is ", response);
-          // localStorage.setItem("otpToken", response.otpToken);
-          // localStorage.setItem("verifyingEmail", response.email);
+
           start();
           localStorage.setItem("purpose", "register");
           localStorage.removeItem("otpEndTime");
@@ -274,15 +260,7 @@ function Otp() {
           {
             pending: "Checking Credentials",
             success: "Otp send Successfully",
-            error: {
-              render({ data }) {
-                // Extracting error message from response
-                if (data.response && data.response.data) {
-                  return `Failed: ${data.response.data.message}`;
-                }
-                return `Failed: ${data.message}`;
-              },
-            },
+    
           },
           {
             position: "top-right",
@@ -298,58 +276,29 @@ function Otp() {
         .then((response: ForgotPasswordResponse) => {
           // console.log("response is ", response);
           // localStorage.setItem("otpToken", response.otpToken);
+          const forgotPasswordResponse = response as ForgotPasswordResponse;
+          const { otpToken, email } = forgotPasswordResponse;
           start();
           // otpToken = response.otpToken;
-          console.log("response is ", response);
-          localStorage.setItem("otpToken", response.otpToken);
-          localStorage.setItem("verifyingEmail", response.email);
-          localStorage.setItem("purpose", "forgotPassword");
-          localStorage.removeItem("otpEndTime");
-          setTimer(60);
+          if (forgotPasswordResponse && otpToken && email) {
+            localStorage.setItem("otpToken", response.otpToken);
+            localStorage.setItem("verifyingEmail", response.email);
+            localStorage.setItem("purpose", "forgotPassword");
+            localStorage.removeItem("otpEndTime");
+            setTimer(60);
 
-          navigate("/otp", {
-            state: {
-              email: response.email,
-              purpose: "forgotPassword",
-              otpToken: response.otpToken,
-            },
-          });
+            navigate("/otp", {
+              state: {
+                email: response.email,
+                purpose: "forgotPassword",
+                otpToken: response.otpToken,
+              },
+            });
+          }else {
+            console.error("Invalid response or missing data:", response);
+          }
 
-          // localStorage.setItem("verifyingEmail",email)
-          // localStorage.setItem("purpose","forgotPassword")
-
-          // navigate("/otp", {
-          //   state: {
-          //     email: email,
-          //     purpose: "forgotPassword",
-          //     otpToken: response.otpToken,
-          //   },
-          // });
-          // const { user, token, role } = response;
-
-          // console.log("log in page   user, token, role", user);
-
-          // // dispatch(loginSuccess({ user: JSON.stringify(user), token }));
-
-          // dispatch(setCredentials({ user, token, role }));
-          // console.log('user role UserLoginResponse ',user.role);
-
-          // if (user.role == "user") {
-          //   console.log(`if (user.role == "user")`);
-
-          //   navigate("/");
-          // } else if (user.role == "admin") {
-          //   console.log(`else if (user.role == "admin")`);
-
-          //   navigate("/admin");
-          // }
-
-          //    else if (role == "admin") {
-          //   dispatch(setCredentialsAdmin({ user, token, role }));
-          //   navigate("/admin");
-          // }
-          // dispatch(authorizeUserOtpPage())
-          // navigate('/otp', { state: { email: formData.email } });
+       
         })
         .catch((error) => {
           console.error(error);

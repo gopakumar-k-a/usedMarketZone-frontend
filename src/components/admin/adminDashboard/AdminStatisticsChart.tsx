@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend } from 'chart.js';
 import { AdminStatistics } from '@/types/admin/dashboard';
+import { ChartData } from 'chart.js';
 
-// Register required Chart.js components
+type ChartDataType = ChartData<'bar', number[]>;
 ChartJS.register(BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
 
 const AdminStatisticsChart = ({ stats }: { stats: AdminStatistics }) => {
-  const [chartData, setChartData] = useState(null);
+  const [chartData, setChartData] = useState<ChartDataType | null>(null);
 
   useEffect(() => {
     const setData = async () => {

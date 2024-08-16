@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import UserCard from "./SuggestedUserCard";
 import { getSuggestedUsers } from "@/api/user";
-import { FaRegUserCircle } from "react-icons/fa";
 
 function SuggestedUsers() {
   interface UserCard {
@@ -21,7 +20,6 @@ function SuggestedUsers() {
     };
     fetchSuggestedUsers();
   }, []);
-  const handleViewClick = () => {};
   return (
     <>
       <div className="flex justify-center">

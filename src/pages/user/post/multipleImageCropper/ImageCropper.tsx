@@ -1,4 +1,4 @@
-import React, { useState, useCallback,useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Cropper from "react-easy-crop";
 import "react-easy-crop/react-easy-crop.css"; // Import styles for react-easy-crop
 import {
@@ -7,18 +7,13 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-//   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-// import { Label } from "@radix-ui/react-label";
-// import { Input } from "@/components/ui/input";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faCamera, faScissors } from "@fortawesome/free-solid-svg-icons";
-// import { useNavigate } from "react-router-dom";
+
 
 interface ImageCropperProps {
   image: File | null;
-  setCroppedImage: (croppedImageFile: File, index: number) => void;
+  setCroppedImage: (croppedImageFile: File | null, index: number) => void;
   index: number;
 }
 
@@ -28,12 +23,9 @@ function ImageCropper({ image, setCroppedImage, index }: ImageCropperProps) {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
 
-  const onCropComplete = useCallback(
-    (croppedArea: any, croppedAreaPixels: any) => {
-      setCroppedAreaPixels(croppedAreaPixels);
-    },
-    []
-  );
+  const onCropComplete = useCallback((croppedAreaPixels: any) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  }, []);
 
   const handleSaveChanges = useCallback(() => {
     if (!croppedAreaPixels || !imageSrc) return;
@@ -61,7 +53,7 @@ function ImageCropper({ image, setCroppedImage, index }: ImageCropperProps) {
       );
 
       canvas.toBlob((blob) => {
-        if (blob) {
+        if (blob && image) {
           const croppedFile = new File([blob], image.name, {
             type: "image/jpeg",
           });
@@ -74,7 +66,9 @@ function ImageCropper({ image, setCroppedImage, index }: ImageCropperProps) {
   useEffect(() => {
     if (image) {
       const reader = new FileReader();
-      reader.addEventListener("load", () => setImageSrc(reader.result as string));
+      reader.addEventListener("load", () =>
+        setImageSrc(reader.result as string)
+      );
       reader.readAsDataURL(image);
     }
   }, [image]);
@@ -118,9 +112,7 @@ function ImageCropper({ image, setCroppedImage, index }: ImageCropperProps) {
               >
                 Cancel
               </Button>
-              <Button onClick={handleSaveChanges}>
-                Save Changes
-              </Button>
+              <Button onClick={handleSaveChanges}>Save Changes</Button>
             </>
           )}
         </DialogFooter>

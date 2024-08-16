@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import { Chat } from "@/types/chat";
 import { formatDate } from "@/utils/formatDate";
 import { useAppSelector } from "@/utils/hooks/reduxHooks";

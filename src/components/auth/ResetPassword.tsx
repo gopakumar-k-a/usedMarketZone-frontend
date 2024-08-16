@@ -1,15 +1,17 @@
-import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import Loader from "../loader/Loader";
 import { submitNewPass } from "@/api/auth";
-
+interface FormValues {
+  newPassword: string;
+  confirmPassword: string;
+}
 const ResetPassword = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { email, otpToken } = location.state || {};
+  const { email } = location.state || {};
 
   const validationSchema = Yup.object({
     newPassword: Yup.string()
@@ -20,10 +22,13 @@ const ResetPassword = () => {
       ),
     confirmPassword: Yup.string()
       .required("Confirm Password is required")
-      .oneOf([Yup.ref("newPassword"), null], "Passwords must match"),
+      .oneOf([Yup.ref("newPassword"), "undefined"], "Passwords must match"),
   });
 
-  const handleSubmit = async (values, { setSubmitting, setFieldError }) => {
+  const handleSubmit = async (
+    values: FormValues,
+    { setSubmitting, setFieldError }: FormikHelpers<FormValues>
+  ) => {
     const { newPassword } = values;
 
     try {
@@ -45,7 +50,7 @@ const ResetPassword = () => {
           theme: "light",
         }
       );
-      navigate("/login",{state:{email}});
+      navigate("/login", { state: { email } });
     } catch (error) {
       console.error(error);
       setFieldError(

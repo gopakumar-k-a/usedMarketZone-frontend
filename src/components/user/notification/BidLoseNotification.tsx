@@ -1,5 +1,4 @@
 import { Notification } from "@/types/Notification";
-import { FaCrown } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { FaWindowClose } from "react-icons/fa";
 import { formatDate } from "@/utils/formatDate";

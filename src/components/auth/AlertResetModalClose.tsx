@@ -7,11 +7,9 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-    AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
-  import { Button } from "@/components/ui/button"
   
-  export function AlertResetPassModalClose({isOpen,onClose,onAccept}) {
+  export function AlertResetPassModalClose({isOpen,onClose,onAccept}:{isOpen:boolean,onClose:()=>void,onAccept:()=>void}) {
     return (
       <AlertDialog open={isOpen} onOpenChange={onClose}>
         <AlertDialogContent>

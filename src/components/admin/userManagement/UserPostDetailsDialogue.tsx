@@ -7,10 +7,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import ProductInterface from "@/types/product";
 
-export function UserPostDetailsDialogue({ isOpen, onClose, postDetails }) {
+export function UserPostDetailsDialogue({ isOpen, onClose, postDetails }:{ isOpen:boolean, onClose:()=>void, postDetails:ProductInterface }) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       {/* <DialogTrigger asChild>
@@ -41,7 +40,7 @@ export function UserPostDetailsDialogue({ isOpen, onClose, postDetails }) {
                 </span>
               </div>
               <p className="text-lg font-medium mb-2">
-                &#8377; {postDetails.basePrice.toFixed(2)}
+                &#8377; {postDetails.basePrice}
               </p>
               <p className="text-gray-600 mb-4">Description: {postDetails.description}</p>
               <div className="grid grid-cols-2 gap-4">

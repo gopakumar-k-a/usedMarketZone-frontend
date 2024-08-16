@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import ProductInterface from "@/types/product";
 
-function useGetProductAdmin(productId: string) {
-  const [productData, setProuductData] = useState<ProductInterface|null>(null);
+function useGetProductAdmin() {
+  const [productData, ] = useState<ProductInterface|null>(null);
 
   const getProduct = async () => {
     try {

@@ -1,4 +1,4 @@
-import { ConversationData, FollowingUser } from "@/types/chat";
+import { ConversationData } from "@/types/chat";
 import { useAppDispatch } from "@/utils/hooks/reduxHooks";
 // import { useAppSelector } from "@/utils/hooks/reduxHooks";
 import { setChatSelected } from "@/redux/reducers/chat/chatSlice";

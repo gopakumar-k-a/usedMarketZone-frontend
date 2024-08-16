@@ -1,8 +1,6 @@
 import PageHeading from "@/components/admin/PageHeading";
 import { formatDate } from "@/utils/formatDate";
-import React, { useEffect, useState } from "react";
-import { IoHammerOutline } from "react-icons/io5";
-import { RxCross2 } from "react-icons/rx";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { FaHistory } from "react-icons/fa";
 import SlideCurosal from "@/components/post/SlideCurosal";
@@ -11,11 +9,10 @@ import BidHistoryProductCard from "./BidHistoryProductCard";
 
 import BidsByUserTable from "./BidsByUserTable";
 function BidHistory() {
-
   const location = useLocation();
   const { bidProductData } = location.state;
   const bidProductId = bidProductData._id;
-  const [imageSlides, setImageSlides] = useState<string[]>(
+  const [imageSlides] = useState<string[]>(
     bidProductData.productImageUrls &&
       bidProductData.productImageUrls.length > 0
       ? bidProductData.productImageUrls
@@ -53,11 +50,10 @@ function BidHistory() {
           <span></span>
         </div>
       </div>
-
-      <BidHistoryProductCard bidProductData={bidProductData} />
-      <BidsByUserTable bidProductId={bidProductId}/>
-
-      
+      {bidProductData && (
+        <BidHistoryProductCard bidProductData={bidProductData} />
+      )}
+      {bidProductId && <BidsByUserTable bidProductId={bidProductId} />}
     </>
   );
 }

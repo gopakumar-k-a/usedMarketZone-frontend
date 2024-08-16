@@ -1,4 +1,4 @@
-import { faBookmark, faWallet } from "@fortawesome/free-solid-svg-icons";
+import {  faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { User } from "@/types/login";
 import { Link } from "react-router-dom";

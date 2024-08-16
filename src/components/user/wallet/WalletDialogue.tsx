@@ -7,12 +7,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import WalletHistory from "./WalletHistory";
 import { getWalletData } from "@/api/payment";
 import { useEffect, useState } from "react";
 import { Wallet } from "@/types/wallet";
+import Loader from "@/components/loader/Loader";
 
 const WalletDialgoue = ({
   isOpen,
@@ -39,32 +38,35 @@ const WalletDialgoue = ({
     fetchWalletData();
   }, []);
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Wallet</DialogTitle>
-          <DialogDescription>
-            Manage your wallet details here. Click submit when you're done.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="flex justify-end mr-4">
-            <h1 className="dark:text-white  text-lg">balance</h1>
-            <h1 className="dark:text-white font-bold text-2xl ml-2">
-              {walletData ? `${walletData.walletBalance}₹` : 0}
-            </h1>
+    <>
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Wallet</DialogTitle>
+            <DialogDescription>
+              Manage your wallet details here. Click submit when you're done.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="flex justify-end mr-4">
+              <h1 className="dark:text-white  text-lg">balance</h1>
+              <h1 className="dark:text-white font-bold text-2xl ml-2">
+                {walletData ? `${walletData.walletBalance}₹` : 0}
+              </h1>
+            </div>
+            {walletData &&
+              walletData.walletHistory &&
+              walletData.walletHistory.length > 0 && (
+                <WalletHistory walletHistory={walletData.walletHistory} />
+              )}
           </div>
-          {walletData &&
-            walletData.walletHistory &&
-            walletData.walletHistory.length > 0 && (
-              <WalletHistory walletHistory={walletData.walletHistory} />
-            )}
-        </div>
-        <DialogFooter>
-          <Button type="submit">Submit</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+          <DialogFooter>
+            <Button type="submit">Submit</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      {loading && <Loader />}
+    </>
   );
 };
 

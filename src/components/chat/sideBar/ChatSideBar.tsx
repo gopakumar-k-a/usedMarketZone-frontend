@@ -1,5 +1,4 @@
 
-import SearchBar from "./SearchBar";
 
 import Conversations from "./Conversations";
 import useGetMessage from "@/utils/hooks/chat/useGetMessage";

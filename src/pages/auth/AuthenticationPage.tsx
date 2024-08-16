@@ -17,13 +17,12 @@ function AuthenticationPage() {
     `<span class="font-bold sm:text-2xl text-xl">Product Discovery:</span> Follow users to see the items they have added for auction, creating a personalized shopping experience based on your network.`,
   ];
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % slideText.length);
     }, 5000);
-    return () => clearInterval(interval); // Cleanup interval on component unmount
+    return () => clearInterval(interval); 
   }, []);
   const slideNext = () => {
     setActiveIndex((prevIndex) => (prevIndex + 1) % slideText.length);
@@ -35,9 +34,7 @@ function AuthenticationPage() {
     );
   };
 
-  useEffect(() => {
-    setIsFirstLoad(false); // After the first load, set it to false
-  }, []);
+
 
   const authenticationComponentVariant = {
     initial: {
@@ -55,7 +52,6 @@ function AuthenticationPage() {
     <>
       <GradientBackground>
         <div className="p-5">
-          {/* <FadeIn> */}
           <motion.div
             className="xl:mx-auto xl:w-full shadow-md p-4 xl:max-w-sm 2xl:max-w-md mb-6 flex  bg-white rounded-lg"
             style={{
@@ -75,26 +71,18 @@ function AuthenticationPage() {
               Used Market Zone
             </h1>
           </motion.div>
-          {/* </FadeIn> */}
           <div className="w-full sm:w-1/2 flex justify-center">
-            {/* <h1 className=" font-extrabold sm:text-4xl text-2xl ">
-            Used Market Zone
-          </h1> */}
+     
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
             <motion.div
-              // initial={{ x: -60, opacity: 0 }}
-              // animate={{ x: 0, opacity: 1 }}
-              // transition={{ delay: 0.4, duration: 0.7 }}
+
       
             >
               {location.pathname == "/login" && (
                 <motion.div
-                  // initial={{ opacity: 0 }}
-                  // animate={{ opacity: 1 }}
-                  // exit={{ opacity: 0 }}
-                  // transition={{ duration: 0.7 }}
+        
                   variants={authenticationComponentVariant}
                   initial="initial"
                   animate="animate"
@@ -189,39 +177,7 @@ function AuthenticationPage() {
             </motion.aside>
           </div>
         </div>
-        {/* <div className="flex items-center justify-center"> */}
-        {/* <div className="grid grid-cols-2">
-          <div className="col-span-1 bg-red-200"></div>
-          <div className="col-span-1">
-            {" "}
-            {location.pathname == "/login" && <LogIn />}
-          </div>
-          
-
-          <div className="col-span-1 bg-red-200"></div>
-
-
-          <div className="col-span-1">
-
-          {location.pathname == "/forgot-password" && <ForgotPass />}
-          </div>
-
-          <div className="col-span-1 bg-red-200"></div>
-
-          <div className="col-span-1">
-
-          {location.pathname == "/signup" && <SignUp />}
-          </div>
-
-          <div className="col-span-1 bg-red-200"></div>
-
-          <div className="col-span-1">
-
-          {location.pathname == "/otp" && <Otp />}
-          </div>
-
-        </div> */}
-        {/* </div> */}
+       
       </GradientBackground>
     </>
   );

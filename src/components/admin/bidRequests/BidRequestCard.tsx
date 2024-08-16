@@ -7,7 +7,8 @@ import { acceptBidRequest } from "@/api/admin";
 import { FaEye } from "react-icons/fa";
 import { BidDuration } from "@/types/product";
 import { useNavigate } from "react-router-dom";
-function BidRequestCard({ request }) {
+import { BidRequest } from "@/types/admin/bidRequest";
+function BidRequestCard({ request }:{request:BidRequest}) {
   const [isAcceptAlertOpen, setAcceptAlertOpen] = useState(false);
   const [isRejectAlertOpen, setRejectAlertOpen] = useState(false);
   const [selectedBidId, setSelectedBidId] = useState("");

@@ -1,7 +1,20 @@
 import { formatDate } from '@/utils/formatDate'
-import React from 'react'
+type BidDuration = {
+  day: number;
+  hour: number;
+  minute: number;
+};
 
-function BidHistoryProductCard({bidProductData}) {
+type BidProductData = {
+  productName: string;
+  category: string;
+  subCategory: string;
+  basePrice: number;
+  productImageUrls: string[];
+  bidDuration?: BidDuration;
+  createdAt: string; 
+};
+function BidHistoryProductCard({bidProductData}:{bidProductData:BidProductData}) {
   return (
   <>
     <div className="bg-gray-800 text-white shadow-lg border rounded-lg overflow-hidden">
@@ -13,7 +26,6 @@ function BidHistoryProductCard({bidProductData}) {
               className="w-24 h-24 object-contain"
             />
           </div>
-          {/* <img src={request?.productData?.productImageUrls[0]} alt="" /> */}
 
           <div className="p-2 flex-grow">
             <div className="flex justify-between items-start">

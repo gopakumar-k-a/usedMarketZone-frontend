@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useAppDispatch } from "../../utils/hooks/reduxHooks";
+import  { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faRightFromBracket,
@@ -17,14 +16,18 @@ import {
   MdLockPerson,
   MdOutlineLockPerson,
 } from "react-icons/md";
-import { PiPackageBold,PiPackageFill  } from "react-icons/pi";
+import { PiPackageBold, PiPackageFill } from "react-icons/pi";
 import { Link, useLocation } from "react-router-dom";
 const AdminSideBar = ({
   isExpanded,
-  toggleSidebar,
   handleLogout,
   theme,
   handleThemeSwitch,
+}: {
+  isExpanded: boolean;
+  handleLogout: () => void;
+  theme: "dark" | "light";
+  handleThemeSwitch: () => void;
 }) => {
   const location = useLocation();
   const [currentPath, setCurrentPath] = useState(location.pathname);
@@ -45,11 +48,7 @@ const AdminSideBar = ({
         />
 
         <div className="p-4 mt-4 flex items-center ">
-          {/* <FontAwesomeIcon
-            icon={isExpanded ? faLessThan : faGreaterThan}
-            className="w-5 h-5 cursor-pointer text-gray-800 dark:text-white"
-            onClick={toggleSidebar}
-          /> */}
+  
 
           {isExpanded && (
             <>

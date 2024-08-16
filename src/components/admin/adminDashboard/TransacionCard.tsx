@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/utils/formatDate";
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { RecentTransactions } from "@/types/transactions";
 // interface TransactionCardProps {

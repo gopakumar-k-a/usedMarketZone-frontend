@@ -1,5 +1,4 @@
 import { Transaction } from '@/types/admin/transaction'
-import React from 'react'
 
 function TransactionReportTable({transactions}:{transactions:Transaction[]}) {
   return (

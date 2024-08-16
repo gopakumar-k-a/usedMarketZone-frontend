@@ -13,7 +13,6 @@ import { useState } from "react";
 import { CustomAlertDialogue } from "@/components/alert/CustomAlertDialogue";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
-import { shipProductToAdmin } from "@/api/payment";
 
 export default function DispatchToAdminTrackingIdDialogue({
   isOpen,

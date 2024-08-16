@@ -18,7 +18,7 @@ import { sendPostAsMessage } from "@/api/chat";
 import { toast } from "react-toastify";
 import LoadingButton from "../loadingButton/LoadingButton";
 
-export function SharePostDialogue({ isOpen, onClose, selectedPostIdShare }) {
+export function SharePostDialogue({ isOpen, onClose, selectedPostIdShare }:{ isOpen:boolean, onClose:()=>void, selectedPostIdShare:string }) {
   const [loading, setLoading] = useState(false);
   const [recieverId, setRecieverId] = useState("");
   const sharePost = async (productId: string, recieverId: string) => {

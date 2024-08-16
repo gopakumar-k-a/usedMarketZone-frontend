@@ -1,12 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import Loader from "../loader/Loader";
 import { submitNewPass } from "@/api/auth";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -19,9 +17,20 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-
-const ResetPassModal = ({ isOpen, onClose, email }) => {
+interface FormValues {
+  newPassword: string;
+  confirmPassword: string;
+  email: string;
+}
+const ResetPassModal = ({
+  isOpen,
+  onClose,
+  email,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  email: string;
+}) => {
   const navigate = useNavigate();
   const validationSchema = Yup.object().shape({
     newPassword: Yup.string()
@@ -31,22 +40,25 @@ const ResetPassModal = ({ isOpen, onClose, email }) => {
         "Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character"
       ),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref("newPassword"), null], "Passwords must match")
+      .oneOf([Yup.ref("newPassword"), "undefined"], "Passwords must match")
       .required("Confirm Password is required"),
   });
 
   const initialValues = {
     newPassword: "",
     confirmPassword: "",
-    email
+    email,
   };
 
-  const handleSubmit = async (values, { setSubmitting, setFieldError }) => {
+  const handleSubmit = async (
+    values: FormValues,
+    { setSubmitting, setFieldError }: FormikHelpers<FormValues>
+  ) => {
     console.log("Form values", values);
     // Handle password update logic here4
-    
-    const { newPassword ,email} = values;
-    console.log('email is ',email);
+
+    const { newPassword, email } = values;
+    console.log("email is ", email);
     // email ? (email = email) : localStorage.getItem("verifyingEmail");
     try {
       await toast.promise(
@@ -83,7 +95,7 @@ const ResetPassModal = ({ isOpen, onClose, email }) => {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Update Password</DialogTitle>
-         
+
           <DialogDescription>
             Reset Password By Adding new Password
           </DialogDescription>

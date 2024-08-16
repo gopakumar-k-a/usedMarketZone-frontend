@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState,  } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { MdReportProblem } from "react-icons/md";
 import { ReportPostDialogue } from "./ReportPostDialogue";

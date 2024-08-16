@@ -1,7 +1,6 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { useAppDispatch } from "../../../utils/hooks/reduxHooks";
-import { logOut } from "../../redux/reducers/user/auth/authSlice";
+import { logOut } from "@/redux/reducers/auth/authSlice";
 function UserNavBar() {
   const dispatch = useAppDispatch();
   const [theme, setTheme] = useState("light");

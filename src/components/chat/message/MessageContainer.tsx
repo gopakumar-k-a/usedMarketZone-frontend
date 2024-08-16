@@ -1,13 +1,10 @@
 import ChatHeader from "./ChatHeader";
 import Messages from "./Messages";
 import { BsChatLeftDotsFill } from "react-icons/bs";
-import { useAppSelector } from "@/utils/hooks/reduxHooks";
 import useGetMessage from "@/utils/hooks/chat/useGetMessage";
-import MessageInput from "./MessageInput";
 function MessageContainer() {
   const { chatSelected } = useGetMessage();
 
-  // const [chatSelected, setChatSelected] = useState(false);
   return (
     <>
       <div
@@ -21,10 +18,6 @@ function MessageContainer() {
               <ChatHeader />
             </div>
             <Messages />
-
-            {/* <div className="relative bottom-0">
-              <MessageInput />
-            </div> */}
           </div>
         ) : (
           <NoChatSelected />

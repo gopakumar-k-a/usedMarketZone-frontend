@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import {  useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,22 +11,24 @@ import {
   faPhone,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { User } from "../../types/login";
-// import { userOtpSignUp } from '../../redux/reducers/user/auth/otpSlice/otpThunk';
 import Loader from "../loader/Loader";
-// import {useAppDispatch,useAppSelector,useAppStore}
-import { useAppDispatch, useAppSelector } from "../../utils/hooks/reduxHooks";
-// import { setFlow } from '../../redux/reducers/user/auth/otpPageFlow/flowSlice';
+import { useAppDispatch } from "../../utils/hooks/reduxHooks";
 import { userOtpSignUp } from "../../api/auth";
 import { toast } from "react-toastify";
 import { authorizeUserOtpPage } from "../../redux/reducers/user/auth/otpProtect/otpProtectSlice";
+export interface SignUpFormValues {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  password: string;
+  confirmPassword: string;
+}
 
 function SignUp() {
   const [isLoading, setLoading] = useState(false);
-  // const [otpStatus, setOtpStatus] = useState(false)
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  // const { userData, error } = useAppSelector((state) => state.getOtp);
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
@@ -39,7 +41,7 @@ function SignUp() {
     setConfirmPasswordVisible(!confirmPasswordVisible);
   };
 
-  const initialValues: User = {
+  const initialValues: SignUpFormValues = {
     firstName: "",
     lastName: "",
     email: "",
@@ -63,12 +65,13 @@ function SignUp() {
         "Password must contain at least one special character"
       )
       .required("Password is required"),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), undefined], "Passwords must match")
       .required("Confirm Password is required"),
+    
   });
 
-  const onSubmit = async (values: User, { setSubmitting }) => {
+  const onSubmit = async (values: SignUpFormValues,  { setSubmitting }: FormikHelpers<SignUpFormValues>) => {
     const { confirmPassword, ...formData } = values;
 
     setLoading(true);
@@ -79,15 +82,6 @@ function SignUp() {
         {
           pending: "Sending Otp",
           success: "Successfully sent OTP To Your Account",
-          error: {
-            render({ data }) {
-              // Extracting error message from response
-              if (data.response && data.response.data) {
-                return ` ${data.response.data.message}`;
-              }
-              return ` ${data.message}`;
-            },
-          },
         },
         {
           position: "top-right",
@@ -102,9 +96,7 @@ function SignUp() {
       )
       .then((response) => {
         dispatch(authorizeUserOtpPage());
-        // navigate("/otp", { state: { email: formData.email } });
-        // For registration
-        // localStorage.setItem("otpToken",response.otpToken);
+
         localStorage.setItem("userData", JSON.stringify(response.userData));
 
         localStorage.setItem("verifyingEmail", values.email);
@@ -122,12 +114,7 @@ function SignUp() {
       });
   };
 
-  // useEffect(() => {
-  //     if (otpStatus) {
-  //         dispatch(authorizeUserOtpPage())
-  //         navigate('/otp', { state: { email: values.email } });
-  //     }
-  // }, [otpStatus, navigate, dispatch]);
+
 
   return (
     <>

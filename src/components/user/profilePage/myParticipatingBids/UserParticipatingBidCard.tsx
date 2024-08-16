@@ -3,13 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import { UserParticipatingBid } from "@/types/bid";
 import { Button } from "@/components/ui/button";
-import { createPaymentOrder } from "@/api/payment";
 import { useAppSelector } from "@/utils/hooks/reduxHooks";
-import { toast } from "react-toastify";
-import { capturePayment } from "@/api/payment";
-import useExternalScripts from "@/utils/hooks/useExternalScripts";
-import Loader from "@/components/loader/Loader";
-// Define the type for the props
 interface UserParticipatingBidProps {
   bid: UserParticipatingBid;
 }
@@ -21,86 +15,24 @@ const UserParticipatingBidCard: React.FC<UserParticipatingBidProps> = ({
   // const fromUserId
   const navigate = useNavigate();
   const fromUserId = useAppSelector((state) => state.auth.user?._id);
-  const [statusMessage, setStatusMessage] = useState("");
-  const [isProductClaimed, setIsProductClaimed] = useState(
+
+  const [isProductClaimed] = useState(
     bid.isBidAmountPaid && bid.claimedUserId == fromUserId ? true : false
   );
-  const [loading, setLoading] = useState(false);
-  useExternalScripts({ url: "https://checkout.razorpay.com/v1/checkout.js" });
-  const toUserId = bid.userId;
-  const handlePayment = async () => {
-    const { order } = await createPaymentOrder({
-      amount: bid.highestBidAmount,
-      currency: "INR",
-      receipt: `receipt_${bid.productId}`,
-      notes: {
-        fromUserId,
-        toUserId,
-      },
-    });
 
-    console.log("order ", order);
-
-    if (!order) {
-      toast.error("something went wrong try payment later");
-      return;
-    }
-
-    const options = {
-      key: "rzp_test_xgAbYbKWLNZHR0",
-      amount: order.amount,
-      currency: order.currency,
-      name: "Used Market Zone",
-      description: "Claim Bid Transaction",
-      order_id: order.id,
-      handler: async (response: any) => {
-        try {
-          setLoading(true);
-          const paymentCaptureResponse = await capturePayment({
-            payment_id: response.razorpay_payment_id,
-            fromUserId,
-            toUserId,
-            amount: order.amount,
-            currency: order.currency,
-            productId: bid.productId,
-          });
-
-          if (paymentCaptureResponse.captureStatus == "captured") {
-            setStatusMessage("Payment successful");
-            setIsProductClaimed(true);
-            // await handleClaimProduct(paymentCaptureResponse.data.transactionId);
-          } else {
-            setStatusMessage("Payment failed");
-          }
-        } catch (error) {
-          console.log(error);
-        } finally {
-          setLoading(false);
-        }
-      },
-      prefill: {
-        name: "Used Market Zone",
-        email: "umzauth@gmail.com",
-      },
-      theme: {
-        color: "#3399cc",
-      },
-    };
-
-    const rzp1 = new (window as any).Razorpay(options);
-    rzp1.open();
-  };
-
-  const isProductClaimable = (productId=bid.productId) => {
+  const isProductClaimable = (productId = bid.productId) => {
     if (bid.isBidEnded && bid.isMyHighestBid) {
-      navigate("/claim-bid",{state:{productId}});
+      navigate("/claim-bid", { state: { productId } });
     } else {
       return;
     }
   };
   return (
     <>
-      <div className="w-full bg-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700 dark:bg-gray-800 rounded-lg" onClick={()=>isProductClaimable()}>
+      <div
+        className="w-full bg-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700 dark:bg-gray-800 rounded-lg"
+        onClick={() => isProductClaimable()}
+      >
         <div className="flex p-4 gap-4 mb-2">
           <div className="ml-2 max-w-16 max-h-16">
             <img
@@ -152,9 +84,7 @@ const UserParticipatingBidCard: React.FC<UserParticipatingBidProps> = ({
                       Claimed
                     </Button>
                   ) : (
-                    <Button
-                      className="bg-green-500 hover:bg-green-400"
-                    >
+                    <Button className="bg-green-500 hover:bg-green-400">
                       Claim Product
                     </Button>
                   )
@@ -176,7 +106,6 @@ const UserParticipatingBidCard: React.FC<UserParticipatingBidProps> = ({
           </div>
         </div>
       </div>
-      {loading && <Loader />}
     </>
   );
 };

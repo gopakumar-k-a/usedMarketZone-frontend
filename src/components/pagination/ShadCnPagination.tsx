@@ -1,7 +1,6 @@
-import React from 'react';
 import { Button } from '../ui/button';
 
-const ShadCnPagination = ({ currentPage, totalPages, onPageChange }) => {
+const ShadCnPagination = ({ currentPage, totalPages, onPageChange }:{ currentPage:number, totalPages:number, onPageChange:(page:number)=>void }) => {
   const maxPageButtons = 7; // Maximum number of page buttons to display
   const pageButtonsToShow = Math.min(totalPages, maxPageButtons); // Limit to totalPages or maxPageButtons
 

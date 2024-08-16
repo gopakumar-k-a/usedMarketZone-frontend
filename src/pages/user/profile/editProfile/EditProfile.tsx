@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useCallback, useId } from "react";
+import  { useState, useEffect,  } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
-import Loader from "../../../../components/loader/Loader";
 import { useAppSelector } from "../../../../utils/hooks/reduxHooks";
 import useDebounce from "../../../../utils/hooks/useDebounce";
 import {
@@ -14,7 +12,6 @@ import {
   removeProfilePicture,
 } from "../../../../api/profile";
 import { toast } from "react-toastify";
-import { UserLoginResponse } from "@/types/login";
 import { useAppDispatch } from "../../../../utils/hooks/reduxHooks";
 import { updateUserCredentials } from "@/redux/reducers/auth/authSlice";
 import { useNavigate } from "react-router-dom";
@@ -22,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import ProfilePicSelector from "./ProfilePicSelector";
 import PasswordUpdateDialogue from "@/components/user/PasswordUpdateDialogue";
 import { CustomAlertDialogue } from "@/components/alert/CustomAlertDialogue";
+import LoaderPost from "@/components/loader/LoaderPost";
 
 const EditProfile = () => {
   const dispatch = useAppDispatch();
@@ -175,12 +173,12 @@ const EditProfile = () => {
   });
 
   // Handle form submission
-  const handleSubmit = async (values: any, { setSubmitting }) => {
+  const handleSubmit = async (
+    values: any,
+    { setSubmitting }: FormikHelpers<any>
+  ) => {
     console.log("Form values:", values);
     values.userName = userName;
-    // updateProfile(values).then((res) => {
-    //   console.log("res in handle submit ", res);
-    // });
 
     await toast
       .promise(
@@ -472,6 +470,7 @@ const EditProfile = () => {
         isOpen={isPasswordModalOpen}
         onClose={handlePasswordUpdateModalClose}
       />
+      {isLoading && <LoaderPost />}
     </>
   );
 };

@@ -1,6 +1,6 @@
 import Conversation from "./Conversation";
 import useGetConversations from "@/utils/hooks/chat/useConversation";
-import { ConversationData, FollowingUser } from "@/types/chat";
+import { ConversationData,  } from "@/types/chat";
 import Loader from "@/components/loader/Loader";
 import { useState } from "react";
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getBidRequests } from "@/api/admin";
 import BidRequestCard from "@/components/admin/bidRequests/BidRequestCard";
 import { IoHammerOutline } from "react-icons/io5";
@@ -8,28 +8,10 @@ import { useSearchParams } from "react-router-dom";
 import { SortDropdown } from "@/components/sort/SortDropDown";
 import { DebouncedSearchInput } from "@/components/debounceSearch/DebouncedSearchInput";
 import { Pagination } from "@/components/pagination/Pagination";
-interface Bid {
-  _id: {
-    $oid: string;
-  };
-  bidderId: {
-    $oid: string;
-  };
-  bidProductId: {
-    $oid: string;
-  };
-  isAccepted: boolean;
-  createdAt: {
-    $date: string;
-  };
-  updatedAt: {
-    $date: string;
-  };
-  __v: number;
-}
+import { BidRequest } from "@/types/admin/bidRequest";
 
 function BidVerificationPage() {
-  const [bidRequests, setBidRequests] = useState([]);
+  const [bidRequests, setBidRequests] = useState<BidRequest[] | null>(null);
   const [searchParams] = useSearchParams();
   const [totalDocuments, setTotalDocuments] = useState(0);
   const pageSize = 5;
@@ -70,6 +52,7 @@ function BidVerificationPage() {
       <section className="bg-gray-100 py-5 flex  justify-center ">
         <div className="w-10/12 ">
           {bidRequests &&
+            bidRequests.length > 0 &&
             bidRequests.map((request) => <BidRequestCard request={request} />)}
         </div>
       </section>

@@ -3,10 +3,9 @@ import { useState, useEffect } from "react";
 import ProfileTop from "@/components/user/profilePage/ProfileTop";
 import { User } from "@/types/login";
 import { getOwnerPostsListImage } from "@/api/profile";
-import { getFollowers, getFollowing, getNumOfFollow } from "@/api/user";
+import { getFollowers, getNumOfFollow } from "@/api/user";
 import { Link, Outlet } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { Console } from "console";
 
 function ProfilePage() {
   const [userData, setUserData] = useState<User | null>(null);

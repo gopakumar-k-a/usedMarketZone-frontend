@@ -10,6 +10,7 @@ import { TransactionRes } from "@/types/admin/transaction";
 import {
   DashboardTransactionStatisticsRes,
 } from "@/types/transactions";
+import { BidRequestResponse } from "@/types/admin/bidRequest";
 
 export const getAllUsers = async (page: number, limit: number) => {
   const response = await axiosAdminInstance.get(
@@ -58,7 +59,7 @@ export const getBidRequests = async (
   sort: string | null,
   limit: number = 5
 ) => {
-  const response = await axiosAdminInstance.get(END_POINTS.GET_BID_REQUESTS, {
+  const response:AxiosResponse<BidRequestResponse> = await axiosAdminInstance.get(END_POINTS.GET_BID_REQUESTS, {
     params: {
       page,
       limit,

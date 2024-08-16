@@ -1,9 +1,9 @@
-import React, { useState, useMemo } from "react";
-import { formatDate } from "@/utils/formatDate";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { UserPostDetailsDialogue } from "./UserPostDetailsDialogue";
 import { getUserPostDetailsInAdmin } from "@/api/admin";
-const UserPosts = ({ userPosts }) => {
+import ProductInterface from "@/types/product";
+const UserPosts = ({ userPosts }: { userPosts: ProductInterface[] }) => {
   const [isDetailsModalOpen, setDetailsModalOpen] = useState(false);
   //   const [modalPostId, setModalPostId] = useState("");
   const [modalPostDetails, setModalPostDetails] = useState(null);
@@ -92,7 +92,7 @@ const UserPosts = ({ userPosts }) => {
       ) : (
         <h2 className="text-2xl font-bold mb-4">No Posts</h2>
       )}
-      {isDetailsModalOpen && (
+      {isDetailsModalOpen && modalPostDetails && (
         <UserPostDetailsDialogue
           isOpen={isDetailsModalOpen}
           onClose={onDetailsModalClose}

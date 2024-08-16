@@ -9,8 +9,6 @@ import { formatAddress } from "@/utils/formatAddress";
 import { Link, useNavigate } from "react-router-dom";
 import { ImHammer2 } from "react-icons/im";
 import ProductInterface from "@/types/product";
-import { store } from "@/redux/app/store";
-// Define the interface for the post prop
 import React from "react";
 
 import SlideCurosal from "./SlideCurosal";
@@ -54,7 +52,6 @@ const BidCard = ({
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [bookmarkedCount, setBookmarkedCount] = useState(0);
   const [isActive, setIsActive] = useState(false);
-  const ownerId = store.getState().auth.user?._id;
   // const [isShareModalOpen, setShareModalOpen] = useState(false);
   // const [postedDate, setPostedDate] = useState("");
 

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import  { useEffect, useState } from "react";
+import {  useLocation } from "react-router-dom";
 import {
   getUserPostsInAdmin,
   getUserProfileInAdmin,
@@ -10,20 +10,7 @@ import AlertDialogBlock from "@/components/admin/userManagement/AlertDialogBlock
 import { Button } from "@/components/ui/button";
 import UserPosts from "@/components/admin/userManagement/UserPosts";
 
-interface User {
-  _id: string;
-  firstName: string;
-  userName: string;
-  lastName: string;
-  email: string;
-  role: string;
-  createdAt: string;
-  updatedAt: string;
-  imageUrl?: string;
-  phone: number;
-  bio?: string | null;
-  isActive: boolean;
-}
+import { User } from "@/types/login";
 
 function UserProfileAdmin() {
   const location = useLocation();

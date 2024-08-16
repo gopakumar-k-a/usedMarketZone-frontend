@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
@@ -17,7 +16,6 @@ import Loader from "../loader/Loader";
 import { setCredentials } from "../../redux/reducers/auth/authSlice";
 import { useAppDispatch } from "../../utils/hooks/reduxHooks";
 import { UserLoginResponse } from "../../types/login";
-import { setCredentialsAdmin } from "../../redux/reducers/admin/auth/adminSlice";
 import GoogleButton from "./GoogleButton";
 import { motion } from "framer-motion";
 function LogIn() {
@@ -52,15 +50,7 @@ function LogIn() {
         {
           pending: "Checking Credentials",
           success: "Log In Success",
-          error: {
-            render({ data }) {
-              // Extracting error message from response
-              if (data.response && data.response.data) {
-                return `Failed to LogIn: ${data.response.data.message}`;
-              }
-              return `Failed to LogIn: ${data.message}`;
-            },
-          },
+  
         },
         {
           position: "top-right",

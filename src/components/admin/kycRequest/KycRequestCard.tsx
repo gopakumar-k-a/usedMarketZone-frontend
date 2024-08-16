@@ -1,6 +1,5 @@
 import { Badge } from "@/components/ui/badge";
 import { KycDataWithUserData } from "@/types/user";
-import { Button } from "@/components/ui/button";
 import { FaEye } from "react-icons/fa";
 import { handleKycRequest } from "@/api/admin";
 import { CustomAlertDialogue } from "@/components/alert/CustomAlertDialogue";
@@ -17,13 +16,7 @@ const KycRequestCard = ({
 }) => {
   const {
     name,
-    dob,
-    idType,
-    idNumber,
-    phone,
     status,
-    createdAt,
-    isAdminAccepted,
     userDetails,
   } = kycRequest;
 

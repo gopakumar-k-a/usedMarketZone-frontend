@@ -1,4 +1,3 @@
-import React from "react";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { app } from "../../api/firebase/firebaseConfig";
 import { googleAuthenticate } from "../../api/auth";
@@ -21,7 +20,9 @@ function GoogleButton() {
 
       console.log("result is ", result);
 
-      let [firstName, lastName] = (await result).user.displayName?.split(" ");
+      // let [firstName, lastName] = (await result).user.displayName?.split(" ");
+      let [firstName, lastName] = (await result).user.displayName?.split(" ") ?? ["", ""];
+
        lastName = lastName ?? Math.floor(100000 + Math.random() * 900000).toString();
 
       const googleUserCredentials = {

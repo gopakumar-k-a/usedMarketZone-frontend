@@ -1,5 +1,5 @@
 import LoaderPost from "@/components/loader/LoaderPost";
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { getBidHistoryOfProduct } from "@/api/admin";
 import { IBid, IBidHistoryAdmin } from "@/types/bid";
 import { formatDate } from "@/utils/formatDate";

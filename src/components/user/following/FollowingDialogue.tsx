@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import LoaderPost from "@/components/loader/LoaderPost";
-import { ConversationData, FollowingUser } from "@/types/chat"; // Adjust the import path as needed
+import {  FollowingUser } from "@/types/chat"; // Adjust the import path as needed
 import UserCardChatFollowing from "@/components/chat/sideBar/UserCardChatFollowingList";
 import { getFollowing } from "@/api/user";
 

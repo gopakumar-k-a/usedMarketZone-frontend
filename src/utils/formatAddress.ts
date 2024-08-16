@@ -1,4 +1,4 @@
-export const formatAddress = (address) => {
+export const formatAddress = (address:string) => {
     
     if (!address) return "";
   

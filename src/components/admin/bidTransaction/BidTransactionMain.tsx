@@ -4,11 +4,11 @@ import { PiDotsThreeCircleDuotone } from "react-icons/pi";
 import { getBidTransactions } from "@/api/admin";
 import { Transaction } from "@/types/admin/transaction";
 import { useSearchParams } from "react-router-dom";
-import { DebouncedSearchInput } from "@/components/debounceSearch/DebouncedSearchInput";
 import { SortDropdown } from "@/components/sort/SortDropDown";
 import ShipmentFilterComponent from "./ShipmentFilter";
 import PaymentFilterComponent from "./PaymentFilterComponent";
 import { Pagination } from "@/components/pagination/Pagination";
+import { ShipmentStatus } from "@/types/bid";
 
 // const transactions = [
 //   {
@@ -27,18 +27,7 @@ import { Pagination } from "@/components/pagination/Pagination";
 //   },
 // ];
 
-const updateShipmentStatus = (transactionId, newStatus) => {
-  // Implement the logic to update shipment status
-  console.log(`Updating shipment status for ${transactionId} to ${newStatus}`);
-  // Make API call here
-};
 
-const confirmReceipt = (transactionId) => {
-  // Implement the logic to confirm receipt
-  console.log(`Confirming receipt for ${transactionId}`);
-
-  // Make API call here
-};
 
 function BidTransactionMain() {
   const [isTransactionActionDialogueOpen, setTransactionActionDialogueOpen] =
@@ -93,7 +82,7 @@ function BidTransactionMain() {
         transaction.transactionId === transactionId
           ? {
               ...transaction,
-              shipmentStatus: newStatus,
+              shipmentStatus: newStatus as ShipmentStatus,
               trackingNumbers: {
                 ...transaction.trackingNumbers,
                 shippedToBuyerTrackingNumber: buyerTrackingNumber,

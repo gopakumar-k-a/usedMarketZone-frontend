@@ -1,35 +1,23 @@
-import React from "react";
 import { useState } from "react";
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers,  } from "formik";
 import * as Yup from "yup";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faEye,
-  faEyeSlash,
-  faLock,
+
   faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import { ForgotPassword } from "../../types/login";
 import { forgotPassword } from "../../api/auth";
 import { toast } from "react-toastify";
 import Loader from "../loader/Loader";
-import { setCredentials } from "../../redux/reducers/auth/authSlice";
-import { useAppDispatch } from "../../utils/hooks/reduxHooks";
 import { ForgotPasswordResponse } from "../../types/login";
-import { setCredentialsAdmin } from "../../redux/reducers/admin/auth/adminSlice";
 import GoogleButton from "./GoogleButton";
 
 function ForgotPass() {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(false);
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const location = useLocation();
-  const emailAfterSignup = location.state?.email;
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-  };
+
 
   const initialValues = {
     email: "",
@@ -41,7 +29,7 @@ function ForgotPass() {
 
   const onSubmit = async (
     values: ForgotPassword,
-    { setSubmitting }
+    { setSubmitting }: FormikHelpers<ForgotPassword>
     // : FormikHelpers<UserLogin>
   ) => {
     console.log("Form data", values);
@@ -52,15 +40,7 @@ function ForgotPass() {
         {
           pending: "Checking Credentials",
           success: "Otp send Successfully",
-          error: {
-            render({ data }) {
-              // Extracting error message from response
-              if (data.response && data.response.data) {
-                return `Failed: ${data.response.data.message}`;
-              }
-              return `Failed: ${data.message}`;
-            },
-          },
+    
         },
         {
           position: "top-right",
@@ -85,31 +65,7 @@ function ForgotPass() {
             otpToken: response.otpToken,
           },
         });
-        // const { user, token, role } = response;
-
-        // console.log("log in page   user, token, role", user);
-
-        // // dispatch(loginSuccess({ user: JSON.stringify(user), token }));
-
-        // dispatch(setCredentials({ user, token, role }));
-        // console.log('user role UserLoginResponse ',user.role);
-
-        // if (user.role == "user") {
-        //   console.log(`if (user.role == "user")`);
-
-        //   navigate("/");
-        // } else if (user.role == "admin") {
-        //   console.log(`else if (user.role == "admin")`);
-
-        //   navigate("/admin");
-        // }
-
-        //    else if (role == "admin") {
-        //   dispatch(setCredentialsAdmin({ user, token, role }));
-        //   navigate("/admin");
-        // }
-        // dispatch(authorizeUserOtpPage())
-        // navigate('/otp', { state: { email: formData.email } });
+      
       })
       .catch((error) => {
         console.error(error);

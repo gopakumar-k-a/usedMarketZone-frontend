@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { UserProfileMyBids } from "@/types/bid";
 import { FaEye } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { formatDate, isBefore } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import ProductStatusComponent from "./BidProductDeliveryStatus";

@@ -9,7 +9,8 @@ import {
   UserProfileBidRes,
 } from "@/types/bid.ts";
 import { AxiosResponse } from "axios";
-export const bidProductPost = async (payload) => {
+import { BidProductPayload } from "@/pages/user/post/BidProductPost.tsx";
+export const bidProductPost = async (payload:BidProductPayload) => {
   const response = await axiosUserInstance.post(
     END_POINTS.POST_BID_PRODUCT,
     payload

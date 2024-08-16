@@ -1,8 +1,7 @@
 import { ReportPost } from "@/components/post/ReportPostDialogue.tsx";
 import { axiosUserInstance } from "../axiosInstance/axiosUserInstance.ts";
 import { END_POINTS } from "@/constants/endPoints.ts";
-import { AxiosError, AxiosResponse, isAxiosError } from "axios";
-import { toast } from "react-toastify";
+import {  AxiosResponse,  } from "axios";
 import { handleAxiosErrorHelper } from "@/utils/helpers/handleAxiosErrorHelper.ts";
 import { NormalBackendRes } from "@/types/login.ts";
 import { GetPostDetailsRes } from "@/types/product.ts";

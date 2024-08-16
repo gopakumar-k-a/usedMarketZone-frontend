@@ -26,7 +26,6 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { submitKycRequest } from "@/api/user";
 import { toast } from "react-toastify";
-import { isAxiosError } from "axios";
 
 interface KycProps {
   isKycDialogueOpen: boolean;
@@ -101,7 +100,7 @@ const KycDialogue: React.FC<KycProps> = ({
           <Formik
             initialValues={{
               name: "",
-              dob: startDate,
+              dob: startDate ? startDate.toISOString().split("T")[0] : "",
               idType: "",
               idNumber: "",
               phone: "",

@@ -1,7 +1,6 @@
 import { MdOutlineMessage } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { Notification } from "@/types/Notification";
-import Messages from "@/components/chat/message/Messages";
 import { formatDate } from "@/utils/formatDate";
 function MessageNotification({
   notification

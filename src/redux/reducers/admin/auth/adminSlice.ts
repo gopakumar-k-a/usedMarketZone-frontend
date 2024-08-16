@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 // import { User } from "../../../../../types/login";
 // import { User } from "../../../../../types/login";
 // import { logInThunk, LoginResponse } from "./logInThunk";

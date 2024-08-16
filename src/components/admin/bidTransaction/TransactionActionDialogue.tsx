@@ -11,12 +11,12 @@ import {
 import { Transaction } from "@/types/admin/transaction";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CustomAlertDialogue } from "@/components/alert/CustomAlertDialogue";
 import {
   changeTransactionStatusToAdminRecieved,
   markProductAsDelivered,
   sendProductToWinner,
 } from "@/api/admin";
+import { ShipmentStatus } from "@/types/bid";
 
 export function TransactionActionDialogue({
   isOpen,
@@ -48,7 +48,7 @@ export function TransactionActionDialogue({
   const handleShipmentStatusChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setSelectedShipmentStatus(event.target.value);
+    setSelectedShipmentStatus(event.target.value as ShipmentStatus);
   };
   const [initialShipmentStatus] = useState(transaction.shipmentStatus);
 

@@ -1,4 +1,4 @@
-import { Axios, AxiosResponse } from "axios";
+import {  AxiosResponse } from "axios";
 import { axiosUserInstance } from "../axiosInstance/axiosUserInstance.ts";
 
 import { END_POINTS } from "@/constants/endPoints.ts";

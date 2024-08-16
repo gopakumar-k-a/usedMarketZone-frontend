@@ -3,7 +3,7 @@ import {
   axiosUserInstance,
 } from "../axiosInstance/axiosUserInstance.ts";
 import { END_POINTS } from "../../constants/endPoints.ts";
-import { RefreshAccessToken, User, UserLogin } from "../../types/login.ts";
+import { ForgotPasswordResponse, NormalBackendRes, RefreshAccessToken,  UserLogin } from "../../types/login.ts";
 
 import {
   SendOtpResponseSignUp,
@@ -12,9 +12,10 @@ import {
   verifyOtpSuccess,
 } from "../../types/login.ts";
 import { AxiosResponse } from "axios";
+import { SignUpFormValues } from "@/components/auth/SignUp.tsx";
 
 export const userOtpSignUp = async (
-  payload: User
+  payload: Omit<SignUpFormValues, 'confirmPassword'>
 ): Promise<SendOtpResponseSignUp> => {
 
   const response = await axiosRefreshInstance.post<SendOtpResponseSignUp>(
@@ -26,13 +27,13 @@ export const userOtpSignUp = async (
   return response.data;
 };
 
-export const resendOtpSignUp = async (payload) => {
-  const response = await axiosRefreshInstance.post(
+export const resendOtpSignUp = async (payload:any) => {
+  const response:AxiosResponse<NormalBackendRes> = await axiosRefreshInstance.post(
     END_POINTS.RESEND_OTP,
     payload
   );
 
-  return response;
+  return response.data;
 };
 
 export const verifyOtpsignUp = async (payload: VerifyOtpSignUp) => {
@@ -63,7 +64,7 @@ export const refreshAccessToken = async () => {
   return response.data;
 };
 
-export const googleAuthenticate = async (payload) => {
+export const googleAuthenticate = async (payload:any) => {
 
   const response = await axiosRefreshInstance.post<UserLoginResponse>(
     END_POINTS.GOOGLE_LOG_IN,
@@ -75,7 +76,7 @@ export const googleAuthenticate = async (payload) => {
   return response.data;
 };
 
-export const verifyOtpForgotPassword = async (payload) => {
+export const verifyOtpForgotPassword = async (payload:any) => {
   const response = await axiosRefreshInstance.post(
     END_POINTS.VERIFY_OTP_FORGOT_PASS,
     payload
@@ -88,8 +89,8 @@ export const verifyOtpForgotPassword = async (payload) => {
   return response.data;
 };
 
-export const forgotPassword = async (payload) => {
-  const response = await axiosRefreshInstance.post(
+export const forgotPassword = async (payload:any) => {
+  const response:AxiosResponse<ForgotPasswordResponse> = await axiosRefreshInstance.post(
     END_POINTS.FORGOT_PASSWORD,
     payload
   );
@@ -101,7 +102,7 @@ export const forgotPassword = async (payload) => {
   return response.data;
 };
 
-export const submitNewPass = async (payload) => {
+export const submitNewPass = async (payload:any) => {
   const response = await axiosRefreshInstance.post(
     END_POINTS.RESET_PASSWORD,
     payload

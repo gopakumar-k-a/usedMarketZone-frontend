@@ -3,7 +3,6 @@ import useGetMessage from "./useGetMessage";
 import { useAppDispatch } from "../reduxHooks";
 import { setMessages } from "@/redux/reducers/chat/chatSlice";
 import { useSocketContext } from "@/context/SocketContext";
-import { useAppSelector } from "../reduxHooks";
 
 function useListenMessages() {
   const context = useSocketContext();

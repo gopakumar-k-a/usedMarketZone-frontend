@@ -66,7 +66,7 @@ function App() {
           <TopBarMobile
             handleLogout={handleLogout}
             handleThemeSwitch={handleThemeSwitch}
-            theme={theme}
+       
           />
         </div>
 

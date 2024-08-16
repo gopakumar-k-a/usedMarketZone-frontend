@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faRightFromBracket,
@@ -19,7 +19,15 @@ import {
 } from "react-icons/md";
 import { PiPackageBold, PiPackageFill } from "react-icons/pi";
 
-const AdminTopBar = ({ handleLogout, theme, handleThemeSwitch }) => {
+const AdminTopBar = ({
+  handleLogout,
+  theme,
+  handleThemeSwitch,
+}: {
+  handleLogout: () => void;
+  theme: "dark" | "light";
+  handleThemeSwitch: () => void;
+}) => {
   const location = useLocation();
   const [currentPath, setCurrentPath] = useState(location.pathname);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -226,7 +234,10 @@ const AdminTopBar = ({ handleLogout, theme, handleThemeSwitch }) => {
               className="absolute right-1 top-1.5"
             />
           ) : (
-            <FontAwesomeIcon icon={faSun} className="absolute right-1 top-1.5" />
+            <FontAwesomeIcon
+              icon={faSun}
+              className="absolute right-1 top-1.5"
+            />
           )}
         </label>
         <button

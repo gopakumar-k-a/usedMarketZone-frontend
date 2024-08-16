@@ -10,8 +10,6 @@ import {
 
 import { formatDate } from "@/utils/formatDate";
 
-import { BidHistoryOnProduct } from "@/types/bid";
-import { bidHistoryOfUser } from "@/api/bid";
 import LoaderPost from "@/components/loader/LoaderPost";
 import { IBid } from "@/types/bid";
 

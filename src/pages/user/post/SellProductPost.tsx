@@ -8,28 +8,22 @@ import { useNavigate } from "react-router-dom";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 
-// import AddressForm from "./AddressForms";
-// import AddressForm from "./AddressForm";
-// import { Import, User } from "lucide-react";
 import axios from "axios";
 import pLimit from "p-limit";
-// import { Constants } from "@/constants/config";
-// import { updateImageToCloudinary } from "@/api/profile";
+
 import { productConditions } from "@/constants/productCategories";
 import { productCategories } from "@/constants/productCategories";
 import ImageCropper from "./multipleImageCropper/ImageCropper";
 import { uploadToCloudinaryAndGetLink } from "./uploadFileToCloudinary/uploadToCloudinaryAndGetLink";
 import { postProduct } from "@/api/product";
 import { toast } from "react-toastify";
-import useDebounce from "@/utils/hooks/useDebounce";
+import LoadingButton from "@/components/loadingButton/LoadingButton";
 
 function SellProductPost() {
   const [productImages, setProductImages] = useState<File[]>([]);
@@ -50,25 +44,14 @@ function SellProductPost() {
     "image/heic",
   ];
 
-  const [country, setCountry] = useState("");
-  const [state, setState] = useState("");
-  const [district, setDistrict] = useState("");
-  const [city, setCity] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-
   const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const [uploadedImagesUrl, setUploadedImagesUrl] = useState<string[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   const [croppingImageIndex, setCroppingImageIndex] = useState<number | null>(
     null
   );
 
   const navigate = useNavigate();
-  // const handleFileChange = (event) => {
-  //   setFiles(Array.from(event.target.files)); // Convert FileList to array
-  // };
 
   interface Product {
     productName: string;
@@ -104,12 +87,16 @@ function SellProductPost() {
       // setUploadedImagesUrl(imageUrls);
       // console.log("uploadedImagesUrl ", uploadedImagesUrl);
     } catch (err) {
-      console.error("Upload failed:", err);
-      setError(err.message);
+      if (err instanceof Error) {
+        console.error("Upload failed:", err);
+        setError(err.message);
+      } else {
+        console.error("Unexpected error:", err);
+        setError("An unexpected error occurred.");
+      }
     } finally {
       setUploading(false);
       setProductImages([]);
-      // formik.setFieldValue("productImages", 0);
     }
   };
 
@@ -124,15 +111,6 @@ function SellProductPost() {
       postalCode: values.postalCode,
     }).join(", ");
 
-    // values.productImageUrls = await uploadFiles() as string[]
-    //   console.log("new values ", values);
-
-    // values.productImageUrls = await uploadFiles() as string[]
-    // console.log("values after uploading files ", values);
-
-    // Call postProduct function
-    // await postProduct(values);
-
     const toastId = toast.loading("Posting Product...", {
       position: "top-right",
       autoClose: 5000,
@@ -140,7 +118,6 @@ function SellProductPost() {
     });
 
     try {
-      // Upload files and set the productImageUrls in values
       try {
         values.productImageUrls = (await uploadFiles()) as string[];
 
@@ -148,7 +125,6 @@ function SellProductPost() {
       } catch (uploadError) {
         console.error("Error during image upload: ", uploadError);
 
-        // Update toast to error for upload failure
         toast.update(toastId, {
           render: "Failed to upload files",
           type: "error",
@@ -156,7 +132,6 @@ function SellProductPost() {
           isLoading: false,
         });
 
-        // Exit early since the upload failed
         return;
       }
 
@@ -187,7 +162,6 @@ function SellProductPost() {
     } catch (error) {
       console.error("Error in postSellProduct: ", error);
 
-      // Update toast to error for other errors
       toast.update(toastId, {
         render: "Failed to Update Please Check Credentials",
         type: "error",
@@ -195,80 +169,7 @@ function SellProductPost() {
         isLoading: false,
       });
     }
-
-    //   {
-    //     "productName": "dxcfsdfds",
-    //     "basePrice": 23432423,
-    //     "category": "vehicles",
-    //     "subCategory": "Trucks",
-    //     "description": "dfsdfsdfsd",
-    //     "phone": "23423423",
-    //     "country": "India",
-    //     "state": "Kerala",
-    //     "district": "Kanayannur",
-    //     "city": "Thrippunithura",
-    //     "postalCode": "682304",
-    //     "productCondition": "Good",
-    //     "address": "India, Kerala, Kanayannur, Thrippunithura, 682304",
-    //     "productImageUrls": [
-    //         "https://res.cloudinary.com/dwjw8biat/image/upload/v1718975473/ufqdf6pe4lcfk1apakfv.png",
-    //         "https://res.cloudinary.com/dwjw8biat/image/upload/v1718975473/x4dg3htczpmhsjhfyabs.png"
-    //     ]
-    // }
-
-    // productCondition:string,
-    // address:string
-
-    // console.log("new values after joining address ",values);
-
-    // await toast
-    //   .promise(
-
-    //     postProduct(values),
-    //     {
-    //       pending: "Updating Credentials",
-    //       success: "User Profile Updated",
-    //       error: "Failed to Update Please Check Credentials",
-    //     },
-    //     {
-    //       position: "top-right",
-    //       autoClose: 5000,
-    //       hideProgressBar: false,
-    //       closeOnClick: true,
-    //       pauseOnHover: true,
-    //       draggable: true,
-    //       progress: undefined,
-    //       theme: "light",
-    //     }
-    //   )
-    //   .then((response: any) => {
-    //     console.log("response is ", response);
-    //     // const { updatedUser } = response;
-
-    //     // console.log("log in page   user, token, role", updatedUser);
-
-    //     // dispatch(loginSuccess({ user: JSON.stringify(user), token }));
-
-    //     // dispatch(updateUserCredentials(updatedUser));
-    //     // navigate("/profile");
-
-    //     //    else if (role == "admin") {
-    //     //   dispatch(setCredentialsAdmin({ user, token, role }));
-    //     //   navigate("/admin");
-    //     // }
-    //     // dispatch(authorizeUserOtpPage())
-    //     // navigate('/otp', { state: { email: formData.email } });
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   })
-    // .finally(() => {
-    //   // setLoading(false);
-    //   setSubmitting(false);
-    // });
   };
-
-  // const debouncePostSellProduct=useDebounce(postProduct,3000)
 
   const validationSchema = Yup.object({
     productName: Yup.string().required("Product Name is required"),
@@ -343,7 +244,6 @@ function SellProductPost() {
   const handleImageRemove = (index: number) => {
     const newImages = productImages.filter((_, i) => i !== index);
     setProductImages(newImages);
-    // formik.setFieldValue("productImages", newImages);
   };
 
   const fetchLocation = () => {
@@ -357,18 +257,13 @@ function SellProductPost() {
           )
           .then((response) => {
             const address = response.data.address;
-            setCountry(address.country);
             formik.setFieldValue("country", address.country);
-            setState(address.state || address.region);
             formik.setFieldValue("state", address.state || address.region);
-            setDistrict(address.county || address.suburb);
             formik.setFieldValue("district", address.county || address.suburb);
-            setCity(address.city || address.town || address.village);
             formik.setFieldValue(
               "city",
               address.city || address.town || address.village
             );
-            setPostalCode(address.postcode);
             formik.setFieldValue("postalCode", address.postcode);
           })
           .catch((error) =>
@@ -390,32 +285,21 @@ function SellProductPost() {
     setProductCondition(productConditions[value]);
   };
 
-  const cloudinaryConfig = {
-    cloudName: "dwjw8biat",
-    uploadPreset: "u9g90r4d", // Optional, if using a preset
-    apiKey: "359379445312476",
-    apiSecret: "7sQagvPX-Ji1fnG3FDGf7iRggo0",
-  };
-
   const setCroppedImage = (croppedImageFile: File | null, index: number) => {
     if (croppedImageFile) {
       const newImages = [...productImages];
       newImages[index] = croppedImageFile;
       setProductImages(newImages);
-      // formik.setFieldValue("productImages", newImages);
     }
     setCroppingImageIndex(null);
   };
 
   return (
     <>
-      <div
-        // className={`w-full h-screen flex justify-center bg-white dark:bg-gray-900`}
-        className="flex justify-center bg-white dark:bg-gray-900 min-h-screen"
-      >
+      <div className="flex justify-center bg-white dark:bg-gray-900 min-h-screen">
         <form
           onSubmit={formik.handleSubmit}
-                className="max-w-3xl w-full mx-auto p-6 bg-white text-black rounded-md shadow-md dark:bg-gray-900 dark:text-white"
+          className="max-w-3xl w-full mx-auto p-6 bg-white text-black rounded-md shadow-md dark:bg-gray-900 dark:text-white"
           // className="max-w-3xl h-screen mx-auto p-6 bg-white text-black rounded-md shadow-md dark:bg-gray-900 dark:text-white"
         >
           <h2 className="text-2xl font-bold mb-6">Post Your Product</h2>
@@ -475,9 +359,7 @@ function SellProductPost() {
               <label className="block text-sm font-medium">
                 Select Category
               </label>
-              {/* <select className="w-full p-2 bg-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700">
-            <option>Electronics</option>
-          </select> */}
+
               <Select
                 name="category"
                 onValueChange={(value) => {
@@ -514,10 +396,6 @@ function SellProductPost() {
                   <SelectValue placeholder="none" />
                 </SelectTrigger>
                 <SelectContent className="w-full p-2 bg-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700">
-                  {/* <SelectItem value="light">mobile</SelectItem>
-              <SelectItem value="dark">head phone</SelectItem>
-              <SelectItem value="system">laptop</SelectItem> */}
-
                   {subCategories &&
                     subCategories.map((value: string, index: number) => (
                       <SelectItem key={index} value={value}>
@@ -536,7 +414,7 @@ function SellProductPost() {
             <label className="block text-sm font-medium">Description</label>
             <textarea
               className="w-full p-2 bg-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-700"
-              rows="3"
+              rows={3}
               placeholder="I'm selling my second-hand iPhone 12, which is in excellent condition"
               name="description"
               onChange={formik.handleChange}
@@ -766,17 +644,23 @@ function SellProductPost() {
               Use Current Location
             </button>
           </div>
-
-          <Button
-            type="submit"
-            className="w-full p-2 bg-blue-600 text-white rounded-md"
-            disabled={productImages.length < 1}
-            // onClick={uploadFiles}
-          >
-            Post Product
-          </Button>
+          <div className="flex flex-col justify-center">
+            {uploading ? (
+              <LoadingButton buttonText="uploading" />
+            ) : (
+              <Button
+                type="submit"
+                className="w-full p-2 bg-blue-600 text-white rounded-md"
+                disabled={productImages.length < 1}
+                // onClick={uploadFiles}
+              >
+                Post Product
+              </Button>
+            )}
+          </div>
         </form>
       </div>
+      {error && <p className="text-red-400">{error}</p>}
       {croppingImageIndex !== null && (
         <ImageCropper
           image={productImages[croppingImageIndex]}

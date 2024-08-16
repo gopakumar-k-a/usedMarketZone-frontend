@@ -22,6 +22,9 @@ export interface User {
   following: string[];
   numOfFollowing: number;
   numOfFollowers: number;
+  isActive:boolean;
+  updatedAt:string;
+  createdAt:string;
 }
 
 export interface SendOtpResponseSignUp {

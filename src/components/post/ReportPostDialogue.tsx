@@ -30,7 +30,7 @@ export interface ReportPost {
 import { postReport } from "@/api/product";
 import { toast } from "react-toastify";
 import { isAxiosError } from "axios";
-export function ReportPostDialogue({ isOpen, onClose, postId }) {
+export function ReportPostDialogue({ isOpen, onClose, postId }:{ isOpen:boolean, onClose:()=>void, postId:string }) {
   const submitReport = async (formData: ReportPost, id = postId) => {
     console.log("post id inside submitReport ", id);
     console.log("problem data ", formData);

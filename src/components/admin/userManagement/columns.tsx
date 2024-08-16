@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import AlertDialogBlock from "./AlertDialogBlock";
@@ -17,15 +17,9 @@ import {
 import { LuUser } from "react-icons/lu";
 import { FaCopy } from "react-icons/fa6";
 import { modifyUserAccess } from "@/api/admin";
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type User = {
-  _id: string;
-  email: string;
-  isActive: boolean;
-};
+import { User } from "@/types/login";
 
-// const navigate=useNavigate()
+
 
 export const columns = (
   userData: User[],
@@ -56,34 +50,9 @@ export const columns = (
     header: " ",
     cell: ({ row }) => {
       const user = row.original;
-      const [isUpdating, setIsUpdating] = useState(false);
-      const [isActive, setIsActive] = useState(user.isActive);
+      const [isUpdating] = useState(false);
+      const [isActive] = useState(user.isActive);
       const [showDialog, setShowDialog] = useState(false);
-
-      // const triggerDialogue = useRef< HTMLButtonElement | null>(null);
-
-      const handleToggleActive = async () => {
-        setIsUpdating(true);
-        setIsActive(!isActive);
-
-        try {
-        } catch (error) {
-          console.error("Error updating user isActive status:", error);
-        } finally {
-          setIsUpdating(false);
-        }
-      };
-      // const handleClick = () => {
-      //   setShowDialog(true);
-      //   if (triggerDialogue.current) {
-      //     trigger.current.click();
-      //   }
-      // };
-
-      // const onConfirm = () => {
-      //   handleToggleActive();
-      //   setShowDialog(false);
-      // };
 
       const handleOpenDialog = () => {
         setShowDialog(true);
@@ -104,7 +73,6 @@ export const columns = (
         });
         setUserData(newUserData);
       };
-
 
       return (
         <>
@@ -128,7 +96,7 @@ export const columns = (
             </Button>
           )}
 
-          {showDialog && (
+          {showDialog && user && (
             <AlertDialogBlock
               userData={user}
               isOpen={showDialog}
@@ -162,8 +130,12 @@ export const columns = (
               Copy User Email
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={()=>navigate("/admin/user-profile",{state:{userId:user._id}})}>
-            {/* <DropdownMenuItem > */}
+            <DropdownMenuItem
+              onClick={() =>
+                navigate("/admin/user-profile", { state: { userId: user._id } })
+              }
+            >
+              {/* <DropdownMenuItem > */}
               <LuUser className="text-red-600 mr-2" />
               View User Profile
             </DropdownMenuItem>

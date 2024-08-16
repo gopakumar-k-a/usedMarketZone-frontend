@@ -1,18 +1,17 @@
 import axios from "axios";
 import {
   axiosUserInstance,
-  axiosRefreshInstance,
 } from "../axiosInstance/axiosUserInstance.ts";
 import { END_POINTS } from "../../constants/endPoints.ts";
 import { UserNameCheckRes } from "../../types/user.ts";
 import { Constants } from "../../constants/config.ts";
 import { store } from "../../redux/app/store.ts";
+import { User } from "@/types/login.ts";
+import { PasswordFormValues } from "@/components/user/PasswordUpdateDialogue.tsx";
 
 const userId = store.getState().auth.user?._id;
 
-const getUserData = async (id: string) => {
-  const response = axiosUserInstance.get(`${END_POINTS.GET_USER_INFO}/${id}`);
-};
+
 
 export const userNameAvailabilty = async (userName: string, userId: string) => {
   console.log("user id is ", userId);
@@ -25,7 +24,7 @@ export const userNameAvailabilty = async (userName: string, userId: string) => {
   return response.data.userAvailablity;
 };
 
-export const updateProfile = async (payload) => {
+export const updateProfile = async (payload:User) => {
   console.log("payload inside update profile ", payload);
   console.log("user id ", userId);
 
@@ -38,7 +37,7 @@ export const updateProfile = async (payload) => {
   return response.data;
 };
 
-export const updateImageToCloudinary = async (imageBlob) => {
+export const updateImageToCloudinary = async (imageBlob:any) => {
   const response = await axios.post(`${Constants.CLOUDINARY_URL}`, imageBlob);
 
   return response.data;
@@ -54,7 +53,7 @@ export const sendImageUrlToBackEnd = async (imageUrl: string) => {
   return response.data;
 };
 
-export const updateUserPassword = async (payload) => {
+export const updateUserPassword = async (payload:PasswordFormValues) => {
   const response = await axiosUserInstance.put(
     `${END_POINTS.UPDATE_USER_PASSWORD}/${userId}`,
     payload

@@ -1,7 +1,7 @@
-import React,{ forwardRef } from 'react';
+import { User } from '@/types/login';
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
 
-const AlertDialogBlock =({userData,isOpen,onClose,changeIsActive }) => (
+const AlertDialogBlock =({userData,isOpen,onClose,changeIsActive }:{userData:User,isOpen:boolean,onClose:()=>void,changeIsActive:()=>void }) => (
   <AlertDialog.Root  open={isOpen} onOpenChange={onClose}>
     <AlertDialog.Trigger />
     <AlertDialog.Portal>
