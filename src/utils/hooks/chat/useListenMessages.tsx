@@ -8,7 +8,6 @@ import { useAppSelector } from "../reduxHooks";
 function useListenMessages() {
   const context = useSocketContext();
   const dispatch = useAppDispatch();
-  const { chatSelected } = useAppSelector((state) => state.chat);
 
   const { messages } = useGetMessage();
 

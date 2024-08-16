@@ -56,13 +56,15 @@ function GoogleButton() {
         )
         .then((response) => {
           console.log("response is ", response);
-          const { user, token, role } = response;
+          const {user, role,accessToken } = response;
+          // const { user, token, role } = response;
+          
 
           //  console.log("log in page   user, token, role", user);
 
           // dispatch(loginSuccess({ user: JSON.stringify(user), token }));
 
-          dispatch(setCredentials({ user, token, role }));
+          dispatch(setCredentials({ user, accessToken, role }));
           navigate("/");
 
           //    else if (role == "admin") {

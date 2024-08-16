@@ -19,6 +19,9 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
+      },
       colors: {
         customTealAdmin: "rgb(140, 185, 189)",
         adminBgLightSideBar: "rgb(134, 182, 246)",

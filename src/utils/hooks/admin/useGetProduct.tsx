@@ -4,7 +4,7 @@ import ProductInterface from "@/types/product";
 function useGetProductAdmin(productId: string) {
   const [productData, setProuductData] = useState<ProductInterface|null>(null);
 
-  const getProduct = async (prId: string = productId) => {
+  const getProduct = async () => {
     try {
 
     } catch (error) {

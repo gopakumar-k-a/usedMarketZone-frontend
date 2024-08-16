@@ -16,7 +16,7 @@ import {
   faLessThan,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
+import { animate, motion } from "framer-motion";
 const menuItems = [
   {
     path: "/home",
@@ -76,19 +76,31 @@ const Sidebar = ({
   hasUnreadNotifications: boolean;
 }) => {
   const location = useLocation();
-
+  const logoVariant = {
+    hover: {
+      scale: 1.1,
+      transition: {
+        duration: 0.3,
+        yoyo: Infinity,
+      },
+    },
+  };
   return (
     <div
       className={`h-screen ${isExpanded ? "w-full" : "w-full"} flex flex-col items-center border-r-2 border-gray-200 justify-between transition-all duration-300 bg-white dark:bg-gray-900`}
     >
       <div className="mt-4 ">
-        <img
-          src="/UMZ-logo.svg"
-          alt="Logo"
-          className="h-12 mb-4 dark:filter dark:invert"
-        />
+        <motion.div className="flex justify-center">
+          <motion.img
+            variants={logoVariant}
+            whileHover="hover"
+            src="/UMP-LOGO-final.png"
+            alt="Logo"
+            className="h-24 mb-4 dark:filter dark:invert"
+          />
+        </motion.div>
 
-        <div className="p-4 mt-4 flex items-center ">
+        <div className="p-4 mt-2 flex items-center ">
           <FontAwesomeIcon
             icon={isExpanded ? faLessThan : faGreaterThan}
             className="w-5 h-5 cursor-pointer text-gray-800 dark:text-white"
@@ -158,7 +170,6 @@ const Sidebar = ({
                 </motion.div>
               ))}
             </motion.div>
-           
           </>
         )}
 
@@ -167,7 +178,7 @@ const Sidebar = ({
             <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.85 }}>
               <Link
                 to="/home"
-                className={`p-4 block text-gray-800 dark:text-white ${
+                className={`p-4  flex justify-center text-gray-800 dark:text-white ${
                   location.pathname.includes("/home")
                     ? "bg-customOrange text-white rounded-xl"
                     : ""
@@ -186,7 +197,7 @@ const Sidebar = ({
             <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.85 }}>
               <Link
                 to="/search"
-                className={`p-4 block text-gray-800 dark:text-white ${
+                className={`p-4  flex justify-center text-gray-800 dark:text-white ${
                   location.pathname.includes("/search")
                     ? "bg-customOrange rounded-xl text-white"
                     : ""
@@ -206,7 +217,7 @@ const Sidebar = ({
             <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.85 }}>
               <Link
                 to="/post/sell-product"
-                className={`p-4 block text-gray-800 dark:text-white ${
+                className={`p-4  flex justify-center text-gray-800 dark:text-white ${
                   location.pathname.includes("/post/sell-product")
                     ? "bg-customOrange rounded-xl text-white"
                     : ""
@@ -225,7 +236,7 @@ const Sidebar = ({
             <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.85 }}>
               <Link
                 to="/post/auction-product"
-                className={`p-4 block text-gray-800 dark:text-white ${
+                className={`p-4  flex justify-center text-gray-800 dark:text-white ${
                   location.pathname.includes("/post/auction-product")
                     ? "bg-customOrange rounded-xl text-white"
                     : ""
@@ -244,7 +255,7 @@ const Sidebar = ({
             <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.85 }}>
               <Link
                 to="/messages"
-                className={`p-4 block text-gray-800 dark:text-white ${
+                className={`p-4  flex justify-center text-gray-800 dark:text-white ${
                   location.pathname.includes("/messages")
                     ? "bg-customOrange rounded-xl text-white"
                     : ""
@@ -263,7 +274,7 @@ const Sidebar = ({
             <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.85 }}>
               <Link
                 to="/notifications"
-                className={`relative p-4 block text-gray-800 dark:text-white ${
+                className={`relative p-4  flex justify-center text-gray-800 dark:text-white ${
                   location.pathname.includes("/notifications")
                     ? "bg-customOrange rounded-xl text-white"
                     : ""
@@ -285,7 +296,7 @@ const Sidebar = ({
             <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.85 }}>
               <Link
                 to="/profile/my-posts"
-                className={`p-4 block text-gray-800 dark:text-white ${
+                className={`p-4  flex justify-center text-gray-800 dark:text-white ${
                   location.pathname.includes("/profile")
                     ? "bg-customOrange rounded-xl text-white"
                     : ""
@@ -304,7 +315,7 @@ const Sidebar = ({
             <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.85 }}>
               <Link
                 to="/settings"
-                className={`p-4 block text-gray-800 dark:text-white ${
+                className={`p-4  flex justify-center text-gray-800 dark:text-white ${
                   location.pathname.includes("/settings")
                     ? "bg-customOrange rounded-xl text-white"
                     : ""
@@ -333,7 +344,6 @@ const Sidebar = ({
             <span className="ml-2">Logout</span>
           </button>
         )}
-
       </div>
     </div>
   );

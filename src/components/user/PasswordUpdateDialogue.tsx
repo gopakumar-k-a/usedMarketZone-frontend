@@ -1,13 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import Loader from "../loader/Loader";
-import { submitNewPass } from "@/api/auth";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -19,11 +16,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { updateUserPassword } from "@/api/profile";
 
 const PasswordUpdateDialogue = ({ isOpen, onClose }) => {
-  const navigate = useNavigate();
   const validationSchema = Yup.object().shape({
     currentPassword: Yup.string().required("Current Password is required"),
     newPassword: Yup.string()

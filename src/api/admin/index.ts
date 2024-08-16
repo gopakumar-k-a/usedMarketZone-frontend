@@ -9,7 +9,6 @@ import { AdminStatisticsRes } from "@/types/admin/dashboard";
 import { TransactionRes } from "@/types/admin/transaction";
 import {
   DashboardTransactionStatisticsRes,
-  ITransaction,
 } from "@/types/transactions";
 
 export const getAllUsers = async (page: number, limit: number) => {
@@ -25,7 +24,6 @@ export const modifyUserAccess = async (userId: string) => {
     `${END_POINTS.UPDATE_USER_ACCESS}/${userId}`
   );
 
-  console.log("response in modify user access api call ", response.data);
 
   return response.data;
 };
@@ -35,7 +33,6 @@ export const getUserProfileInAdmin = async (userId: string) => {
     `${END_POINTS.GET_USER_PROFILE_IN_ADMIN}/${userId}`
   );
 
-  console.log("getUserProfile response .data ", response.data);
 
   return response.data;
 };
@@ -178,7 +175,9 @@ export const getBidTransactions = async (
   sort: string | null,
   limit: number = 5,
   shipmentStatus: string,
-  paymentStatus: string
+  paymentStatus: string,
+  toDate: string = "",
+  fromDate: string = ""
 ) => {
   const response: AxiosResponse<TransactionRes> = await axiosAdminInstance.get(
     END_POINTS.GET_BID_TRANSACTIONS_ADMIN,
@@ -190,6 +189,8 @@ export const getBidTransactions = async (
         sort,
         shipmentStatus,
         paymentStatus,
+        toDate,
+        fromDate,
       },
     }
   );

@@ -45,6 +45,7 @@ export interface UserLoginResponse extends NormalBackendRes {
   user: User;
   role: string;
   accessToken: string;
+  
 }
 
 export interface RefreshAccessToken extends NormalBackendRes {

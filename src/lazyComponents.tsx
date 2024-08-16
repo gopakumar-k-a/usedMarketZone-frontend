@@ -93,6 +93,7 @@ const ViewProductPageAdmin = React.lazy(
   () => import("./pages/admin/ViewProductAdminPage")
 );
 const BidTransactionPage=React.lazy(()=>import("./pages/admin/BidTransactionPage"))
+const AdminBidReportPage=React.lazy(()=>import ("./pages/admin/AdminBidReportPage"))
 export {
   //user
   App,
@@ -135,5 +136,6 @@ export {
   KycRequestPage,
   ViewProductPageAdmin,
   ViewBidProductPageAdmin,
-  BidTransactionPage
+  BidTransactionPage,
+  AdminBidReportPage
 };

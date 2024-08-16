@@ -43,6 +43,7 @@ import {
   ViewBidProductPageAdmin,
   ViewProductPageAdmin,
   BidTransactionPage,
+  AdminBidReportPage,
 } from "./lazyComponents";
 // import ForgotPass from "./components/auth/ForgotPass";
 
@@ -292,6 +293,10 @@ export const AppRouter = createBrowserRouter([
       {
         path: "bid-transaction",
         element: <BidTransactionPage />,
+      },
+      {
+        path: "transaction-report",
+        element: <AdminBidReportPage />,
       },
     ],
   },

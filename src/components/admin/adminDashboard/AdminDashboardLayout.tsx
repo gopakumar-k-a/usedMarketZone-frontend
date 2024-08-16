@@ -12,6 +12,8 @@ import PieChartTransaction from "./chart/PieChartTransaction";
 import { Doughnut } from "react-chartjs-2";
 import { ShipmentStatus } from "@/types/bid";
 import TransactionCard from "./TransacionCard";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 function AdminDashboardLayout() {
   const [adminStatistics, setAdminStatistics] =
     useState<AdminStatistics | null>(null);
@@ -122,6 +124,13 @@ function AdminDashboardLayout() {
   };
   return (
     <div className="flex flex-col gap-3 p-3">
+      <div className="flex justify-end mr-4">
+        <Link to={"/admin/transaction-report"}>
+          <Button className="bg-blue-600 hover:bg-blue-800">
+            Transaction Report
+          </Button>
+        </Link>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 w-full h-auto md:h-32 p-3">
         <div className="border-2 border-gray-200 rounded-lg p-3">
           <div className="flex items-center justify-between w-full h-full rounded-lg">
@@ -142,13 +151,6 @@ function AdminDashboardLayout() {
               <h1 className="text-lg font-medium">
                 no of products : {adminStatistics?.numberOfProducts}
               </h1>
-              {/* <h1 className="text-lg font-medium">
-                Bid products : {adminStatistics?.numberOfBidProducts}
-              </h1>
-              <h1 className="text-lg font-medium">
-                Sell products : {adminStatistics?.numberOfNonBidProducts}
-              </h1> */}
-              {/* <Doughnut data={data} />; */}
             </div>
             <div className="bg-blue-50 p-3 rounded-lg">
               <FaBox className="text-2xl" />
@@ -169,6 +171,7 @@ function AdminDashboardLayout() {
           </div>
         </div>
       </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full h-auto md:h-40 p-3">
         <div className="border-2 border-gray-200 rounded-lg p-3">
           <div className="flex justify-center w-full h-full rounded-lg">
@@ -176,7 +179,6 @@ function AdminDashboardLayout() {
 
             <div className="bg-blue-50 p-3 rounded-lg flex items-center flex-col">
               <h1>Product Statisctics</h1>
-              {/* <FaUsers className="text-2xl" /> */}
               {adminStatistics && (
                 <AdminStatisticsChart stats={adminStatistics} />
               )}
@@ -198,7 +200,6 @@ function AdminDashboardLayout() {
             </div>
           </div>
         </div>
-        {/* new row */}
         <div className="border-2 border-gray-200 rounded-lg p-3">
           <div className="flex justify-center  w-full h-full rounded-lg">
             <div className="p-3 rounded-lg"></div>
@@ -219,7 +220,6 @@ function AdminDashboardLayout() {
             </div>
           </div>
         </div>
-        {/* new row end  */}
       </div>
     </div>
   );
