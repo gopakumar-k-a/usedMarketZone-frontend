@@ -36,14 +36,7 @@ axiosAdminInstance.interceptors.request.use(
     }
   );
 
-  // axiosAdminInstance.interceptors.response.use(
-  //   (response) => response,
-  //   async (error) => {
-  //     console.log('error message from interceptor',error.message)
-  //     handleAxiosErrorHelper(error);
-  //     return Promise.reject(error);
-  //   }
-  // );
+
 
   axiosAdminInstance.interceptors.response.use(
     (response) => response,

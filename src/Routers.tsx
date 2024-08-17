@@ -47,7 +47,13 @@ import {
 } from "./lazyComponents";
 // import ForgotPass from "./components/auth/ForgotPass";
 
-const Loading = () => <div>Loading...</div>;
+const Loading = () => (
+  <div className="flex w-full gap-4 h-full items-center justify-center">
+    <div className="w-4 h-4 rounded-full bg-red-500 animate-bounce"></div>
+    <div className="w-4 h-4 rounded-full bg-red-500 animate-bounce [animation-delay:-.3s]"></div>
+    <div className="w-4 h-4 rounded-full bg-red-500 animate-bounce [animation-delay:-.5s]"></div>
+  </div>
+);
 
 export const AppRouter = createBrowserRouter([
   {

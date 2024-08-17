@@ -27,7 +27,7 @@ axiosUserInstance.interceptors.request.use(
     console.log("accessToken is ", accessToken);
 
     if (accessToken) {
-      // config.headers.authorization = 'Bearer ' +accessToken;
+
       config.headers.authorization = `Bearer ${accessToken}`;
     }
     return config;
@@ -37,10 +37,19 @@ axiosUserInstance.interceptors.request.use(
   }
 );
 
+axiosRefreshInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+
+    handleAxiosErrorHelper(error);
+
+    return Promise.reject(error);
+  }
+);
+
 axiosUserInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    console.log("error message from interceptor", error.message);
     const originalRequest = error.config;
     if (
       error.response &&
