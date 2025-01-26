@@ -14,7 +14,7 @@ interface ProductImage {
 //   postImagesList: ProductImage[];
 // }
 
-function Myposts() {
+export default function Myposts() {
   const [postImagesList, setPostImagesList] = useState<ProductImage[]>([]);
 
   const getPostImageList = async () => {
@@ -81,5 +81,3 @@ function Myposts() {
     </>
   );
 }
-
-export default Myposts;

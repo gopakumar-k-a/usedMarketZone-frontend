@@ -1,13 +1,9 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { useAppSelector } from "../utils/hooks/reduxHooks";
 import { RootState } from "../redux/app/store";
 
-interface PublicRouteProps {
-  children: ReactNode;
-}
-
-const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
+export default function PublicRoute({ children }: { children: ReactNode }) {
   const isAuthenticated: boolean = useAppSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
@@ -23,6 +19,5 @@ const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
   }
 
   return <>{children}</>;
-};
+}
 
-export default PublicRoute;
