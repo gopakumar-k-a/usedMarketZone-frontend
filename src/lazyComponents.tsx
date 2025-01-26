@@ -1,100 +1,100 @@
 import React from "react";
 
-// import Temp from './components/home/Home'
-const ErrorPage = React.lazy(() => import("./pages/auth/ErrorPage"));
+// import Temp from '@/components/home/Home'
+const ErrorPage = React.lazy(() => import("@/pages/auth/ErrorPage"));
 
 //user
-const App = React.lazy(() => import("./App")); //user page layout
-const Home = React.lazy(() => import("./pages/user/home/HomePage"));
-const Profile = React.lazy(() => import("./pages/user/profile/MyProfilePage"));
+const App = React.lazy(() => import("@/App")); //user page layout
+const Home = React.lazy(() => import("@/pages/user/home/HomePage"));
+const Profile = React.lazy(() => import("@/pages/user/profile/MyProfilePage"));
 const EditProfile = React.lazy(
-  () => import("./pages/user/profile/editProfile/EditProfile")
+  () => import("@/pages/user/profile/editProfile/EditProfile")
 );
-const Chat = React.lazy(() => import("./pages/user/chat/ChatPage"));
+const Chat = React.lazy(() => import("@/pages/user/chat/ChatPage"));
 const UserProfile = React.lazy(
-  () => import("./pages/user/profile/UserProfilePage")
+  () => import("@/pages/user/profile/UserProfilePage")
 );
 const OwnerPosts = React.lazy(
-  () => import("./components/user/profilePage/MyPosts")
+  () => import("@/components/user/profilePage/MyPosts")
 );
 // ownerposts
 const OwnerBookmarks = React.lazy(
-  () => import("./components/user/profilePage/MyBookmarks")
+  () => import("@/components/user/profilePage/MyBookmarks")
 );
 const OwnerBidStatus = React.lazy(
-  () => import("./components/user/profilePage/MyBids")
+  () => import("@/components/user/profilePage/MyBids")
 );
-const OwnerParticipatingBids=React.lazy(()=>import("./components/user/profilePage/myParticipatingBids/MyParticipatingBids"))
+const OwnerParticipatingBids=React.lazy(()=>import("@/components/user/profilePage/myParticipatingBids/MyParticipatingBids"))
 const SettingsPage = React.lazy(
-  () => import("./pages/user/settings/SettingsPage")
+  () => import("@/pages/user/settings/SettingsPage")
 );
-const SearchPage = React.lazy(() => import("./pages/user/search/SearchPage"));
+const SearchPage = React.lazy(() => import("@/pages/user/search/SearchPage"));
 const NotificationPage = React.lazy(
-  () => import("./pages/user/notification/NotificationPage")
+  () => import("@/pages/user/notification/NotificationPage")
 );
 //product
 const SellProductPost = React.lazy(
-  () => import("./pages/user/post/SellProductPost")
+  () => import("@/pages/user/post/SellProductPost")
 );
 const AuctionProductPost = React.lazy(
-  () => import("./pages/user/post/BidProductPost")
+  () => import("@/pages/user/post/BidProductPost")
 );
 const ShowPostDetails = React.lazy(
-  () => import("./pages/user/post/ShowPostDetails")
+  () => import("@/pages/user/post/ShowPostDetails")
 );
 
-const BidClaimPage=React.lazy(()=>import("./pages/user/post/BidClaimPage"))
+const BidClaimPage=React.lazy(()=>import("@/pages/user/post/BidClaimPage"))
 
-const BidResultPageOwner=React.lazy(()=>import("./pages/user/post/BidResultsPageOwner"))
+const BidResultPageOwner=React.lazy(()=>import("@/pages/user/post/BidResultsPageOwner"))
 //auth
 const AuthenticationPage = React.lazy(
-  () => import("./pages/auth/AuthenticationPage")
+  () => import("@/pages/auth/AuthenticationPage")
 );
-const Otp = React.lazy(() => import("./components/auth/Otp"));
-const PublicRoute = React.lazy(() => import("./routes/PublicRoute"));
-const PrivateRoute = React.lazy(() => import("./routes/PrivateRoute"));
-const OtpRouteGuard = React.lazy(() => import("./routes/otpRouteProtect"));
+const Otp = React.lazy(() => import("@/components/auth/Otp"));
+const PublicRoute = React.lazy(() => import("@/routes/PublicRoute"));
+const PrivateRoute = React.lazy(() => import("@/routes/PrivateRoute"));
+const OtpRouteGuard = React.lazy(() => import("@/routes/otpRouteProtect"));
 const AdminPrivateRoute = React.lazy(
-  () => import("./routes/AdminPrivateRoute")
+  () => import("@/routes/AdminPrivateRoute")
 );
 const ResetPassword = React.lazy(
-  () => import("./components/auth/ResetPassword")
+  () => import("@/components/auth/ResetPassword")
 );
 const ResetPassModal = React.lazy(
-  () => import("./components/auth/ResetPasswModal")
+  () => import("@/components/auth/ResetPasswModal")
 );
 //admin
 const AdminPageLayout = React.lazy(
-  () => import("./pages/admin/layout/AdminPageLayout")
+  () => import("@/pages/admin/layout/AdminPageLayout")
 );
 const AdminDashboard = React.lazy(
-  () => import("./pages/admin/AdminDashboardPage")
+  () => import("@/pages/admin/AdminDashboardPage")
 );
-const UserManagement = React.lazy(() => import("./pages/admin/UserManagement"));
+const UserManagement = React.lazy(() => import("@/pages/admin/UserManagement"));
 const PostMangement = React.lazy(
-  () => import("./pages/admin/PostManagementPage")
+  () => import("@/pages/admin/PostManagementPage")
 );
 const BidVerfication = React.lazy(
-  () => import("./pages/admin/bid/BidVerificationPage")
+  () => import("@/pages/admin/bid/BidVerificationPage")
 );
 const UserProfileAdmin = React.lazy(
-  () => import("./pages/admin/UserProfileAdmin")
+  () => import("@/pages/admin/UserProfileAdmin")
 );
 const PostIncidents = React.lazy(
-  () => import("./pages/admin/PostIncidentsPage")
+  () => import("@/pages/admin/PostIncidentsPage")
 );
 const BidHistoryAdmin = React.lazy(
-  () => import("./components/admin/bidHistory/BidHistoryAdmin")
+  () => import("@/components/admin/bidHistory/BidHistoryAdmin")
 );
-const KycRequestPage = React.lazy(() => import("./pages/admin/KycRequestPage"));
+const KycRequestPage = React.lazy(() => import("@/pages/admin/KycRequestPage"));
 const ViewBidProductPageAdmin = React.lazy(
-  () => import("./pages/admin/ViewBidProductPageAdmin")
+  () => import("@/pages/admin/ViewBidProductPageAdmin")
 );
 const ViewProductPageAdmin = React.lazy(
-  () => import("./pages/admin/ViewProductAdminPage")
+  () => import("@/pages/admin/ViewProductAdminPage")
 );
-const BidTransactionPage=React.lazy(()=>import("./pages/admin/BidTransactionPage"))
-const AdminBidReportPage=React.lazy(()=>import ("./pages/admin/AdminBidReportPage"))
+const BidTransactionPage=React.lazy(()=>import("@/pages/admin/BidTransactionPage"))
+const AdminBidReportPage=React.lazy(()=>import ("@/pages/admin/AdminBidReportPage"))
 export {
   //user
   App,
