@@ -18,7 +18,6 @@ export const userOtpSignUp = createAsyncThunk<resData, User, { rejectValue: MyEr
   async (payload: User, thunkApi) => {
     try {
       const response = await authAxios.post(END_POINTS.SEND_OTP_SIGNUP, payload);
-      console.log('response data ', response.data);
 
       const data = response.data as resData;
       // Set userData to local storage here

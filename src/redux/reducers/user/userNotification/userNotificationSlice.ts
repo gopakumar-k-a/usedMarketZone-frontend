@@ -35,7 +35,6 @@ const userNotificationSlice = createSlice({
       state,
       action: PayloadAction<{ userNotification: Notification }>
     ) => {
-      console.log("inside addd new notification");
 
       state.userNotifications = [
         action.payload.userNotification,

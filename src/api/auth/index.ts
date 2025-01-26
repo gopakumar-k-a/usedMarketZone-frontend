@@ -71,7 +71,6 @@ export const googleAuthenticate = async (payload:any) => {
     payload
   );
 
-  console.log(" googleAuthenticate api response is ", response.data);
 
   return response.data;
 };
@@ -82,9 +81,7 @@ export const verifyOtpForgotPassword = async (payload:any) => {
     payload
   );
 
-  console.log("payload ", payload);
 
-  console.log("response in verifyOTp forgo password ", response.data);
 
   return response.data;
 };
@@ -95,10 +92,6 @@ export const forgotPassword = async (payload:any) => {
     payload
   );
 
-  console.log("payload ", payload);
-
-  console.log("response in verifyOTp forgo password ", response.data);
-
   return response.data;
 };
 
@@ -107,8 +100,6 @@ export const submitNewPass = async (payload:any) => {
     END_POINTS.RESET_PASSWORD,
     payload
   );
-
-  console.log("payload ", response.data);
 
   return response.data;
 };

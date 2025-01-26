@@ -14,26 +14,21 @@ const userId = store.getState().auth.user?._id;
 
 
 export const userNameAvailabilty = async (userName: string, userId: string) => {
-  console.log("user id is ", userId);
 
   const response = await axiosUserInstance.get<UserNameCheckRes>(
     `${END_POINTS.USER_NAME_AVILABILITY}/${userName}/${userId}`
   );
-  console.log("response in USER_NAME_AVILABILITY ", response.data);
 
   return response.data.userAvailablity;
 };
 
 export const updateProfile = async (payload:User) => {
-  console.log("payload inside update profile ", payload);
-  console.log("user id ", userId);
 
   const response = await axiosUserInstance.put(
     `${END_POINTS.UPDATE_PROFILE}/${userId}`,
     payload
   );
 
-  console.log("update profile response ", console.log(response.data));
   return response.data;
 };
 
@@ -49,7 +44,6 @@ export const sendImageUrlToBackEnd = async (imageUrl: string) => {
     { imageUrl }
   );
 
-  console.log("response from sendImageUrlToBackEnd", response.data);
   return response.data;
 };
 
@@ -59,8 +53,6 @@ export const updateUserPassword = async (payload:PasswordFormValues) => {
     payload
   );
 
-  console.log("response from update user password");
-
   return response.data;
 };
 
@@ -69,8 +61,6 @@ export const removeProfilePicture = async (userId: string) => {
     `${END_POINTS.REMOVE_PROFILE_PIC}/${userId}`
   );
 
-  console.log("response from remove profile picture ", removeProfilePicture);
-
   return response.data;
 };
 
@@ -78,7 +68,6 @@ export const getOwnerPostsListImage = async () => {
   const response = await axiosUserInstance.get(
     END_POINTS.GET_OWNER_POSTS_IMAGE_LIST
   );
-console.log('image urls ',response.data);
 
   return response.data;
 };

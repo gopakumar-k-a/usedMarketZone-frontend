@@ -22,11 +22,9 @@ axiosAdminInstance.interceptors.request.use(
     (config) => {
 
       const { accessToken } = store.getState().auth;  
-      console.log('accessToken is ',accessToken);
       
       
       if (accessToken) {
-        // config.headers.authorization = 'Bearer ' +accessToken; 
         config.headers.authorization = `Bearer ${accessToken}`; 
       }
       return config;
@@ -41,7 +39,6 @@ axiosAdminInstance.interceptors.request.use(
   axiosAdminInstance.interceptors.response.use(
     (response) => response,
     async (error) => {
-      console.log("error message from interceptor", error.message);
       const originalRequest = error.config;
       if (
         error.response &&

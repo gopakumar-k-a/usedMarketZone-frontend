@@ -12,7 +12,6 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   const user = useAppSelector((state: RootState) => state.auth.user);
 
   const role = isAuthenticated && user ? user?.role : "";
-  console.log('role of the user in user private route is ', role);
 
 
   if (!isAuthenticated || role !== "user") {

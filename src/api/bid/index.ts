@@ -29,7 +29,6 @@ export const placeBidOnProduct = async (
     `${END_POINTS.PLACE_BID_ON_PRODUCT}/${bidProductId}`,
     { bidAmount }
   );
-  console.log("response .data bidProductPOst", response.data);
 
   return response.data;
 };
@@ -40,7 +39,6 @@ export const bidHistoryOfUser = async (bidProductId: string) => {
       `${END_POINTS.GET_BID_HISTORY_ON_PRODUCT}/${bidProductId}`
     );
 
-  console.log("response.data bid  history of user ", response.data);
 
   return response.data;
 };
@@ -49,7 +47,6 @@ export const getUserWistBid = async () => {
   const response: AxiosResponse<UserProfileBidRes> =
     await axiosUserInstance.get(END_POINTS.GET_USER_BIDS);
 
-  console.log("getUserWistBid response data ", response.data);
 
   return response.data;
 };

@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
@@ -65,13 +65,15 @@ function SignUp() {
         "Password must contain at least one special character"
       )
       .required("Password is required"),
-      confirmPassword: Yup.string()
+    confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), undefined], "Passwords must match")
       .required("Confirm Password is required"),
-    
   });
 
-  const onSubmit = async (values: SignUpFormValues,  { setSubmitting }: FormikHelpers<SignUpFormValues>) => {
+  const onSubmit = async (
+    values: SignUpFormValues,
+    { setSubmitting }: FormikHelpers<SignUpFormValues>
+  ) => {
     const { confirmPassword, ...formData } = values;
 
     setLoading(true);
@@ -114,12 +116,10 @@ function SignUp() {
       });
   };
 
-
-
   return (
     <>
-          <section className="flex items-center justify-center ">
-          <div className="xl:mx-auto xl:w-full shadow-md p-4 xl:max-w-sm 2xl:max-w-md  bg-white rounded-lg">
+      <section className="flex items-center justify-center ">
+        <div className=" xl:mx-auto xl:w-full shadow-md p-4 xl:max-w-sm 2xl:max-w-md  bg-white rounded-lg">
           <h2 className="text-left text-2xl font-bold leading-tight text-black">
             Sign Up
           </h2>

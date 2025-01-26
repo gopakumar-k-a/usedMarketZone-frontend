@@ -105,7 +105,7 @@ function LogIn() {
   return (
     <>
       <motion.section
-        className="flex items-center justify-center "
+        className="flex items-center justify-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >

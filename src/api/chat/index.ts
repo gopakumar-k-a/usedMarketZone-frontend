@@ -5,11 +5,7 @@ import { AxiosResponse } from "axios";
 import { GetChatRes } from "@/types/chat.ts";
 
 export const postMessage = async (message: string, recieverId: string) => {
-  console.log(
-    "postMessage message: string, recieverId: string",
-    message,
-    recieverId
-  );
+
 
   const response: AxiosResponse<SendMessageRes> = await axiosUserInstance.post(
     `${END_POINTS.SEND_MESSAGE}/${recieverId}`,
@@ -46,8 +42,6 @@ export const getChat = async (recieverId: string) => {
     `${END_POINTS.GET_CHAT}/${recieverId}`
   );
 
-  console.log("response get chat ", response.data);
-
   return response.data;
 };
 
@@ -55,8 +49,6 @@ export const getUnreadMessages = async (senderId: string) => {
   const response = await axiosUserInstance.get(
     `${END_POINTS.GET_UNREAD_MESSAGES}/${senderId}`
   );
-
-  console.log("response unread messages ", response.data);
 
   return response.data;
 };

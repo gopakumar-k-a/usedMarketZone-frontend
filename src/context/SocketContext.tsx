@@ -49,7 +49,6 @@ export const SocketContextProvider = ({
       newSocket?.on("getOnlineUsers", (onlineUsers: string[]) => {
         console.log("Online users received:", onlineUsers);
         setOnlineUsers(onlineUsers);
-        // Handle the list of online users as needed
       });
 
       newSocket?.on("notification", (data: Notification) => {

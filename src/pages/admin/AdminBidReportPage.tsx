@@ -11,6 +11,7 @@ import { useSearchParams } from "react-router-dom";
 function AdminBidReportPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [totalDocuments, setTotalDocuments] = useState(0);
+  const [totalBidAmount,setTotalBidAmount]=useState(0)
   const [searchParams] = useSearchParams();
   const limit = 5;
   const fetchBidTransactions = async (
@@ -32,6 +33,15 @@ function AdminBidReportPage() {
       toDate, fromDate
     );
     console.log("transactions ", transactions);
+
+    if(transactions){
+
+      let sum=transactions.reduce((acc,transaction)=>{
+         return acc+transaction.wonPrice
+         },0)
+         setTotalBidAmount(sum)
+
+    }
 
     setTransactions(transactions);
     setTotalDocuments(totalDocuments);
@@ -86,6 +96,13 @@ function AdminBidReportPage() {
       {transactions && transactions.length > 0 && (
         <Pagination pageSize={limit} totalCount={totalDocuments} />
       )}
+
+      {
+        transactions&& totalBidAmount&&
+     <p>total bid amount {totalBidAmount}</p>
+      }
+
+
     </>
   );
 }

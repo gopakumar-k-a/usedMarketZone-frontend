@@ -11,7 +11,6 @@ function useGetFollowing() {
     setIsLoading(true);
     try {
       const res= await getFollowing();
-      console.log('following users ',res);
       
       setFollowing(res.followingUsers);
     //   toast.success(message || "UsersDataFetchedSuccess");

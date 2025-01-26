@@ -22,7 +22,7 @@ function AuthenticationPage() {
     const interval = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % slideText.length);
     }, 5000);
-    return () => clearInterval(interval); 
+    return () => clearInterval(interval);
   }, []);
   const slideNext = () => {
     setActiveIndex((prevIndex) => (prevIndex + 1) % slideText.length);
@@ -33,8 +33,6 @@ function AuthenticationPage() {
       (prevIndex) => (prevIndex - 1 + slideText.length) % slideText.length
     );
   };
-
-
 
   const authenticationComponentVariant = {
     initial: {
@@ -53,7 +51,7 @@ function AuthenticationPage() {
       <GradientBackground>
         <div className="p-5">
           <motion.div
-            className="xl:mx-auto xl:w-full shadow-md p-4 xl:max-w-sm 2xl:max-w-md mb-6 flex  bg-white rounded-lg"
+            className="xl:mx-auto relative xl:w-full shadow-md p-4 xl:max-w-sm 2xl:max-w-md mb-6 flex  bg-white rounded-lg"
             style={{
               backgroundImage: `
         linear-gradient(
@@ -71,48 +69,46 @@ function AuthenticationPage() {
               Used Market Zone
             </h1>
           </motion.div>
-          <div className="w-full sm:w-1/2 flex justify-center">
-     
-          </div>
+          <div className="w-full sm:w-1/2 flex justify-center"></div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
-            <motion.div
-
-      
-            >
+            <motion.div>
               {location.pathname == "/login" && (
                 <motion.div
-        
                   variants={authenticationComponentVariant}
                   initial="initial"
                   animate="animate"
+                  className="relative"
                 >
                   <LogIn />
                 </motion.div>
               )}
               {location.pathname == "/otp" && (
                 <motion.div
-                variants={authenticationComponentVariant}
-                initial="initial"
-                animate="animate"
+                  variants={authenticationComponentVariant}
+                  initial="initial"
+                  animate="animate"
+                  className="relative"
                 >
                   <Otp />
                 </motion.div>
               )}
               {location.pathname == "/signup" && (
                 <motion.div
-                variants={authenticationComponentVariant}
-                initial="initial"
-                animate="animate"
+                  variants={authenticationComponentVariant}
+                  initial="initial"
+                  animate="animate"
+                  className="relative"
                 >
                   <SignUp />
                 </motion.div>
               )}
               {location.pathname == "/forgot-password" && (
                 <motion.div
-                variants={authenticationComponentVariant}
+                  variants={authenticationComponentVariant}
                   initial="initial"
                   animate="animate"
+                  className="relative"
                 >
                   <ForgotPass />
                 </motion.div>
@@ -177,7 +173,6 @@ function AuthenticationPage() {
             </motion.aside>
           </div>
         </div>
-       
       </GradientBackground>
     </>
   );

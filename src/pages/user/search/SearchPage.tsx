@@ -24,9 +24,7 @@ function SearchPage() {
     try {
       if (query == null) return;
       setLoading(true);
-      console.log(`query ${query}, 
-    filter ${filter},
-     subFilter ${subFilter}`);
+  
 
       const results = await searchOnApp(query, filter, subFilter);
       setSearchResults(results.results);
@@ -47,14 +45,12 @@ function SearchPage() {
 
   useEffect(() => {
     if (query) {
-      console.log("inside useeffect in search");
 
       handleSearch(query);
     }
   }, [filter, subFilter]);
 
   const postIdCallBack = (postId: string) => {
-    console.log(" postIdCallBack", postId);
     setSelectedPostIdShare(postId);
   };
 

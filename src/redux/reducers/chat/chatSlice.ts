@@ -40,7 +40,6 @@ const chatSlice = createSlice({
     },
     addOneConversationToConversations: (state, action) => {
       const { conversation } = action.payload;
-      console.log('conversation ',conversation);
       
       const conversationExists = state.conversations.some(conv =>
         conv.participantsData.some((participant:ParticipantData) => 

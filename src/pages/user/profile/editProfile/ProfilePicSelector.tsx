@@ -106,7 +106,6 @@ function ProfilePicSelector() {
                 }
               )
               .then((response: any) => {
-                console.log("response in toast image ", response);
                 const { updatedUser } = response;
                 dispatch(updateUserCredentials(updatedUser));
                 navigate("/profile");

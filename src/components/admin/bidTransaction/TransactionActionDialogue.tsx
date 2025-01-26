@@ -54,7 +54,6 @@ export function TransactionActionDialogue({
 
   const handleSaveChanges = async () => {
     if (selectedShipmentStatus !== initialShipmentStatus) {
-      console.log("shipment status", selectedShipmentStatus);
 
       switch (selectedShipmentStatus) {
         case "received_by_admin":

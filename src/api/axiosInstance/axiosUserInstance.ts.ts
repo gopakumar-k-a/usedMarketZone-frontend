@@ -24,7 +24,6 @@ export const axiosRefreshInstance = axios.create({
 axiosUserInstance.interceptors.request.use(
   (config) => {
     const { accessToken } = store.getState().auth;
-    console.log("accessToken is ", accessToken);
 
     if (accessToken) {
 

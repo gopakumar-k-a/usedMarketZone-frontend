@@ -20,8 +20,6 @@ function BidRequestCard({ request }:{request:BidRequest}) {
 
   const navigate = useNavigate();
   const acceptBid = async (bidId: string, bidDuration: BidDuration | null) => {
-    console.log("id is ", bidId);
-    console.log("bid duration is ", bidDuration);
 
     await acceptBidRequest(bidId, bidDuration).then(() => {
       setAdminAcceptedBid(true);
@@ -33,7 +31,6 @@ function BidRequestCard({ request }:{request:BidRequest}) {
   };
 
   const handleAcceptAlertOpen = (bidId: string, bidDuration: BidDuration) => {
-    console.log("handleAcceptAlertOpen bidDuration", bidDuration);
 
     setSelectedBidId(bidId);
     setSelectedBidDuration(bidDuration);

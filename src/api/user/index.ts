@@ -9,8 +9,6 @@ import { toast } from "react-toastify";
 export const getSuggestedUsers = async () => {
   const response = await axiosUserInstance.get(END_POINTS.GET_SUGGESTED_USERS);
 
-  console.log("response data getSuggesteUsers ", response.data);
-
   return response.data;
 };
 
@@ -39,8 +37,6 @@ export const getNumOfFollow = async (userId: string) => {
     `${END_POINTS.GET_NO_OF_FOLLOW}/${userId}`
   );
 
-  console.log("response data get num of follow ", response.data);
-
   return response.data;
 };
 
@@ -49,8 +45,6 @@ export const getFollowing = async (): Promise<ConversationsRes> => {
     END_POINTS.GET_FOLLOWING
   );
 
-  console.log("get following api ", response.data);
-
   return response.data;
 };
 
@@ -58,8 +52,6 @@ export const getFollowers = async () => {
   const response: AxiosResponse<FollowUserRes> = await axiosUserInstance.get(
     END_POINTS.GET_FOLLOWERS
   );
-
-  console.log("get following api ", response.data);
 
   return response.data;
 };
@@ -75,20 +67,16 @@ export const submitKycRequest = async (kycData: {
     const response: AxiosResponse<NormalBackendRes> =
       await axiosUserInstance.post(END_POINTS.SUBMIT_KYC_REQUEST, kycData);
 
-    console.log("response data submit kyc request ", response.data);
-
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
       const axiosError = error as AxiosError<any>;
-      console.log("axiosError ", axiosError);
 
       if (
         axiosError.response &&
         axiosError.response.data &&
         axiosError.response.data.message
       ) {
-        console.log("inside backendError");
 
         const backendError = axiosError.response.data.message;
         toast.error(backendError);
@@ -102,7 +90,6 @@ export const searchOnApp = async (
   filter: string,
   subFilter: string | null = ""
 ) => {
-  console.log("query filter subFilter ", query, filter, subFilter);
 
   const response = await axiosUserInstance.get(END_POINTS.SEARCH_ON_APP, {
     params: {
@@ -112,8 +99,6 @@ export const searchOnApp = async (
     },
   });
 
-  console.log("search on app response ", response.data);
-
   return response.data;
 };
 
@@ -121,7 +106,6 @@ export const getNotifications = async () => {
   const response: AxiosResponse<NotificationRes> = await axiosUserInstance.get(
     END_POINTS.GET_NOTIFICATIONS
   );
-  console.log("notifications ", response.data);
 
   return response.data;
 };

@@ -38,13 +38,10 @@ export const postReport = async (payload: ReportPost) => {
 };
 
 export const getUserPostDetails = async (postId: string) => {
-  console.log("post id ", postId);
 
   const response:AxiosResponse<GetPostDetailsRes> = await axiosUserInstance.get(
     `${END_POINTS.GET_POST_DETAILS}/${postId}`
   );
-
-  console.log('response ',response.data);
   
   return response.data;
 };

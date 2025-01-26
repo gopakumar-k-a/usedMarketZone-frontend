@@ -13,7 +13,6 @@ const AdminPrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
 
   const role = isAuthenticated && user ? user?.role : "";
 
-  console.log('role of the user in admin private route is ', role);
 
   if (!isAuthenticated || role !== "admin") {
     return <Navigate to="/login" replace />;
