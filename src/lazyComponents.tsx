@@ -17,6 +17,7 @@ const UserProfile = React.lazy(
 const OwnerPosts = React.lazy(
   () => import("./components/user/profilePage/MyPosts")
 );
+// ownerposts
 const OwnerBookmarks = React.lazy(
   () => import("./components/user/profilePage/MyBookmarks")
 );
